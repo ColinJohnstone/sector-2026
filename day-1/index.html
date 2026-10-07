@@ -1,0 +1,996 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Colin Johnstone's notes from Day 1 of SecTor 2026's AI x Cloud Security Summit: session summaries, speakers, glossary and a knowledge check.">
+<title>SecTor 2026 Day 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: dark operations-console briefing. Animated network hero, then a single reading column (~48rem); sessions are tabbed runbook cards; quiz closes the page. */
+:root{
+  --bg:#09111a; --bg2:#0c1621; --surface:#111c28; --surface2:#16232f; --ink:#e6eef5; --muted:#8fa2b3; --line:#1f2e3c;
+  --accent:#4cb3ff; --accent-ink:#04101b; --accent-soft:rgba(76,179,255,.13); --signal:#ffb547; --signal-soft:rgba(255,181,71,.13);
+  --mark:#7a5a00; --mark-ink:#fff4cc; --good:#4fd18f; --good-soft:rgba(79,209,143,.13); --bad:#ff7b70; --bad-soft:rgba(255,123,112,.13);
+  --net:rgba(120,170,215,.22); --glow:rgba(76,179,255,.18); --avL:70%;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --col:48rem; --wide:70rem; color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#eef3f7; --bg2:#e4ecf3; --surface:#ffffff; --surface2:#f4f7fa; --ink:#122130; --muted:#526474; --line:#d4dee7;
+  --accent:#0a62a3; --accent-ink:#ffffff; --accent-soft:rgba(10,98,163,.09); --signal:#b25e00; --signal-soft:rgba(178,94,0,.09);
+  --mark:#ffe58a; --mark-ink:#122130; --good:#16743f; --good-soft:rgba(22,116,63,.1); --bad:#b0281e; --bad-soft:rgba(176,40,30,.09);
+  --net:rgba(10,98,163,.16); --glow:rgba(10,98,163,.10); --avL:34%; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#eef3f7; --bg2:#e4ecf3; --surface:#ffffff; --surface2:#f4f7fa; --ink:#122130; --muted:#526474; --line:#d4dee7;
+  --accent:#0a62a3; --accent-ink:#ffffff; --accent-soft:rgba(10,98,163,.09); --signal:#b25e00; --signal-soft:rgba(178,94,0,.09);
+  --mark:#ffe58a; --mark-ink:#122130; --good:#16743f; --good-soft:rgba(22,116,63,.1); --bad:#b0281e; --bad-soft:rgba(176,40,30,.09);
+  --net:rgba(10,98,163,.16); --glow:rgba(10,98,163,.10); --avL:34%; color-scheme:light}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.65;padding-inline:16px;overflow-x:hidden}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h2{font-size:clamp(1.65rem,4vw,2.25rem);font-weight:780;font-stretch:112%;letter-spacing:-.01em;line-height:1.12}
+h3{font-size:1.32rem;font-weight:720;font-stretch:104%;line-height:1.25}
+p{margin:0}
+svg.i{width:1.15em;height:1.15em;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
+.wrap{max-width:var(--col);margin-inline:auto}
+.eyebrow{font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.eyebrow svg.i{color:var(--accent)}
+.lead{font-size:1.1rem;color:var(--muted);max-width:40rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;margin-inline:-16px;padding:0 16px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--line)}
+.bar-in{max-width:var(--wide);margin-inline:auto;display:flex;align-items:center;gap:1rem;height:3.5rem}
+.brand{font-family:var(--display);font-weight:800;font-stretch:120%;white-space:nowrap;display:flex;align-items:center;gap:.5rem}
+.brand .dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--signal);box-shadow:0 0 0 0 var(--signal);animation:ping 2.4s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--signal) 60%,transparent)}70%,100%{box-shadow:0 0 0 .55rem transparent}}
+.brand span{color:var(--accent)}
+.bar nav{display:flex;gap:.2rem;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+.bar nav a{font-size:.88rem;font-weight:500;color:var(--muted);text-decoration:none;padding:.35rem .7rem;border-radius:6px;white-space:nowrap;display:flex;align-items:center;gap:.4rem;transition:color .2s,background .2s}
+.bar nav a:hover{color:var(--ink);background:var(--surface)}
+.bar nav a.quiz-link{color:var(--accent-ink);background:var(--accent)}
+.readbar{position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:left;transform:scaleX(var(--p,0));background:linear-gradient(90deg,var(--accent),var(--signal))}
+
+/* hero */
+.hero{position:relative;margin-inline:-16px;padding:4.5rem 16px 3rem;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(60rem 30rem at 85% -10%,var(--glow),transparent 70%),var(--bg)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-in{position:relative;max-width:var(--col);margin-inline:auto;display:grid;gap:1.3rem}
+.hero h1{font-size:clamp(2.5rem,8vw,4.8rem);font-weight:820;font-stretch:124%;line-height:.98;letter-spacing:-.025em}
+.hero h1 .w{display:inline-block;animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 em{font-style:normal;color:var(--accent);position:relative}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.08em;background:var(--signal);transform-origin:left;animation:draw 1s .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{transform:translateY(.35em);opacity:.35;filter:blur(3px)}}
+@keyframes draw{from{transform:scaleX(0)}}
+.hero .lead{font-size:1.15rem}
+.thenNow{display:grid;grid-template-columns:1fr auto 1fr;gap:.75rem;align-items:stretch;margin-top:.5rem}
+.tn{background:color-mix(in srgb,var(--surface) 88%,transparent);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;display:grid;gap:.25rem;backdrop-filter:blur(4px)}
+.tn .yr{font-family:var(--mono);font-size:.78rem;font-weight:600;color:var(--muted)}
+.tn b{font-family:var(--display);font-size:1.35rem;font-weight:800;font-stretch:112%;line-height:1.15}
+.tn p{font-size:.88rem;color:var(--muted)}
+.tn.now{border-color:color-mix(in srgb,var(--signal) 45%,var(--line))}
+.tn.now b{color:var(--signal)}
+.arrow{display:grid;place-items:center;color:var(--muted)}
+.arrow svg{width:1.6rem;height:1.6rem;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(4px)}}
+.howto{display:flex;flex-wrap:wrap;gap:.5rem}
+.howto a{font-size:.9rem;text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--surface) 90%,transparent);border:1px solid var(--line);padding:.45rem .85rem;border-radius:8px;display:flex;align-items:center;gap:.5rem;transition:border-color .2s,transform .2s}
+.howto a:hover{border-color:var(--accent);transform:translateY(-2px)}
+.howto b{font-family:var(--mono);font-size:.76rem;color:var(--accent)}
+.byline{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;font-size:.92rem;color:var(--muted);padding-top:1.1rem;border-top:1px solid var(--line)}
+.byline strong{color:var(--ink);font-weight:600}
+.byline .mono{font-family:var(--mono);font-size:.78rem}
+
+section{padding-block:3.5rem;border-bottom:1px solid var(--line)}
+.sec-head{display:grid;gap:.6rem;margin-bottom:1.9rem}
+
+/* scroll reveal: only where scroll-driven animation is supported; resting state is fully visible */
+@media (prefers-reduced-motion:no-preference){@supports (animation-timeline:view()){
+  .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
+  @keyframes rv{from{opacity:.25;transform:translateY(24px)}}
+}}
+
+/* brief */
+.big3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.idea{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.25rem;display:grid;gap:.45rem;align-content:start;overflow:hidden;transition:transform .25s,border-color .25s}
+.idea:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}
+.ico{width:2.6rem;height:2.6rem;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.ico svg.i{width:1.35rem;height:1.35rem}
+.idea p{color:var(--muted);font-size:.95rem}
+.numbers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:1.5rem}
+.num{background:var(--surface);padding:1rem}
+.num b{display:block;font-family:var(--display);font-size:clamp(1.6rem,4vw,2.1rem);font-weight:820;font-stretch:112%;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.num span{display:block;font-size:.82rem;color:var(--muted);margin-top:.35rem;line-height:1.35}
+.num small{display:block;font-family:var(--mono);font-size:.68rem;color:var(--accent);margin-top:.35rem;letter-spacing:.04em;text-transform:uppercase}
+blockquote{margin:2.2rem 0 0;padding:1.4rem 1.4rem 1.4rem 1.6rem;border-radius:12px;background:linear-gradient(120deg,var(--accent-soft),transparent 70%);border:1px solid var(--line);position:relative}
+blockquote::before{content:"“";position:absolute;top:-.35rem;left:.9rem;font-family:var(--display);font-size:4rem;line-height:1;color:var(--accent);opacity:.5}
+blockquote p{font-family:var(--display);font-size:clamp(1.3rem,3.4vw,1.8rem);font-weight:720;font-stretch:108%;line-height:1.25;text-wrap:balance}
+blockquote footer{margin-top:.6rem;color:var(--muted);font-size:.92rem}
+.after-q{margin-top:.9rem;color:var(--muted);max-width:40rem}
+
+/* agenda timeline */
+.agenda{margin-top:2.6rem}
+.agenda ol{list-style:none;margin:1rem 0 0;padding:0;position:relative}
+.agenda ol::before{content:"";position:absolute;left:4.35rem;top:.4rem;bottom:.4rem;width:2px;background:linear-gradient(var(--accent),var(--signal));opacity:.5}
+.agenda li{display:grid;grid-template-columns:3.6rem 1.5rem 1fr;gap:.25rem;align-items:start}
+.agenda time{font-family:var(--mono);font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:.6rem}
+.agenda .pin{width:.75rem;height:.75rem;border-radius:50%;margin:.82rem auto 0;background:var(--bg);border:2px solid var(--accent);position:relative;z-index:1}
+.agenda li.brk .pin{border-color:var(--line);background:var(--surface2)}
+.agenda a,.agenda .row{display:flex;gap:.7rem;align-items:flex-start;padding:.45rem .6rem;border-radius:8px;text-decoration:none;color:var(--ink);transition:background .2s}
+.agenda a:hover{background:var(--surface)}
+.agenda a:hover .pin-i{transform:scale(1.12) rotate(-6deg)}
+.pin-i{width:1.9rem;height:1.9rem;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none;transition:transform .25s}
+.brk .pin-i{background:var(--surface2);color:var(--muted)}
+.agenda b{font-weight:600;display:block;line-height:1.35;font-size:.96rem}
+.agenda small{color:var(--muted);font-size:.84rem;display:block}
+.brk b{font-weight:500;color:var(--muted)}
+
+/* tools */
+.tools{position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.5rem);z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);padding-block:.8rem;margin-bottom:1.1rem;display:grid;gap:.6rem;border-bottom:1px solid var(--line);margin-inline:-16px;padding-inline:16px}
+.search{position:relative;display:block}
+.search input{width:100%;font:inherit;font-size:1rem;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.72rem .9rem .72rem 2.5rem;transition:border-color .2s,box-shadow .2s}
+.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.search svg.i{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--muted)}
+.filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
+.chipbtn{font:inherit;font-size:.84rem;font-weight:500;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;transition:all .2s}
+.chipbtn:hover{color:var(--ink);border-color:var(--muted)}
+.chipbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.count{margin-left:auto;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+
+/* session card */
+.sessions{display:grid;gap:1.4rem}
+.session{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;scroll-margin-top:10rem;transition:border-color .3s,box-shadow .3s}
+.session:hover{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));box-shadow:0 10px 40px -20px var(--glow)}
+.s-top{padding:clamp(1.1rem,3vw,1.6rem) clamp(1.1rem,3vw,1.75rem) 1rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;background:linear-gradient(180deg,var(--bg2),transparent)}
+.s-icon{width:3.1rem;height:3.1rem;border-radius:12px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);position:relative}
+.s-icon svg.i{width:1.6rem;height:1.6rem;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.session:hover .s-icon svg.i{transform:scale(1.12) rotate(-8deg)}
+.s-icon .n{position:absolute;bottom:-.45rem;right:-.45rem;font-family:var(--mono);font-size:.64rem;font-weight:600;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:0 .35rem;color:var(--muted)}
+.s-head{display:grid;gap:.45rem;min-width:0}
+.s-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .55rem}
+.s-time{font-family:var(--mono);font-weight:600;font-size:.82rem;color:var(--accent);font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:.3rem}
+.fmt{font-size:.74rem;font-weight:600;color:var(--signal);background:var(--signal-soft);border-radius:4px;padding:.08rem .45rem}
+.tag{font-family:var(--mono);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:.05rem .4rem}
+.speakers{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.6rem;margin-top:.2rem}
+.spk{display:flex;align-items:flex-start;gap:.65rem;min-width:0;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:.6rem .7rem;transition:border-color .2s,transform .2s}
+.spk:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));transform:translateY(-1px)}
+.av{width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-stretch:110%;font-size:.95rem;font-weight:800;flex:none;
+  color:hsl(var(--h) 65% var(--avL));background:radial-gradient(circle at 30% 25%,hsl(var(--h) 70% 60% / .35),hsl(var(--h) 60% 45% / .12));box-shadow:inset 0 0 0 1.5px hsl(var(--h) 65% var(--avL) / .55)}
+.av.photo{object-fit:cover;background:var(--surface);box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px color-mix(in srgb,var(--accent) 55%,transparent);transition:transform .3s}
+.spk:hover .av.photo{transform:scale(1.08)}
+.agenda .faces{display:flex;margin-top:.3rem}
+.agenda .faces img{width:1.5rem;height:1.5rem;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--bg);margin-right:-.35rem}
+.spk>div{line-height:1.3;min-width:0}
+.spk b{font-size:.92rem;font-weight:600;display:block}
+.spk small{font-size:.78rem;color:var(--muted);display:block}
+.spk-links{display:flex;flex-wrap:wrap;gap:.15rem .7rem;margin-top:.3rem;font-size:.76rem}
+.spk-links a{text-decoration:none;display:inline-flex;align-items:center;gap:.25rem;color:var(--accent)}
+.spk-links a:hover{text-decoration:underline}
+.spk-links .loc{display:inline-flex;align-items:center;gap:.25rem;color:var(--muted)}
+.oneline{margin:0 clamp(1.1rem,3vw,1.75rem);font-size:1.08rem;font-weight:500;line-height:1.5;padding:.15rem 0 .15rem .9rem;border-left:3px solid var(--signal)}
+.tabs{display:flex;gap:.2rem;margin:1.1rem clamp(1.1rem,3vw,1.75rem) 0;border-bottom:1px solid var(--line);position:relative;overflow-x:auto;scrollbar-width:none}
+.tab{font:inherit;font-size:.88rem;font-weight:600;color:var(--muted);background:none;border:0;padding:.6rem .8rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;position:relative;white-space:nowrap;transition:color .2s}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent)}
+.tab::after{content:"";position:absolute;left:.5rem;right:.5rem;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.tab[aria-selected="true"]::after{transform:scaleX(1)}
+.tab .hit{width:.4rem;height:.4rem;border-radius:50%;background:var(--signal)}
+.panel{padding:1.2rem clamp(1.1rem,3vw,1.75rem) clamp(1.1rem,3vw,1.6rem);display:grid;gap:1.15rem;animation:fade .35s ease both}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}}
+.label{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;display:flex;align-items:center;gap:.4rem}
+.label svg.i{color:var(--accent)}
+.bul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+.bul li{position:relative;padding-left:1.25rem}
+.bul li::before{content:"";position:absolute;left:.15rem;top:.62em;width:.42rem;height:.42rem;border-radius:2px;background:var(--accent);transform:rotate(45deg)}
+.prog .bul li::before{background:var(--signal)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+.stat{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:.8rem .9rem}
+.stat b{display:block;font-family:var(--display);font-size:1.7rem;font-weight:820;font-stretch:110%;font-variant-numeric:tabular-nums;line-height:1.05;color:var(--signal)}
+.stat span{font-size:.8rem;color:var(--muted);line-height:1.35;display:block;margin-top:.25rem}
+.chain{overflow-x:auto;padding-bottom:.2rem}
+.chain ol{list-style:none;margin:0;padding:0;display:flex;min-width:max-content}
+.chain li{position:relative;background:var(--surface2);border:1px solid var(--line);padding:.5rem 1rem .5rem 1.35rem;font-size:.83rem;font-weight:500;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);margin-left:-3px;animation:lit 6s infinite;animation-delay:calc(var(--k) * .45s)}
+.chain li:first-child{clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);padding-left:1rem;margin-left:0}
+@keyframes lit{0%,12%{background:var(--surface2);color:var(--ink)}5%{background:var(--accent);color:var(--accent-ink)}}
+.chain small{display:block;color:var(--muted);font-size:.78rem;margin-top:.4rem}
+.concepts{display:flex;flex-wrap:wrap;gap:.4rem}
+.concept{font-size:.84rem;text-decoration:none;color:var(--accent);background:var(--accent-soft);border:1px solid transparent;border-radius:999px;padding:.2rem .7rem;transition:border-color .2s,transform .2s}
+.concept:hover{border-color:var(--accent);transform:translateY(-1px)}
+.takeaway{background:linear-gradient(120deg,var(--signal-soft),transparent 80%);border:1px solid color-mix(in srgb,var(--signal) 30%,var(--line));border-radius:10px;padding:1rem 1.1rem}
+.takeaway .label,.takeaway .label svg.i{color:var(--signal)}
+.takeaway p{font-weight:500}
+.ask{display:flex;gap:.6rem;font-size:.95rem;color:var(--muted);background:var(--surface2);border-radius:10px;padding:.8rem 1rem}
+.ask svg.i{color:var(--accent);margin-top:.15rem}
+.ask strong{color:var(--ink);font-weight:600}
+.briefnote{font-size:.85rem;color:var(--muted);font-style:italic;display:flex;gap:.4rem;align-items:center}
+.pmeta{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:.86rem;color:var(--muted)}
+.pmeta span{display:inline-flex;align-items:center;gap:.35rem}
+.official{font-size:.88rem;display:inline-flex;align-items:center;gap:.35rem;text-decoration:none}
+.official:hover{text-decoration:underline}
+.links{display:grid}
+.links a{display:grid;grid-template-columns:auto 1fr;gap:.1rem .7rem;padding:.7rem 0;border-bottom:1px solid var(--line);text-decoration:none}
+.links a:last-child{border-bottom:0}
+.links a svg.i{grid-row:span 2;color:var(--muted);margin-top:.2rem;transition:transform .2s,color .2s}
+.links a:hover svg.i{transform:translate(2px,-2px);color:var(--accent)}
+.links a strong{color:var(--ink);font-weight:600;font-size:.93rem}
+.links a:hover strong{color:var(--accent)}
+.links a span{font-size:.84rem;color:var(--muted)}
+mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:2.2rem;text-align:center;color:var(--muted);display:grid;gap:.8rem;justify-items:center}
+
+/* remember */
+.six{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.six>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;display:grid;grid-template-columns:auto 1fr;gap:.25rem .9rem;transition:transform .25s,border-color .25s}
+.six>div:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.six .ico{grid-row:span 2}
+.six h3{font-size:1.06rem}
+.six p{color:var(--muted);font-size:.93rem}
+.closing{margin-top:2rem}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:0}
+.gloss div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;scroll-margin-top:5rem;transition:border-color .3s,background .3s}
+.gloss dt{font-weight:600;display:flex;align-items:center;gap:.45rem}
+.gloss dt svg.i{color:var(--accent)}
+.gloss dd{margin:.2rem 0 0;color:var(--muted);font-size:.92rem}
+.gloss div:target{border-color:var(--signal);background:var(--signal-soft);animation:flash 1.2s ease}
+@keyframes flash{30%{transform:scale(1.02)}}
+
+/* quiz */
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(1.1rem,3vw,1.75rem);display:grid;gap:1.15rem}
+.q-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.pips{display:flex;gap:4px;flex-wrap:wrap}
+.pip{width:.7rem;height:.7rem;border-radius:3px;background:var(--surface2);border:1px solid var(--line);transition:background .3s}
+.pip.ok{background:var(--good);border-color:var(--good)}
+.pip.no{background:var(--bad);border-color:var(--bad)}
+.pip.cur{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.progress{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--signal));transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.q-text{font-family:var(--display);font-size:clamp(1.2rem,3vw,1.45rem);font-weight:720;font-stretch:104%;line-height:1.3;animation:fade .35s ease both}
+.opts{display:grid;gap:.5rem}
+.opt{font:inherit;text-align:left;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:.8rem .95rem;cursor:pointer;display:grid;grid-template-columns:1.8rem 1fr auto;gap:.6rem;align-items:center;transition:border-color .2s,transform .15s,background .2s;animation:fade .35s ease both;animation-delay:calc(var(--k) * 60ms)}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt:disabled{cursor:default}
+.opt .k{width:1.8rem;height:1.8rem;border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:.8rem;color:var(--muted);background:var(--surface);border:1px solid var(--line)}
+.opt .res{opacity:0;transform:scale(.4);transition:all .35s cubic-bezier(.3,1.6,.5,1)}
+.opt.right{background:var(--good-soft);border-color:var(--good);animation:pop .4s ease}
+.opt.right .k{color:var(--good);border-color:var(--good)}
+.opt.right .res{opacity:1;transform:none;color:var(--good)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad);animation:shake .4s ease}
+.opt.wrong .k{color:var(--bad);border-color:var(--bad)}
+.opt.wrong .res{opacity:1;transform:none;color:var(--bad)}
+.opt.dim{opacity:.5}
+@keyframes pop{50%{transform:scale(1.02)}}
+@keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.feedback{border-radius:10px;padding:1rem 1.1rem;display:grid;gap:.35rem;animation:fade .35s ease both}
+.feedback.ok{background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 35%,transparent)}
+.feedback.no{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 35%,transparent)}
+.feedback strong{font-weight:600;display:flex;align-items:center;gap:.4rem}
+.feedback.ok strong{color:var(--good)}
+.feedback.no strong{color:var(--bad)}
+.feedback a{font-size:.88rem;display:inline-flex;align-items:center;gap:.3rem}
+.q-actions{display:flex;justify-content:flex-end;gap:.5rem}
+.btn{font:inherit;font-weight:600;font-size:.95rem;border-radius:10px;padding:.65rem 1.15rem;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);display:inline-flex;align-items:center;gap:.45rem;transition:transform .15s,filter .2s}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.result{display:grid;gap:1.3rem;animation:fade .4s ease both}
+.score{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.ring{width:8rem;height:8rem;position:relative;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}
+.ring .bg{stroke:var(--surface2)}
+.ring .fg{stroke:url(#rg);stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:1.9rem;font-weight:820;font-stretch:112%;font-variant-numeric:tabular-nums}
+.score h3{font-size:1.4rem}
+.score p{color:var(--muted);max-width:28rem}
+.missed{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+.missed li{font-size:.93rem;background:var(--surface2);border-radius:8px;padding:.7rem .9rem;display:grid;gap:.2rem}
+.missed a{font-size:.86rem;display:inline-flex;align-items:center;gap:.3rem}
+
+.page-foot{padding-block:2.5rem 3rem;color:var(--muted);font-size:.88rem;display:grid;gap:.35rem}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+@media (max-width:760px){
+  .big3,.six,.gloss,.stats{grid-template-columns:1fr}
+  .numbers{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .thenNow{grid-template-columns:1fr}
+  .arrow svg{transform:rotate(90deg);animation:none}
+  .brand{display:none}
+  .bar nav{margin-left:0}
+  .bar nav a .i{display:none}
+  .s-top{grid-template-columns:1fr}
+  .session{scroll-margin-top:12.5rem}
+  .agenda ol::before{left:4.1rem}
+  .agenda li{grid-template-columns:3.3rem 1.5rem 1fr}
+}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h10.5a4 4 0 0 0 .4-8A6 6 0 0 0 6.3 9.5 4.3 4.3 0 0 0 7 18z"/></symbol>
+    <symbol id="i-badge" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="10" r="2.6"/><path d="M8 17c.8-1.8 2.2-2.6 4-2.6s3.2.8 4 2.6M10 6h4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6.4-6.4"/><circle cx="16" cy="9" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="9" cy="7" rx="5" ry="2.5"/><path d="M4 7v4c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V7"/><path d="M10 15.4c.6 1.2 2.6 2.1 5 2.1 2.8 0 5-1.1 5-2.5v-4c0-1.2-1.6-2.2-3.8-2.5"/><path d="M14 11.5c.3.1.7.1 1 .1 2.8 0 5-1.1 5-2.5"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
+    <symbol id="i-fork" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6 7v2a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7M12 12v5"/></symbol>
+    <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><circle cx="12" cy="10" r="1.6"/><path d="M7 7l3.6 2.2M17 7l-3.6 2.2M12 11.6v4.2"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/><circle cx="12" cy="3.5" r="1"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M5 16l4-5 4 3 6-8"/><path d="M15 6h4v4"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></symbol>
+    <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.7.3-1.1.9-1.1 1.6v.5M12 17h.01"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 12h8M8 16h6"/></symbol>
+    <symbol id="i-retry" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"/></symbol>
+    <symbol id="i-li" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V17M8 7.3v.01M12 17v-6.5M12 13.5c0-1.8 1-3 2.6-3S17 11.7 17 13.5V17"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3 2.8-4.5 5.5-4.5s4.8 1.5 5.5 4.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.6c2 .2 3.4 1.6 4 4.4"/></symbol>
+  </defs>
+</svg>
+
+<header class="bar"><div class="bar-in">
+  <a class="brand" href="/" style="color:inherit;text-decoration:none" title="All days"><i class="dot"></i>SecTor <span>2026</span></a>
+  <nav aria-label="Page sections">
+    <a href="#brief"><svg class="i"><use href="#i-bolt"/></svg>Brief</a>
+    <a href="#sessions"><svg class="i"><use href="#i-note"/></svg>Sessions</a>
+    <a href="#remember"><svg class="i"><use href="#i-key"/></svg>Remember</a>
+    <a href="#glossary"><svg class="i"><use href="#i-book"/></svg>Glossary</a>
+    <a href="#quiz" class="quiz-link"><svg class="i"><use href="#i-q"/></svg>Quiz</a>
+  </nav>
+</div><div class="readbar" id="readbar"></div></header>
+
+<main>
+<div class="hero">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <p class="eyebrow"><svg class="i"><use href="#i-pin"/></svg>SecTor 2026 · Day 1 · Tue Oct 6 · MTCC Toronto · AI x Cloud Security Summit</p>
+    <h1 id="h1">AI changed the <em>speed</em> of the attack.</h1>
+    <p class="lead">My notes from ten sessions on nation-state tradecraft, autonomous agents, cloud hardening, deception, security economics and the question of who owns an AI system. Get the gist in two minutes, then test yourself.</p>
+    <div class="thenNow" aria-label="Then and now, from the opening keynote">
+      <div class="tn"><span class="yr">2010 · Stuxnet</span><b>~$300M + 4 zero-days</b><p>Two governments to reach a Siemens S7 controller.</p></div>
+      <div class="arrow" aria-hidden="true"><svg class="i"><use href="#i-arrow"/></svg></div>
+      <div class="tn now"><span class="yr">2026 · Same S7 family</span><b>AI-written Python</b><p>Five US agencies warned of unattributed attacks using scripts an AI model wrote.</p></div>
+    </div>
+    <div class="howto" aria-label="Ways to use this page">
+      <a href="#brief"><svg class="i"><use href="#i-bolt"/></svg><b>2 MIN</b>Read the brief</a>
+      <a href="#sessions"><svg class="i"><use href="#i-note"/></svg><b>15 MIN</b>Go through the sessions</a>
+      <a href="#quiz"><svg class="i"><use href="#i-q"/></svg><b>5 MIN</b>Take the quiz</a>
+    </div>
+    <div class="byline"><strong>Written &amp; created by Colin Johnstone</strong><span>Senior Consultant, Authentication Services @ CIBC</span></div>
+  </div>
+</div>
+
+<section id="brief"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-bolt"/></svg>The brief</p>
+    <h2>If you only read one thing</h2>
+    <p class="lead">AI security is turning out to be less a new category of security and more what happens when existing cloud and security problems start happening at machine speed.</p>
+  </div>
+  <div class="big3">
+    <div class="idea rv"><div class="ico"><svg class="i"><use href="#i-bolt"/></svg></div><p class="eyebrow">Speed</p><h3>Minutes, not days</h3><p>Reconnaissance, privilege escalation and data access that took hours or days can now run end to end in minutes.</p></div>
+    <div class="idea rv"><div class="ico"><svg class="i"><use href="#i-badge"/></svg></div><p class="eyebrow">Identity</p><h3>Agents nobody tracks</h3><p>We're deploying more agents without a mature way to inventory, identify and govern them.</p></div>
+    <div class="idea rv"><div class="ico"><svg class="i"><use href="#i-layers"/></svg></div><p class="eyebrow">Fundamentals</p><h3>Basics matter more</h3><p>Segmentation, least privilege, isolation, logging and blast-radius reduction are possibly more important than ever.</p></div>
+  </div>
+
+  <div class="numbers rv" aria-label="Day 1 by the numbers">
+    <div class="num"><b data-count>~13 min</b><span>Average time from a low-privileged cloud key to admin</span><small>Tracebit</small></div>
+    <div class="num"><b data-count>99.4%</b><span>AI attacks caught before the first critical action</span><small>Tracebit</small></div>
+    <div class="num"><b data-count>~$500</b><span>Cost of a full agent-driven intrusion demo</span><small>RedWraith demo</small></div>
+    <div class="num"><b data-count>~3 min</b><span>For an autonomous chain's critical steps</span><small>Cloud hardening</small></div>
+  </div>
+
+  <blockquote class="rv">
+    <p>You are not defending against China: you are defending against $250 a month.</p>
+    <footer>Matt Johansen, Founder &amp; CEO, Vulnerable U</footer>
+  </blockquote>
+  <p class="after-q">That line summed up the day. The worry isn't only whether a nation-state has advanced capability. Much of that capability is now cheap and available to anyone.</p>
+
+  <div class="agenda">
+    <p class="label"><svg class="i"><use href="#i-clock"/></svg>The day at a glance · Room 718AB</p>
+    <ol id="agenda"></ol>
+  </div>
+</div></section>
+
+<section id="sessions"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-note"/></svg>Session notes</p>
+    <h2>The ten sessions</h2>
+    <p class="lead">Each card has my notes, what the program said the session would cover, and further reading. Tap a concept to jump to its definition.</p>
+  </div>
+  <div class="tools">
+    <label class="search" for="q">
+      <span class="sr">Search session notes</span>
+      <svg class="i"><use href="#i-search"/></svg>
+      <input id="q" type="search" placeholder="Search notes, speakers or topics: canary, SSRF, Wiz…" autocomplete="off">
+    </label>
+    <div class="filter-row" role="group" aria-label="Filter by topic">
+      <button class="chipbtn" data-tag="all" aria-pressed="true">All</button>
+      <button class="chipbtn" data-tag="offense" aria-pressed="false"><svg class="i"><use href="#i-target"/></svg>Offense</button>
+      <button class="chipbtn" data-tag="cloud" aria-pressed="false"><svg class="i"><use href="#i-cloud"/></svg>Cloud</button>
+      <button class="chipbtn" data-tag="agents" aria-pressed="false"><svg class="i"><use href="#i-bot"/></svg>Agents</button>
+      <button class="chipbtn" data-tag="governance" aria-pressed="false"><svg class="i"><use href="#i-scale"/></svg>Governance</button>
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+  </div>
+  <div class="sessions" id="list"></div>
+</div></section>
+
+<section id="remember"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-key"/></svg>What I'm taking away</p>
+    <h2>Six things to remember</h2>
+  </div>
+  <div class="six">
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-bolt"/></svg></div><h3>Speed is the real change</h3><p>AI doesn't invent every technique. It makes existing ones faster, cheaper and easier to chain together.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-layers"/></svg></div><h3>Fundamentals matter more</h3><p>Segmentation, identity, least privilege, isolation and smaller blast radius kept coming up because AI makes weak architecture easier to exploit.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-badge"/></svg></div><h3>Agents need identity</h3><p>With thousands or millions of agents, we need to know what they are, what they can access and who is responsible for them.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-radar"/></svg></div><h3>Deception gets interesting</h3><p>Canaries and decoys work better when the attacker is autonomous and explores everything.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-coins"/></svg></div><h3>Security economics are changing</h3><p>Falling model costs make continuous testing realistic, for attackers and defenders alike.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-scale"/></svg></div><h3>Governance can't be an afterthought</h3><p>The technology is moving faster than ownership models, and that gap becomes a security problem.</p></div>
+  </div>
+  <blockquote class="closing rv">
+    <p>The day wasn't about “AI security” as a separate thing. It was about cloud, identity and software security operating at AI speed.</p>
+  </blockquote>
+</div></section>
+
+<section id="glossary"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-book"/></svg>Glossary</p>
+    <h2>Key concepts</h2>
+    <p class="lead">Plain-language definitions for the terms that came up across the day.</p>
+  </div>
+  <dl class="gloss" id="gloss"></dl>
+</div></section>
+
+<section id="quiz"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-q"/></svg>Knowledge check</p>
+    <h2>Day 1 quiz</h2>
+    <p class="lead">Twelve questions drawn from the sessions. You'll see the answer and a short explanation after each one.</p>
+  </div>
+  <div class="quiz" id="quizbox" aria-live="polite"></div>
+</div></section>
+
+<footer class="wrap page-foot">
+  <strong style="color:var(--ink)">SecTor 2026 · Day 1 · AI x Cloud Security Summit</strong>
+  <span>Tuesday, October 6, 2026 · Metro Toronto Convention Centre, Room 718AB · Emcee: Francis Odum, SACR</span>
+  <span>Personal notes and observations by Colin Johnstone. Program details come from the <a href="https://blackhat.com/sector/summit-sessions/schedule/index.html?track[]=ai-x-cloud-security-summit" target="_blank" rel="noopener">official summit schedule</a>. External links are for context; where no public material from the exact talk exists, they are the closest related sources.</span>
+</footer>
+</main>
+
+<script>
+const OFFICIAL="https://blackhat.com/sector/summit-sessions/schedule/index.html?track[]=ai-x-cloud-security-summit";
+const ic=(n,c="")=>`<svg class="i ${c}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+
+const GLOSS={
+  accountability:["AI ownership","A named owner who answers for an AI system's decisions, actions and failures, set before the system runs autonomously.","scale"],
+  agentidentity:["Agent identity","Treating each AI agent as an identity with an owner, scoped permissions, its own credentials and an audit trail.","badge"],
+  attackpath:["Attack path","The chain of steps and relationships an attacker could use to reach a valuable asset. Graphing them links techniques to business impact.","graph"],
+  attacksurface:["Attack surface","Everything an attacker can reach and interact with: exposed services, identities, APIs and code paths.","target"],
+  autonomoussoc:["Autonomous SOC","Security operations where AI agents triage, investigate and possibly respond with limited human involvement.","bot"],
+  blastradius:["Blast radius","How much damage one compromised identity, system or agent can do. The goal is to keep it small.","spark"],
+  canary:["Canary","A fake credential, file or resource with no legitimate use. Any touch is a high-confidence alert.","radar"],
+  contextbomb:["Context bomb","Content planted where an AI attacker will read it, designed to make the model halt or derail. Results vary by model.","bolt"],
+  continuousred:["Continuous red teaming","Using AI to test your own environment repeatedly and cheaply, instead of in occasional engagements.","retry"],
+  deception:["Deception","Decoy accounts, environments and data that waste an attacker's effort and reveal its presence.","layers"],
+  drift:["Model drift","An AI system's behaviour gradually changing in production as data, usage or context shifts, without any code change.","chart"],
+  humanloop:["Human in the loop","A design where a person reviews or approves an AI system's consequential actions.","users"],
+  identitychain:["Identity chaining","Using one compromised identity's access to obtain the next, hopping between users, roles and services toward a target.","key"],
+  imds:["Metadata service (IMDS)","An internal cloud endpoint that gives a virtual machine its configuration and temporary credentials. A classic SSRF target.","cloud"],
+  leastpriv:["Least privilege","Giving each user, service or agent only the permissions its task needs.","key"],
+  lotc:["Living off the cloud","Attacking with a cloud provider's own legitimate services and APIs so activity blends in with normal operations.","cloud"],
+  machinespeed:["Machine speed","Attack steps run by software continuously and in parallel, measured in minutes rather than days.","bolt"],
+  openweight:["Open-weight model","A model whose weights are published, so anyone can run and modify it outside the provider's usage controls.","layers"],
+  segmentation:["Segmentation","Splitting networks and environments so a compromise in one zone can't freely reach another.","layers"],
+  shadowai:["Shadow AI","AI tools, models and agents used without the organization's knowledge or approval.","bot"],
+  ssrf:["SSRF","Server-side request forgery. Tricking a server into making requests for the attacker, often to internal-only addresses.","target"],
+  zerotrust:["Zero Trust","Verifying every request based on identity and context instead of trusting network location.","shield"]
+};
+
+const S=[
+{id:"s1",time:"9:10",end:"9:35",icon:"globe",fmt:"Keynote",short:"Nation-state capability",sub:"Cheap, scalable offensive AI",tags:["offense","agents"],
+ title:"The Commoditization of the Nation-State Hacker",
+ speakers:[["Matt Johansen","Founder & CEO, Vulnerable U"]],
+ line:"Capabilities we associate with nation-state attackers are becoming cheap and easy to access.",
+ covered:[
+  "Open-weight models can be used for offensive work without the restrictions some frontier models have.",
+  "Anthropic's threat intelligence reporting this year and the Hugging Face incident, where a very large swarm of agents operated at a scale no human team could match, show how serious AI-enabled activity has become.",
+  "The vulnerability lifecycle is compressing: bugs are found, exploited and chained much faster. Project Glasswing and a two-hour remediation SLA for new CVEs came up as the direction of travel.",
+  "If anyone can write code and use AI to make fixes, fast fixing can create a new wave of bugs. Attackers may already be exploiting a flaw before it is public.",
+  "Putting an agent in a sandbox doesn't make it safe. A guardrails.md file is not a security architecture; segmentation and normal controls still stop small weaknesses being chained.",
+  "Tools like Nmap were always broadly available. Getting defenders the best AI tools quickly may beat keeping them behind a velvet rope."],
+ program:[
+  "Opened with a contrast: Stuxnet in 2010 needed two governments, an estimated $300M and four zero-days to reach a Siemens S7 controller. In August 2026, five US agencies warned of an unattributed actor going after the same S7 family with Python scripts an AI model wrote.",
+  "Documented AI-powered attacks, cases of AI lab agents going rogue, and what open-weight models can do offensively once guardrails are removed.",
+  "Which security controls held up against these attacks and which failed.",
+  "Practical recommendations teams can act on the following Monday."],
+ concepts:["openweight","machinespeed","segmentation"],
+ why:"The question shifts from who has the capability to who has the intent. Any motivated attacker with a subscription can now run tradecraft that used to need a funded team, so assumptions about an unsophisticated attacker need revisiting.",
+ takeaway:"“Nation-state” is becoming less about secret capability and more about intent, patience, compute and access to cheap tools.",
+ ask:"If an attacker could chain three of our minor findings together in minutes, which three would they pick?",
+ links:[
+  ["https://www.anthropic.com/glasswing","Anthropic: Project Glasswing","Program material on using advanced AI to find vulnerabilities in critical software."],
+  ["https://www.anthropic.com/news/expanding-project-glasswing","Anthropic: Expanding Project Glasswing","The 2026 expansion and reported high and critical findings in partner codebases."],
+  ["https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access/","Google Threat Intelligence: AI Vulnerability Exploitation","AI-assisted discovery, exploit generation, supply-chain attacks and adversary adoption."],
+  ["https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai","Google Threat Intelligence: From Prompting to Autonomy","The move from simple prompting to agentic attack workflows."]]},
+{id:"s2",time:"9:40",end:"10:05",icon:"cloud",fmt:"Sponsored talk",short:"Cloud hardening",sub:"Architecture becomes the control plane",tags:["cloud","agents"],
+ title:"Back to the Fundamentals: Cloud Hardening in the Age of AI",
+ speakers:[["Gal Ordo","Co-Founder & CPO, Native"]],
+ line:"AI security is cloud security, and the attack now moves faster than detection.",
+ covered:[
+  "Detection and response worked when attackers needed time to move. An autonomous chain that finishes its key steps in about three minutes outruns a slower detection process.",
+  "The Zealot attack chain (below). No single technique was new; what stood out was how quickly an agent connected the steps.",
+  "Agents can take actions their user didn't expect, including destructive changes in production when they hold those permissions. The Hugging Face incident came up again here.",
+  "The answer was architecture rather than another AI-specific control: separate prod and non-prod, reduce internet exposure, enforce strong identity and permission boundaries, and block destructive agent actions by default."],
+ chain:{steps:["Reconnaissance","SSRF + metadata service","Credential theft","Cloud enumeration","Privilege escalation","Data exfiltration"],note:"Zealot attack chain, as walked through in the session"},
+ program:[
+  "Nearly every enterprise AI system runs on cloud compute, reads cloud data and acts through a cloud identity.",
+  "AI-driven attackers discover, exploit and move laterally at machine speed, often finishing before a human responds to the first alert.",
+  "AI workloads are non-deterministic: agents decide at runtime, inherit standing permissions and find unintended paths through the architecture.",
+  "Argued for security by design at the infrastructure level so exploit paths don't exist, with a model for when to prevent versus contain and how to sequence a 2027 hardening program."],
+ concepts:["ssrf","imds","blastradius","leastpriv","machinespeed"],
+ why:"When response time is longer than attack time, detection becomes a forensic tool rather than a defence. The controls that still work are the ones already in place before the attack starts.",
+ takeaway:"If the attack moves faster than your detection and response, prevention and blast-radius reduction have to do more of the work.",
+ ask:"Which of our agents or service identities could make a destructive change in production today?",
+ links:[
+  ["https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/","Mandiant: Demystifying AI Exploits","Integrating AI agents safely into vulnerability discovery and remediation."],
+  ["https://cloud.google.com/blog/topics/threat-intelligence/defending-enterprise-ai-vulnerabilities","Google Cloud: Defending the Enterprise","Why AI-driven discovery changes hardening and vulnerability management."],
+  ["https://www.nist.gov/itl/ai-risk-management-framework","NIST AI Risk Management Framework","Foundation for governing, mapping, measuring and managing AI risk."],
+  ["https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/","OWASP: Top 10 for Agentic Applications 2026","Risk taxonomy for autonomous and agentic applications."]]},
+{id:"s3",time:"10:10",end:"10:35",icon:"badge",fmt:"Fireside chat",short:"Agent identity",sub:"Trust and governance at scale",tags:["agents","governance"],
+ title:"Securing Autonomous Agents: Identity, Trust, and Control at Scale",
+ speakers:[["Eric Broda","President, Broda Group Software"],["Rachel Clark","CEO & Founder, SKADI Cyber Defense"]],
+ line:"Agents are multiplying faster than our ability to inventory and govern them.",
+ covered:[
+  "Organizations may soon run thousands or millions of agents, with no reliable way to inventory which ones are operating.",
+  "Agent-to-agent interactions could be a source of better detection.",
+  "Govern agents the way we govern people: identity, trust, standards and accountability need to exist before something can scale safely.",
+  "The toaster analogy: standards are why you can trust a toaster not to burn your house down. Agents need a consistent way to define what they may do and under what conditions."],
+ program:[
+  "Agents run continuously, touch many systems at once, decide independently and talk to other agents at machine speed, which strains identity models built for people.",
+  "Requirements: each agent uniquely identifiable, its actions traceable, a well-defined agent registry, and clear ownership for governance at scale.",
+  "Grounded in real deployments and the risks seen in them.",
+  "Aimed to give a blueprint for balancing innovation and control as agents become active participants in enterprise operations."],
+ concepts:["agentidentity","leastpriv","accountability"],
+ why:"An agent holding credentials is an identity. If it isn't inventoried, it can't be reviewed, revoked or traced when something goes wrong. It's the orphaned service account problem at a much larger scale.",
+ takeaway:"We need an actual identity and governance layer for agents, not another AI policy document.",
+ ask:"Could we list every agent or automation that holds credentials in our environment, and who owns each one?",
+ links:[
+  ["https://cloudsecurityalliance.org/artifacts/securing-autonomous-ai-agents","Cloud Security Alliance: Securing Autonomous AI Agents","Survey research on agent identity, IAM readiness, discovery and oversight."],
+  ["https://cloudsecurityalliance.org/blog/2026/07/27/beyond-human-identity-a-runtime-governance-model-for-autonomous-ai-agents-in-the-enterprise-cloud","CSA: Beyond Human Identity","A runtime governance model for agents as dynamic cloud principals."],
+  ["https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/","OWASP: Agentic Applications 2026","Risks and mitigations for agents that plan, act and use tools."],
+  ["https://atlas.mitre.org/","MITRE ATLAS","Knowledge base of AI-enabled attacks and adversary techniques."]]},
+{id:"s4",time:"10:40",end:"11:05",icon:"shield",fmt:"Sponsored talk",short:"Zero Trust",sub:"Reduce attack surface and blast radius",tags:["cloud","offense"],
+ title:"Dark by Default: Operational Zero Trust for Threats",
+ speakers:[["Brian Deitch","VP & CTO in Residence, Zscaler"]],
+ line:"You will never patch fast enough, so be hard to reach and small when hit.",
+ covered:[
+  "The volume of critical vulnerabilities is huge, and automated attackers can go from discovery to exploitation in minutes. “Find and patch everything immediately” isn't a workable strategy.",
+  "Reduce opportunity and impact instead: minimize attack surface, segment important systems, use Zero Trust access, isolate risky browsing, manage AI assets, prioritize vulnerabilities continuously and test adversarially on an ongoing basis.",
+  "The RedWraith demo used multiple agents in parallel for different attack stages and eventually reached credentials and developer tooling that could exfiltrate secrets.",
+  "The point wasn't that every attacker will follow that exact process. It was how little cost and human involvement it took."],
+ stats:[["~27 h","First human prompt to exfiltration in the RedWraith demo"],["~$500","Reported cost of the whole run"],["1","Human prompt to start it"]],
+ chain:{steps:["Reconnaissance","Exploitation","Intrusion","Exfiltration"],note:"RedWraith stages, each run by its own agent in parallel"},
+ program:[
+  "Autonomous phishing, AI-assisted cloud exploit chains and nation-state tradecraft need controls that work at machine speed without hurting operational flexibility.",
+  "How to run “dark by default” environments with identity-centric, per-application Zero Trust.",
+  "Where cloud visibility is strong, where blind spots remain, and how incident responsibility is shared with cloud and SaaS providers.",
+  "Patterns for trustworthy automation in AI-era systems."],
+ concepts:["zerotrust","attacksurface","segmentation","blastradius"],
+ why:"When a full intrusion costs less than a laptop and starts with one prompt, attacker volume goes up and patch-first strategies fall further behind. Reducing what is reachable scales; patching faster doesn't.",
+ takeaway:"“Dark by default” makes sense because assuming you can patch everything fast enough is becoming less realistic.",
+ ask:"What do we expose to the internet that doesn't need to be there?",
+ links:[
+  ["https://www.cisa.gov/known-exploited-vulnerabilities-catalog","CISA: Known Exploited Vulnerabilities Catalog","Prioritization source focused on vulnerabilities with observed exploitation."],
+  ["https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model","CISA: Zero Trust Maturity Model","Moving from perimeter assumptions to continuous verification."],
+  ["https://atlas.mitre.org/","MITRE ATLAS","Mapping AI-enabled attack chains and where controls can break them."],
+  ["https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/","Mandiant: AI-Assisted Vulnerability Management","Combining AI speed with deterministic controls and human validation."]]},
+{id:"s5",time:"11:35",end:"12:00",icon:"radar",fmt:"Talk",short:"Deception",sub:"Canaries against autonomous attackers",tags:["offense","cloud"],
+ title:"Deceiving the Threat: Detecting and Disrupting AI Attackers in the Cloud",
+ speakers:[["Alessandro Brucato","Security Researcher, Tracebit"]],
+ line:"AI attackers explore everything, which makes them easy to catch with canaries.",
+ covered:[
+  "Tracebit tested multiple frontier models across many runs in a realistic cloud environment, measuring privilege escalation, persistence, code execution, lateral movement, reconnaissance and exfiltration.",
+  "Canaries were often touched during enumeration, before the agent had picked its final target. That leaves a short but useful window: first canary hit in the first couple of minutes, first critical action about ten minutes later.",
+  "When the attacker knew deception was in use, its success rate dropped significantly. Decoy environments and accounts feed the agent meaningless data while alerting defenders.",
+  "Context bombs: injected content that made specific models stop rather than continue the attack. Models reacted differently, so it isn't universal."],
+ stats:[["~13 min","Average time from a low-privileged key to admin"],["99.4%","Runs detected before the first critical action"],["~10 min","Gap between first canary hit and first critical action"]],
+ program:[
+  "A benchmark of 11 frontier models across more than 1,000 autonomous attack runs in AWS, scored on reconnaissance, privilege escalation, lateral movement, exfiltration and persistence.",
+  "How cloud canaries change agent behaviour, making agents more cautious and slowing their progress.",
+  "How fast AI attackers move, and the response window that leaves defenders.",
+  "Concrete ways to detect and disrupt AI attacks in the cloud."],
+ concepts:["canary","deception","contextbomb"],
+ why:"Breadth is the AI attacker's strength and its weakness. A cautious human might skip an odd-looking resource; an agent enumerating everything trips the wire early, which turns cheap decoys into high-signal alerts.",
+ takeaway:"Deception becomes more valuable against AI attackers because they explore far more of the environment than a human normally would.",
+ ask:"Where would a canary credential or decoy resource give us the earliest warning?",
+ links:[
+  ["https://agentic.tracebit.com/context-bombs","Tracebit Research: Context Bombs","Testing canaries and context bombs against autonomous AI attackers."],
+  ["https://tracebit.com/blog/context-bombs-against-abliterated-ai-models","Tracebit: Context Bombs Against Abliterated Models","Follow-up testing against modified open-weight models."],
+  ["https://tracebit.com/blog","Tracebit Research Index","Tracebit's research on AI attackers, deception and cloud environments."],
+  ["https://atlas.mitre.org/","MITRE ATLAS","Mapping autonomous attack behaviour to AI-specific techniques."]]},
+{id:"s6",time:"12:05",end:"12:30",icon:"coins",fmt:"Sponsored talk",short:"Security economics",sub:"Falling model costs change the math",tags:["cloud","offense"],
+ title:"The AI Shift: Rethinking the Economics of Cloud Security",
+ speakers:[["Yigael Berger","Chief AI Officer, Sweet Security"]],
+ line:"When finding a vulnerability costs almost nothing, testing becomes continuous for both sides.",
+ covered:[
+  "Models have crossed a threshold where they can find vulnerabilities in real code, and running them keeps getting cheaper.",
+  "The cost of finding a vulnerability in proprietary code trends toward zero when an attacker can rerun agents against a target again and again.",
+  "Finding and exploiting are different problems, but a vulnerable path on an exposed surface becomes much more likely to be found eventually.",
+  "Supervised AI red teaming moves from an occasional assessment to something that can run continuously.",
+  "The same economics help defenders: AI can triage alerts, investigate and cut noise, and fill part of the cloud and AI knowledge gap on short-staffed teams.",
+  "Where I disagreed: the speaker suggested attackers have only improved slightly with AI. I think the numbers game still favours them. Defenders have to be right every time; an attacker needs one path."],
+ program:[
+  "Cloud security assumed humans initiated actions and defenders had time to investigate. Autonomous agents and automated attackers change that.",
+  "Raw alert volume and vulnerability counts matter less; exploitability, speed of fix and stopping attacks before impact matter more.",
+  "Which traditional metrics change in the AI era and which become more important.",
+  "Continuous validation, prioritized remediation and enforcement based on runtime context as the way defenders regain the advantage."],
+ concepts:["continuousred","attacksurface","machinespeed"],
+ why:"Many security decisions quietly assume attacks are expensive. If cost per attempt approaches zero, low-probability paths get found, and testing on an annual cycle leaves long gaps attackers can fill.",
+ takeaway:"The interesting question isn't “is AI making attacks better?” It's “what happens when the cost of running an attack approaches zero?”",
+ ask:"If we could run an AI red team against our environment every week, what would we point it at first?",
+ links:[
+  ["https://www.sweet.security/blog/short-sweet-newsletter-september-2026-edition","Sweet Security: September 2026","Confirms the Toronto session; AI security and machine-speed economics."],
+  ["https://www.sweet.security/blog/securing-the-agentic-era-building-your-2026-ai-security-program","Sweet Security: Securing the Agentic Era","Runtime visibility and security architecture for production AI."],
+  ["https://www.sweet.security/blog/how-to-secure-ai-agents-when-prompts-become-code","Sweet Security: When Prompts Become Code","Why agentic workflows shift security toward runtime control."],
+  ["https://cloud.google.com/blog/topics/threat-intelligence/staying-ahead-of-adversarial-ai-through-agentic-source-code-review","Mandiant: Agentic Source Code Review","Multi-agent orchestration for vulnerability discovery and validation."]]},
+{id:"s7",time:"1:50",end:"2:25",icon:"mic",fmt:"Live forum",short:"Industry forum",sub:"Detection, governance, shadow AI",tags:["agents","governance","cloud"],
+ title:"The State of AI & Cloud Security: A Live Audience Forum",
+ speakers:[["Matt Johansen","Founder & CEO, Vulnerable U"],["Helen Oakley","Strategic Advisor, AI & Cybersecurity"],["Francis Odum","Founder & Chief Researcher, SACR"],["Ian Paterson","CEO, Plurilock"]],
+ line:"Detection and response is the top priority; governance is the thing most likely to be overlooked.",
+ covered:[
+  "Top priority for the next twelve months: detection and response. Governance is becoming more important but is still easy to overlook.",
+  "Main concerns: data exposure, autonomous agents and shadow AI. Shadow AI is hard because organizations don't have a complete inventory of the software and models people use.",
+  "Agent visibility: we can see a user, server or endpoint, but it's much harder to see what an autonomous agent is doing across a cloud environment and what it can affect.",
+  "Canada-specific question: should organizations send data and inference to US-based AI providers, especially as regulation develops?",
+  "Avoid locking into one model; the technology changes too quickly. Once basic controls are in place, experiment with more autonomous security operations, with traditional controls containing failures."],
+ program:[
+  "Live polling and open audience discussion rather than prepared talks.",
+  "Questions many organizations still face: governance, identity, visibility, runtime protection, AI agents and operational risk.",
+  "The biggest challenges and opportunities where AI and cloud security meet, from leaders dealing with them day to day."],
+ concepts:["shadowai","agentidentity","autonomoussoc"],
+ why:"The forum's concerns line up with the morning talks: visibility into what AI is in use, and controls strong enough to contain an agent's mistakes. Data residency adds a regulatory angle that Canadian organizations can't ignore.",
+ takeaway:"Autonomous SOC capabilities are coming, but the controls underneath them need to mature first.",
+ ask:"Do we know which AI tools and models people in our area are already using?",
+ links:[
+  ["https://orca.security/resources/blog/2026-state-of-ai-security-report-summary/","Orca: 2026 State of AI Security","Telemetry on AI packages, credentials, agent frameworks and cloud infrastructure."],
+  ["https://cloudsecurityalliance.org/blog/2026/08/18/2026-state-of-ai-security-ai-is-in-production-security-isn-t","CSA: 2026 State of AI Security","The same research and what it means for enterprise programs."],
+  ["https://www.nist.gov/itl/ai-risk-management-framework/ai-risk-management-framework-resources","NIST: AI RMF Resources","Resources for building formal AI risk programs."],
+  ["https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai","Google Threat Intelligence: Agentic AI Threat Tracker","Adversaries moving toward AI-enabled automation."]]},
+{id:"s8",time:"2:50",end:"3:30",icon:"fork",fmt:"Panel",short:"2027 playbook",sub:"Where leaders disagree",tags:["agents","governance"],
+ title:"The AI Security Playbook for 2027: Where Security Leaders Disagree",
+ speakers:[["Guillaume Ross","Moderator · Startup CISO, Caffeine Security"],["Kunal Modasiya","SVP Product & Growth, Qualys"],["Gal Ordo","Co-Founder & CPO, Native"],["Jay Thurston","Chief Trust Officer, Thales"],["Fernando Tucci","Senior Product Manager, TrendAI"]],
+ line:"There is no settled AI security playbook yet, and the panel was designed to show it.",
+ covered:[
+  "Focus: where security leaders disagree about what an AI security program should look like heading into 2027.",
+  "Themes: the practical security implications of agentic AI, how much autonomy to allow, and where to invest as adoption accelerates.",
+  "Organizations are making different decisions about autonomy, governance, runtime controls, model choice and how much human involvement stays in the loop."],
+ program:[
+  "Built for disagreement: candid debate to expose assumptions and raise better questions rather than land on one answer.",
+  "How AI speeds up pipeline automation and data engineering, and how agentic operations spread across accounts, regions and services.",
+  "Visibility gaps, pressure-testing failure modes, and an executive-approved strategy that defines shared incident responsibility in cloud terms.",
+  "Promised outputs: a cloud control map for AI workloads, a multi-cloud resilience checklist, and a trust model that combines cloud IAM with behaviour, context and policy."],
+ concepts:["humanloop","autonomoussoc","agentidentity"],
+ why:"Expect peers and vendors to give conflicting advice. Decisions about autonomy and human oversight need to fit our own risk appetite rather than be copied from someone else's program.",
+ ask:"Which AI-driven actions would we never allow without a human approving them?",
+ links:[
+  ["https://blog.qualys.com/product-tech/2026/07/08/cloud-roc-day-minus-seven-etm","Qualys: Operationalizing Day Minus Seven","Kunal Modasiya on machine-speed exposure management and autonomous remediation."],
+  ["https://blog.qualys.com/product-tech/2025/09/04/operationalizing-threat-exposure-with-agentic-ai-meet-agent-nova","Qualys: Agent Nova","Agentic exposure analysis, prioritization and remediation."],
+  ["https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/","OWASP: Agentic Applications 2026","A baseline for evaluating agentic AI risk."],
+  ["https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence","NIST: Generative AI Profile","Risk management reference for governance and operational controls."]]},
+{id:"s9",time:"3:35",end:"4:00",icon:"graph",fmt:"Talk",short:"Executive threat action",sub:"Turning techniques into decisions",tags:["offense","governance"],
+ title:"Graph the Threat: Turning Nation-State Techniques into Executive Action",
+ speakers:[["Ryoji Betchaku","Staff Solutions Engineer, Wiz"]],
+ line:"Threat intelligence only helps leadership when it's tied to our own exposure.",
+ covered:[
+  "Taking nation-state techniques and translating them into something executives can use to make decisions.",
+  "Threat intelligence easily becomes a list of techniques with no clear connection to business risk.",
+  "The real challenge is what those techniques mean for an organization's own exposure, priorities and investment decisions."],
+ program:[
+  "Nation-state operations abuse identities, cloud-native services and harmless-looking data flows to move quickly and quietly.",
+  "Control checklists and static risk registers rarely show how these techniques chain together in a specific environment.",
+  "A method for mapping techniques such as identity chaining, living off the cloud and covert egress into analysis a security team can act on.",
+  "A way to prioritize the fixes that break real attack chains, with measurable certainty."],
+ concepts:["attackpath","identitychain","lotc"],
+ why:"This ties back to the opening keynote. If nation-state techniques are now available to anyone, leaders need to see which of them actually reach our critical assets, not a generic threat list.",
+ ask:"Could we show leadership the attack path from an exposed system to our most important data?",
+ links:[
+  ["https://atlas.mitre.org/","MITRE ATLAS","AI adversary tactics, techniques, mitigations and case studies."],
+  ["https://siberx.org/event/aiseccon-2026/","siberX / AiSecCon: Ryoji Betchaku","Related 2026 material on graph-based AI security visibility."],
+  ["https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai","Google Threat Intelligence: From Prompting to Autonomy","Threat intelligence that can be mapped into attack-path narratives."],
+  ["https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access/","Google Threat Intelligence: AI Exploitation Trends","Translating AI-enabled techniques into enterprise exposure."]]},
+{id:"s10",time:"4:05",end:"4:35",icon:"scale",fmt:"Dual-topic talk",short:"AI accountability",sub:"Resilience, ownership and trust",tags:["agents","governance"],
+ title:"Building Resilient AI Systems / Who Owns the AI?",
+ speakers:[["Ali Dehghantanha","Professor & Canada Research Chair, University of Guelph"],["Iain Paterson","CISO, Well Health Technologies"],["Olivera Zatezalo","CISO & VP Cyber and IT Security, Ontario Power Generation"]],
+ line:"Autonomous AI needs a clear owner before something goes wrong, not after.",
+ covered:[
+  "Part one: lessons from AI systems that failed in production.",
+  "Part two: who actually owns an AI system when it's autonomous and something goes wrong?",
+  "The candidates multiply quickly: the team that built the model, the team that deployed the agent, the business owner who approved the use case, the security team, or the model vendor.",
+  "AI systems need clear ownership and governance before autonomy scales beyond what people can realistically supervise."],
+ program:[
+  "AI systems don't fail like traditional software. They degrade, drift and misbehave in ways that show up only under real-world pressure.",
+  "Lessons from production incidents on designing for failure from day one.",
+  "A governance blueprint covering model ownership, decision rights and accountability, treating trust as an operational outcome.",
+  "Practical guidance: continuous monitoring for drift and misuse, red teaming, safety cases, and incident response that keeps autonomy in line with risk."],
+ concepts:["accountability","drift","humanloop"],
+ why:"Without a named owner, nobody is accountable for reviewing an agent's permissions, responding when it misbehaves, or deciding to switch it off. That gap is where incidents grow.",
+ takeaway:"“Who owns the AI?” isn't just a governance question. It becomes a security question as soon as the system can make decisions and take actions on its own.",
+ ask:"For each AI system we run, is there one named person who can turn it off?",
+ links:[
+  ["https://axaxl.com/press-releases/new-axa-xl-and-srm-report-outlines-five-priorities-for-resilient-ai-adoption","AXA XL + S-RM: Building Resilient AI","Governance, security, resilience and accountability as AI enters critical processes."],
+  ["https://www.nist.gov/itl/ai-risk-management-framework","NIST AI Risk Management Framework","Assigning responsibility and managing trustworthy AI across its lifecycle."],
+  ["https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf","NIST AI 600-1: Generative AI Profile","Governance, lifecycle risks and suggested actions for generative AI."],
+  ["https://cloudsecurityalliance.org/blog/2026/07/27/beyond-human-identity-a-runtime-governance-model-for-autonomous-ai-agents-in-the-enterprise-cloud","CSA: Runtime Identity Governance","Agent identity, authorization and accountability in enterprise cloud."]]}
+];
+
+const DAY=[
+ ["8:00","Coffee & tea networking",null,"coffee"],
+ ["9:00","Welcome & opening remarks","Francis Odum, SACR (emcee)","flag"],
+ "s1","s2","s3","s4",
+ ["11:05","Morning networking break",null,"coffee"],
+ "s5","s6",
+ ["12:30","Lunch",null,"coffee"],
+ "s7",
+ ["2:30","Afternoon networking break",null,"coffee"],
+ "s8","s9","s10",
+ ["4:35","Closing remarks","Francis Odum, SACR (emcee)","flag"],
+ ["4:45","Networking reception","Level 700 pre-function space","users"]
+];
+
+const QUIZ=[
+ {s:"s1",q:"Matt Johansen's line that summed up the day: “You are not defending against China: you are defending against…”",o:["A swarm of a million agents","$250 a month","Unpatched open-source libraries","Insiders with admin rights"],a:1,e:"Nation-state-level capability is now cheap. The threat is intent plus an inexpensive subscription, not secret tooling."},
+ {s:"s1",q:"What's wrong with relying on an agent sandbox plus a guardrails.md file?",o:["Sandboxes are too slow for production","Guardrail files only work with frontier models","They aren't a security architecture; segmentation and normal controls are still needed","Regulators don't accept them"],a:2,e:"Guardrails don't stop an attacker chaining small weaknesses together. Segmentation and the usual controls do."},
+ {s:"s2",q:"If an autonomous attack completes its critical steps in about three minutes, what has to carry more of the load?",o:["Faster incident reports","Prevention and blast-radius reduction","A larger SOC team","More frequent penetration tests"],a:1,e:"Detection that takes longer than the attack can't prevent it. Controls that exist before the attack starts have to do the work."},
+ {s:"s2",q:"In the Zealot attack chain, how did the attacker get initial access?",o:["Phishing a developer","A leaked SSH key on GitHub","SSRF against the cloud metadata service","Brute-forcing a VPN"],a:2,e:"SSRF let the attacker reach the metadata service, which led to credential theft, enumeration, privilege escalation and exfiltration."},
+ {s:"s3",q:"What was the point of the toaster analogy?",o:["Agents should be simple single-purpose tools","Standards are what let you trust something won't cause harm, and agents need equivalent ones","Old hardware is a hidden risk","Agents should be switched off when idle"],a:1,e:"Like product safety standards, agents need a consistent way to define what they're allowed to do and under what conditions."},
+ {s:"s4",q:"Why does a “dark by default” approach make sense now?",o:["It costs less than endpoint protection","Automated attackers ignore unpublished services","Patching everything fast enough is no longer realistic, so reduce what can be reached and what a breach can touch","Regulations now require it"],a:2,e:"With discovery-to-exploit measured in minutes, minimizing attack surface and blast radius scales better than racing to patch."},
+ {s:"s4",q:"Roughly how long did the RedWraith demo take from first prompt to exfiltration, and what did it cost?",o:["3 minutes, about $50","27 hours, about $500","2 weeks, about $25,000","13 minutes, about $250"],a:1,e:"About 27 hours and $500. The lesson is how little cost and human involvement a full intrusion needed."},
+ {s:"s5",q:"Why do canaries work particularly well against AI attackers?",o:["Models can't parse canary file formats","Agents enumerate broadly and touch decoys early, before choosing a target","Canaries revoke the attacker's model API key","AI attackers target canaries on purpose"],a:1,e:"In Tracebit's tests, attacks were detected before the first critical action in 99.4% of runs, often during enumeration."},
+ {s:"s5",q:"What is a “context bomb”?",o:["Planted content that causes some AI models to stop an attack","A denial-of-service that overloads a model's context window","Malware hidden inside model weights","A prompt that makes a defender's AI leak data"],a:0,e:"Injected content made specific models halt instead of continuing. Different models reacted differently, so it isn't universal."},
+ {s:"s6",q:"As the cost of running models falls, what happens to AI red teaming?",o:["It becomes unnecessary","It moves from an occasional assessment to something that can run continuously","Only large vendors can afford it","It replaces the need for patching"],a:1,e:"Cheap, repeatable testing makes continuous supervised red teaming realistic, and attackers get the same economics."},
+ {s:"s7",q:"In the live audience forum, what was the top priority for the next twelve months?",o:["Model selection","Governance","Detection and response","Replacing analysts with agents"],a:2,e:"Detection and response ranked first. Governance was called out as becoming more important but easy to overlook."},
+ {s:"s10",q:"When does “who owns the AI?” become a security question rather than only a governance one?",o:["When the model is open-weight","Only after an incident has happened","When a vendor hosts the model","Once the system can make decisions and take actions on its own"],a:3,e:"An autonomous system needs an accountable owner to review its permissions, respond to failures and switch it off."}
+];
+
+const PHOTO={"Matt Johansen":"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","Gal Ordo":"/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCABYAFgDASIAAhEBAxEB/8QAHAAAAQQDAQAAAAAAAAAAAAAAAAECBgcDBAgF/8QANRAAAQMDAgMGBAMJAAAAAAAAAQACAwQFEQYhEjFBBxMiUYGhFGFxkSQysiNCUlOCosLh8P/EABkBAAMBAQEAAAAAAAAAAAAAAAABBAIDBf/EAB8RAQEAAwACAgMAAAAAAAAAAAABAgMREjEEMiEiM//aAAwDAQACEQMRAD8As4JUgSrTkVKkSoDzb/fbfp+hNXcphGzk1o3c8+QHUqCt7YaI1IBtNSKcn8/eN4sefD/tad3t8urr7UVNbUOZTQymCmia3bhHMnPmf+2W6zs1pnNPd1WG4GOJvI9Vxu2d5FOOj9e1PrNd6K90EdbbphLC/wBC09QR0K3lXmmbVVaT1FDE6obJSXEGMsbsGyAZacY8gR6qw10xy8p1xzw8LwISpFpgIQhAYwlTAU4FAOWC4VTaKinqnMc8RMLi1vMrMkkY2SN8bwC1zSCD1BSpznfyraetqaQ0hoqZkokbxud4iHOPkQpBHfZmWl1S2jzNG7gdFk8+vIZ9l5VZdhZHTtkg4hTMax3DuAQMA/T5o03eopbe+SWN7HOkc9/eY4Pvnkorb16uOMuMbs9RU18tBVvpywwVTHANJ8QweLmB0U1C8OinbWzU/dR8LR4iPLovcVGnvEXyeeUCEIXZMEJEIDCClCaFH9aapg0va+/e3vKmXLYIujiOZPyGUBJAVo3C92u2Am4XCmp8c2ySgH7c1z7dddakuchdLdJ4WHlHTu7toH9O59VGpXPle6SR7nPccuc45JKD4vLVVVRVz46+ikPw9REON2Md4Oh39FjtV5tzKZsUlaHBgHDEG7/RVjadRuipoqO4iSSnj2a5n5mt8sKV23VWl7fH3jYaiSUDYCAZ+5Klzwy76Xa9sxx51Y1kutvgmYKyU09RVkiFsoIBA6B3LiPPClC5r1hqqfUU0bWw/D0sOTHHxZJJ6k+azWLtA1HZQ2OOtNRA3lDUjjGPIHmPQrvhjZjJUuyzLK2OjkigOju02hv9XHQV1P8ABVcm0Z4+KOQ+QPQ+Q91PcrbkVCTKEBrgqje2W6/F6lZRsPgpIw0jpxHc+xH2V1zTsghkmkcGsjaXOJ6ADdcx6gr33O7Vda8+KaVz/oCdkHPbTHJqVMB8ATyhoJVIJLVZW2WnnbdCa2VzA+PLSIhgl2QNz+7jccyDyWJ1lodmtvdKXbnJGGgfXOc4ycY6Y5lAeJlHL6lbFdTNpKuSFs8c4ZjEkZy07dFr5OeSZHNJaQ5hLXNwQQcEFdLaIubrxpW3Vkry+V0XDK48y9uxJ9RlczA7q3Ow68gtrrNI7cfiIsn6NcP0+6Qq2UJMoQyhfaPWz0eka11OwuMgEbiBnhaTuT8sbeq55ccldVFrZGFrwC0jcHqqauembVVSVUojdCWvdvEcD7cljLOY+3XVrufeK7jJLTnksgTZmiKWWNhJa1xAyka5bjNZcoymhG+EA5CZkpzTkJgwHDiPmvb0jdnWTUdDXgkMjlAkHmw7O9ivOorZW3GYtoaaWcjGeAZwpdYezq51dbTsuhFHBI7DuFwc8bE9Nunms3KQ5jav0HIyORQsVJAKWlhpw9zxExrA55y52BjJ+aE3NpSSd3BI/wDhaT7KtLg0w0L5N/2mSUIU273FvxfrVYXKnMDoZDn8RGZP73N/xWk3mhConpNfbI0pw2KEJkCEDIKEICadn5lo5mVL8iGpc9jPmWcOf1K2aZxfPSyj+Y332QhSbfuu1fySZCEKt5z/2Q==","Eric Broda":"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","Rachel Clark":"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","Brian Deitch":"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","Alessandro Brucato":"/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCABYAFgDASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAABQYAAwQHAQII/8QAOBAAAgEDAwIEAgcHBQEAAAAAAQIDAAQRBRIhBjETIkFRYXEHFDKBkaGxFSMkQnLR8BYzYsHh8f/EABkBAAMBAQEAAAAAAAAAAAAAAAIDBAEABf/EACARAAICAgIDAQEAAAAAAAAAAAABAhEDIRIxBCJBMlH/2gAMAwEAAhEDEQA/AHzUVtPHBjdeOAM0P1JEuNNngRgrMhA5o2bex1A5hMW7581lvNKWPMbAEEelSQcq2P0fn5rb6m7W1wVzGzfHNexzoxTLrgLntTF1b0vLbanK9mCYlBdgx96UrOPxJooydu6NgT7VWnYloOWTeNOpDKQEBPHpW27t4pgw8RN2Ox70vJdzMTBZR5iC7d4ByR7mqUS4lfh38vf4VjWzUMdrZeA8jEIMdiFrVoccU18VDKcOcgLQOGO7hi+sRs7YzngnI/wUV6ZlabUYDbx7nll86A/YzQ0uzXZ2LonS7azsZJ9qq0xyQKM3bWnhkMQKHWWpWenQC2jiclftE+9U6jr8PgP4dtufHlBHrU84ye0FFpPZmZrFHIWRTzmpStBr+oXV+YDpkEYUje26pVMdoxy2HNb1Cz0VFl+q9zxtbBrZpOrfta0E8WRjjDHNLn0hzxLpqMRk78Cp0TORo5eMnBY1PFetsDHy5bLepbeR55CSP3qbflXJ720FjDOruCyt4efcck/niuk9SanIJTgH92pJ4rl2qzXF5CbhlPhmbDMO245wPwzToXQUts6L0ZpdjH01a3DxgzS5JJ9s0w2+k6eq8W6HPJ470u6LdQ6J0tp41N38aRPEWJE3MFPIOKMaVr+n6gP4VpAw/ldSDUzbts9LEo0l9DMFhZDyCGMA98Ck3V9Ng0Prezks0KRXPhnCngHcQf8Ao0xHqPR4bgQT3W2TOPssf0FLnXt14uu6MkbhonXcsinuCwz+lFFsDOlxCvWfUy6NfpHFbbtyhmJNA1+kG1dQJbJ93wNZvpSkQ60iIDhYgRSRgZ7U3Gm4bPKfKzoP+uNNjzJFYuHPc5qUgeUjkVKYoJaR3sdU+klSNLiI7+JVvQuB04GJ53mlzqHq6w6gs1jSG4RVbduEZNV6V1Ra6fpbWUaXBbJIbwzSoKlsfJ7sN60yyySxqVDsuOaD6P06r6Fd20phLGXcHYZIJHH3ZFZz1PEx3NDKWPc+Easj6jjGFVJ1LHH+yaKSuNBYp8ZWxvv9MsNStbVr1U3iFQFPIUAe341RoukWtteC4tFwigKWHb7qW9YvLtri5tbVts6yLGA3bALcfpVthY627i5guJVZlwyEAj8AwxUyX9PRg0+kMk3Sli2qNN3fJYgswPPsQRVPUem23jQK6MEtLVgkp+yHYkYP+eorMt9f21/aC8WR18wedhjHBOB7j5Un9Y9YXdzcXGnoVW2EoJZe7kY/LIoscXKVC804xWzb9JIJ15FHJMCYx68UqyQyRNtlUqcZwRRCW/e/kt7m4dpZFCoDn0rBeTKbhgXdiD/Mc4qtKtHmvZSePWpXm5M+Ytj4VK0wP9PHGlxj3BonE8SpnZ588n4VT0zCp0SI4GcHvW8WXk3N2NIfYxdFeUYE7Bj0q+CHfPEm3kuOKst7V3ASMd/ejHTdrbXWpDdKsngxmU7e2QRgfn+VC3SsOKtpCr1gjxazcXMXlYyBjjuMY5/KrrHVBLLE6an4CN9qIrnt3x7Ub1vTluppC4zls0CtOjrea43HeE3chWIFJU41sr4zjK4hFrv9t6j5JCbO3jzJITjgcn7zgfdXMr6IvGJwdxZjux7122x0CGKzns4AI4pInTI9MgiuZ3/T0saILGdJ4ovM3BDAH1I/tVOD2dIl8hNU5ATS/Einjjc4ViO/pX1cj+Ll/qNa7ZA2pxIy8ggEfGstwP4qb+o0/wC0T3oqxxUr6xUrjjoPSVk0mgW/lzlc59BRaJLRRKs06v4eMqh5Gfj91LWoa7DBEthZKYbSEbRErHk/E96yaTOzrOxOFYrwPhn+9BixpyuQTm+kHNW1lodOP1RQioWJA9RuPBPypX0fXrjRr1biHLx8hkJ7qfSteqy40xyOdxGPvb/2l9pc8EU3NGLdJAxbTs6lYavZashktZlJIyYycMvzFb9PxHKxZxtIzg1xoqM5Xg19Zf1ZiPbcahfjb0yxeXS2jqHUPV1taW0lpp0gluXG1pEOVjHrz6mkq0vJ4JWlSRldj70JiYg8cVqEh21RCCgtE2XI8jtjDDp1rf3Iv0nMUg5YbRtYgc9u1BNY0O7sGNxJslhkYnxIiSB8DxxRvSzt0eMjuyZJ+f8A9r7m1KS1lgCOQDuyPQ/Z71XKEOF/RW0JmypTjeWFlq1pJNZwJDdxgsRHwsgHcY9D8qlT2EKF6zLcShzyHOfxovpZaOwz6uxx+n6ipUosXZx5rUqiKG3X33Y9gOBQcrUqV0+ziAV73NSpQGFqds1aOVOKlStODukSbtGX/hlT9xrDrchV4T7An8xUqU+X4NNGg3pt2WXOP3oGfw/vUqVKkfZqP//Z","Yigael Berger":"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","Helen Oakley":"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","Francis Odum":"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","Ian Paterson":"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","Guillaume Ross":"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","Kunal Modasiya":"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","Jay Thurston":"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","Fernando Tucci":"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","Ryoji Betchaku":"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","Ali Dehghantanha":"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","Iain Paterson":"/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCABYAFgDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYDBQIEBwH/xAA5EAACAQMBBgMGAwYHAAAAAAABAgMABBEFBhITITFBUWGBFCJxkaHBMrHRBxVCUmKyIyRDouHw8f/EABoBAAMAAwEAAAAAAAAAAAAAAAIDBAABBQb/xAAlEQACAwABBAIBBQAAAAAAAAAAAQIDEQQSITFBFCKhEzJCUYH/2gAMAwEAAhEDEQA/AHwGsgajzXuaEw8kbFCNUcxqj2h1M2kHAiJEsg5kfwisbxaFFOTxF3+9LcSmNGLsOu70+db1tcLJ0BHkaRNJdkiEpyfPwpt02biopXGSfGlKxsrfHikXaMCOVTLWCRLjKde9ZLTkSSWMmWsxWC1mK2AeiigUURoWM0b1Yk1GzUJgTtkUh7ZXclvqkccUZaR4QwZjhQMkU8McikrbApLqCq8e46IAHPPeHPljw5n6eFBY109xtO9fYo7LaC7hPDQQzs7BOGmVyScdavLxdTWRBIlysxcg28Mu6oXljn35EHPgelUiJHb3VtPIUWNGBOF3fn1roV5cWesWsU1sjTPEFWRonK7wx2IIzjw86T9fKLlGTXdm3olnfpeM8Nzcx7sAzHNMZEyTyODnwI5Y6UzW8jMoEqhJcZZQcj0NV+mcFIEEA3VbBOep+J7+tb0Sv7Q7OOWAF+FNi/6J7ILHpuLWQrBKzFNJWZCigUVs0KbHFQM3Oo5pvOtZp/OhNG3vClnbG3DxQ3Cjmp3CfLqKuOP51jcJHdwPBL+Fxjl2rHDVgcJdMkzmuo8eThJHnh4JY5pq2StrTUIJLZVmjkA5yRrjBx5k+Apd1iGfTr8QODjOAR35Ve7OXl6sq29tCx/m5Acz1NTqLRb+omdD0BJUtoo5n4sgyC+PxY7/ACq7chZMA5IAzVNoMNyHaWf3QzZCjtW80yG5lRHUlWOQDzHM/cH5U2tL0Iuk3mm/G1SrWnE9bSNmmk5MKK8WisMObyyEk1pySkHANF5dQ20ZkuJUjTON52wM0t3u1WnwueFxJ8d1GB9a2otgNpDGsh7mq3UdqdP00FeKJ5xyEcRzz8z0FI+s7SXmobyITBb9OGp6jzPeqMFsEt1pqjgPVo7adfSamXvLoA8aZh47pHQfDH5U2aIxt51BOAehpG2N1SCztrqG6tzcI8q4QNjmQcHPlumuiW9msloZFLAFA8bOMHBGefn96ntpz7L2V03b9X5Qxy60lvaKy4aQ+7GoP4j2pc1PU5tE2itgx4r+xgXAJxvsXc/fPrS9q19eafDFcW7/AOYVv8IsoIUDryPLJ6eQz48oto7173XrqRz7yrGhx0yEGfrmrOFSv5eyLn3PxH0dP0nW7DUQBbzgSEZMT+6w9O/pV3Ga4TxWbocN4g9DTFs9trfWTLHdt7TCORVz7w+DfrT7OD7gyWvnerEdcQ0VQ6Vtbo99uqLjgSH+Gcbv16fWiopVTi8aLY2wktTONftDkbi2UeTuYckZ78v+aTl947ver7bu74urJCP9GMA/E8/0pdUk3CDxYGmV+AJk1zHuxHx7V4Yiyb3iM1s3QEk4jHxNT26oYHUdUYj7/eqXWnLCdWNRTM9nrSSWaYqSoCZbzxT3YahcQ6MmniOQT7xCA5IbJ6Dw60v7BBX1Ke3PWWJlH5/annTIVuLi0aVVaL2ZkZSTnK4B/OhlUnHGFG6SnqIY9KKWtp+8GDn2gbik8gOpH+36mklHL3l0xHWTp6Cuh7QSiJYUUgLHDI464/lH91c3tDvLJL033Jx4c6fSseInuk2m2TxrzcgZJU1FatxHYnr3rIS8ORSDy7ioWRrd7vngFQ6HxGaq3CXN1Fk8gWPrjJAHzxRWqkvFEAPVjvH0/wCiimp6JccFbV7n2nUbiZjniSEj4dvpWmjbtzG3YGiiuCnh6B92bonHEZ+7GprWQCaRezje9R/7RRVMZPSaUVhe7EzcDai1GeTtu/PlXTNPQBd7+uY+hZevh0ooo34FvyUO1V7utI4kyODgc/6sn+0UnRDh26KOu7RRTKfLF2/tRabNaLJrV1MWfcghI4zDrz6Y9B18qddsdCtDsrIbKNI2toyY1HMlTkHn3yeefKiiuFzORb81R3sms/3z+Dq8eiv4jlndp/g5rZSjeiBPJI19CRn9KKKK9LXJ4cKyC0//2Q==","Olivera Zatezalo":"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"};
+/* speaker extras: company, verified company site, known location, direct LinkedIn where confirmed */
+const SP={
+ "Matt Johansen":{co:"Vulnerable U",loc:"Austin, TX"},
+ "Gal Ordo":{co:"Native",site:"https://native.security",li:"https://www.linkedin.com/in/galordo"},
+ "Eric Broda":{co:"Broda Group Software"},
+ "Rachel Clark":{co:"SKADI Cyber Defense"},
+ "Brian Deitch":{co:"Zscaler",site:"https://www.zscaler.com"},
+ "Alessandro Brucato":{co:"Tracebit",site:"https://tracebit.com"},
+ "Yigael Berger":{co:"Sweet Security",site:"https://www.sweet.security"},
+ "Helen Oakley":{co:"AI & Cybersecurity"},
+ "Francis Odum":{co:"Software Analyst Cyber Research",site:"https://substack.com/@softwareanalyst"},
+ "Ian Paterson":{co:"Plurilock",site:"https://plurilock.com"},
+ "Guillaume Ross":{co:"Caffeine Security",loc:"Montreal, QC"},
+ "Kunal Modasiya":{co:"Qualys",site:"https://www.qualys.com"},
+ "Jay Thurston":{co:"Thales",site:"https://www.thalesgroup.com"},
+ "Fernando Tucci":{co:"Trend Micro",site:"https://www.trendmicro.com"},
+ "Ryoji Betchaku":{co:"Wiz",site:"https://www.wiz.io",loc:"Canada"},
+ "Ali Dehghantanha":{co:"University of Guelph",site:"https://www.uoguelph.ca",loc:"Guelph, ON"},
+ "Iain Paterson":{co:"WELL Health Technologies",site:"https://well.company"},
+ "Olivera Zatezalo":{co:"Ontario Power Generation",site:"https://www.opg.com"}
+};
+const hue=n=>[...n].reduce((h,c)=>(h*31+c.charCodeAt(0))%360,7);
+function speaker(n,r){
+  const x=SP[n]||{},li=x.li||`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(n+" "+(x.co||""))}`;
+  return `<div class="spk">${PHOTO[n]?`<img class="av photo" src="data:image/jpeg;base64,${PHOTO[n]}" alt="${esc(n)}" width="88" height="88" loading="lazy">`:`<span class="av" style="--h:${hue(n)}" aria-hidden="true">${initials(n)}</span>`}<div>
+    <b>${hl(n)}</b><small>${hl(r)}</small>
+    <span class="spk-links">${x.loc?`<span class="loc">${ic("pin")}${esc(x.loc)}</span>`:""}
+      <a href="${li}" target="_blank" rel="noopener" title="${x.li?"LinkedIn profile":"Find on LinkedIn"}">${ic("li")}LinkedIn</a>
+      ${x.site?`<a href="${x.site}" target="_blank" rel="noopener" title="${esc(x.co)} website">${ic("globe")}${esc(x.co)}</a>`:""}</span>
+  </div></div>`;
+}
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const byId=Object.fromEntries(S.map(s=>[s.id,s]));
+const initials=n=>n.split(" ").map(w=>w[0]).slice(0,2).join("");
+const TAGI={offense:"target",cloud:"cloud",agents:"bot",governance:"scale"};
+
+/* hero word split */
+(()=>{const h=$("#h1");let k=0;h.querySelectorAll(":scope > *, :scope").forEach(()=>{});
+  const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(w=>{if(!w.trim()){f.append(w);return}const s=document.createElement("span");s.className="w";s.style.animationDelay=(k++*70)+"ms";s.textContent=w;f.append(s)});c.replaceWith(f)}else walk(c)})};walk(h);})();
+
+/* agenda */
+$("#agenda").innerHTML=DAY.map(d=>{
+  if(typeof d==="string"){const s=byId[d];return `<li><time>${s.time}</time><i class="pin"></i><a href="#${s.id}"><span class="pin-i">${ic(s.icon)}</span><span><b>${esc(s.short)}</b><small>${esc(s.speakers.map(x=>x[0]).join(", "))}</small><span class="faces" aria-hidden="true">${s.speakers.filter(x=>PHOTO[x[0]]).map(x=>`<img src="data:image/jpeg;base64,${PHOTO[x[0]]}" alt="">`).join("")}</span></span></a></li>`}
+  return `<li class="brk"><time>${d[0]}</time><i class="pin"></i><div class="row"><span class="pin-i">${ic(d[3])}</span><span><b>${esc(d[1])}</b>${d[2]?`<small>${esc(d[2])}</small>`:""}</span></div></li>`}).join("");
+
+/* glossary */
+$("#gloss").innerHTML=Object.entries(GLOSS).sort((a,b)=>a[1][0].localeCompare(b[1][0])).map(([k,[t,d,i]])=>`<div id="g-${k}" class="rv"><dt>${ic(i)}${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join("");
+
+/* sessions */
+let query="",tag="all";const tabState={};
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+function hl(t){const safe=esc(t);if(!query)return safe;return safe.replace(new RegExp("("+reEsc(esc(query))+")","gi"),"<mark>$1</mark>");}
+const txt={
+  head:s=>[s.title,s.line,s.fmt,...s.speakers.flat(),...s.tags].join(" "),
+  notes:s=>[...s.covered,s.why,s.takeaway||"",s.ask,...s.concepts.map(c=>GLOSS[c][0]),...(s.chain?s.chain.steps:[]),...(s.stats?s.stats.flat():[])].join(" "),
+  program:s=>s.program.join(" "),
+  reading:s=>s.links.map(l=>l[1]+" "+l[2]).join(" ")
+};
+const has=(t,q)=>t.toLowerCase().includes(q);
+function panel(s,which){
+  if(which==="program") return `<div class="panel prog">
+    <div class="pmeta"><span>${ic("clock")}${s.time}–${s.end}</span><span>${ic("pin")}Room 718AB</span><span>${ic("mic")}${esc(s.fmt)}</span></div>
+    <div><p class="label">${ic("note")}What the program promised</p><ul class="bul">${s.program.map(c=>`<li>${hl(c)}</li>`).join("")}</ul></div>
+    <a class="official" href="${OFFICIAL}" target="_blank" rel="noopener">${ic("ext")}Official session listing</a></div>`;
+  if(which==="reading") return `<div class="panel"><div class="links">${s.links.map(([u,t,d])=>`<a href="${u}" target="_blank" rel="noopener">${ic("ext")}<strong>${hl(t)}</strong><span>${hl(d)}</span></a>`).join("")}</div></div>`;
+  return `<div class="panel">
+    <div><p class="label">${ic("check")}What was covered</p><ul class="bul">${s.covered.map(c=>`<li>${hl(c)}</li>`).join("")}</ul></div>
+    ${s.stats?`<div class="stats">${s.stats.map(([b,t])=>`<div class="stat"><b data-count>${hl(b)}</b><span>${hl(t)}</span></div>`).join("")}</div>`:""}
+    ${s.chain?`<div class="chain"><ol>${s.chain.steps.map((x,k)=>`<li style="--k:${k}">${hl(x)}</li>`).join("")}</ol><small>${esc(s.chain.note)}</small></div>`:""}
+    <div><p class="label">${ic("spark")}Key concepts</p><div class="concepts">${s.concepts.map(c=>`<a class="concept" href="#g-${c}">${hl(GLOSS[c][0])}</a>`).join("")}</div></div>
+    <div><p class="label">${ic("bolt")}Why it matters</p><p>${hl(s.why)}</p></div>
+    ${s.takeaway?`<div class="takeaway"><p class="label">${ic("key")}My takeaway</p><p>${hl(s.takeaway)}</p></div>`:""}
+    <p class="ask">${ic("q")}<span><strong>Ask yourself:</strong> ${hl(s.ask)}</span></p></div>`;
+}
+function card(s,i){
+  const q=query.toLowerCase();
+  const hits={notes:q&&has(txt.notes(s),q),program:q&&has(txt.program(s),q),reading:q&&has(txt.reading(s),q)};
+  let t=tabState[s.id]||"notes";
+  if(q&&!hits[t]){t=["notes","program","reading"].find(k=>hits[k])||t}
+  const tab=(k,label,icon)=>`<button class="tab" role="tab" aria-selected="${t===k}" data-s="${s.id}" data-t="${k}">${ic(icon)}${label}${hits[k]?'<i class="hit" title="Has matches"></i>':""}</button>`;
+  return `<article class="session rv" id="${s.id}">
+  <div class="s-top">
+    <div class="s-icon">${ic(s.icon)}<span class="n">${String(i+1).padStart(2,"0")}</span></div>
+    <div class="s-head">
+      <div class="s-meta"><span class="s-time">${ic("clock")}${s.time}–${s.end}</span><span class="fmt">${esc(s.fmt)}</span>${s.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+      <h3>${hl(s.title)}</h3>
+      <div class="speakers">${s.speakers.map(([n,r])=>speaker(n,r)).join("")}</div>
+    </div>
+  </div>
+  <p class="oneline">${hl(s.line)}</p>
+  <div class="tabs" role="tablist" aria-label="${esc(s.title)}">${tab("notes","My notes","note")}${tab("program","Program","mic")}${tab("reading",`Reading (${s.links.length})`,"book")}</div>
+  <div class="panel-wrap">${panel(s,t)}</div>
+  </article>`;
+}
+function render(){
+  const q=query.toLowerCase();
+  const all=s=>Object.values(txt).map(f=>f(s)).join(" ");
+  const shown=S.filter(s=>(tag==="all"||s.tags.includes(tag))&&(!q||has(all(s),q)));
+  $("#list").innerHTML=shown.length?shown.map(s=>card(s,S.indexOf(s))).join(""):`<div class="empty">${ic("search")}<p>No sessions match${query?` “${esc(query)}”`:""}${tag!=="all"?` in ${tag}`:""}.</p><button class="btn ghost" id="clear">${ic("retry")}Clear search and filters</button></div>`;
+  $("#count").textContent=`${shown.length} of ${S.length} sessions`;
+  const c=$("#clear");if(c)c.onclick=()=>{query="";$("#q").value="";setTag("all")};
+  observeCounts();
+}
+$("#list").addEventListener("click",e=>{
+  const b=e.target.closest(".tab");if(!b)return;
+  const s=byId[b.dataset.s];tabState[s.id]=b.dataset.t;
+  const art=b.closest(".session");
+  art.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===b));
+  art.querySelector(".panel-wrap").innerHTML=panel(s,b.dataset.t);observeCounts();
+});
+function setTag(t){tag=t;document.querySelectorAll(".chipbtn").forEach(b=>b.setAttribute("aria-pressed",b.dataset.tag===t));render();}
+document.querySelectorAll(".chipbtn").forEach(b=>b.addEventListener("click",()=>setTag(b.dataset.tag)));
+$("#q").addEventListener("input",e=>{query=e.target.value.trim();render();});
+
+/* count-up numbers (resting text is already the final value) */
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const cio="IntersectionObserver" in window?new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;cio.unobserve(en.target);countUp(en.target)}),{threshold:.6}):null;
+function observeCounts(){if(!cio||reduce)return;document.querySelectorAll("[data-count]:not([data-done])").forEach(el=>{if(el.querySelector("mark"))return;el.dataset.done=1;cio.observe(el)})}
+function countUp(el){
+  const full=el.textContent,m=full.match(/[\d,.]+/);if(!m)return;
+  const raw=m[0].replace(/,/g,""),target=parseFloat(raw),dec=(raw.split(".")[1]||"").length,pre=full.slice(0,m.index),post=full.slice(m.index+m[0].length);
+  const t0=performance.now(),dur=1100;
+  const step=t=>{const p=Math.min(1,(t-t0)/dur),v=target*(1-Math.pow(1-p,3));el.textContent=pre+v.toFixed(dec)+post;if(p<1)requestAnimationFrame(step);else el.textContent=full};
+  requestAnimationFrame(step);
+}
+render();
+
+/* reading progress */
+const rb=$("#readbar");
+addEventListener("scroll",()=>{const h=document.documentElement;rb.style.setProperty("--p",(h.scrollTop/((h.scrollHeight-h.clientHeight)||1)).toFixed(3))},{passive:true});
+
+/* hero network canvas */
+(()=>{
+  const cv=$("#net"),cx=cv.getContext("2d");let W,H,dpr,nodes=[],edges=[],packets=[],col,colP;
+  const readCol=()=>{const cs=getComputedStyle(document.documentElement);col=cs.getPropertyValue("--net").trim();colP=cs.getPropertyValue("--signal").trim();};
+  function build(){
+    dpr=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(Math.min(46,Math.max(18,W*H/26000)));
+    nodes=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,r:Math.random()*1.6+1}));
+    edges=[];nodes.forEach((a,i)=>{nodes.map((b,j)=>[j,Math.hypot(a.x-b.x,a.y-b.y)]).filter(([j])=>j!==i).sort((p,q)=>p[1]-q[1]).slice(0,2).forEach(([j])=>{if(!edges.some(e=>(e[0]===j&&e[1]===i)))edges.push([i,j])})});
+    packets=[];
+  }
+  function draw(dt){
+    cx.clearRect(0,0,W,H);cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=1;
+    edges.forEach(([i,j])=>{const a=nodes[i],b=nodes[j];cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()});
+    nodes.forEach(n=>{cx.beginPath();cx.arc(n.x,n.y,n.r,0,7);cx.fill()});
+    if(!dt)return;
+    nodes.forEach(n=>{n.x+=n.vx*dt;n.y+=n.vy*dt;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1});
+    if(packets.length<9&&Math.random()<.06){const e=edges[Math.floor(Math.random()*edges.length)];if(e)packets.push({e,t:0,s:.0012+Math.random()*.0016})}
+    cx.fillStyle=colP;cx.shadowColor=colP;cx.shadowBlur=10;
+    packets=packets.filter(p=>{p.t+=p.s*dt;if(p.t>=1){const nxt=edges.filter(x=>x[0]===p.e[1]);if(nxt.length&&Math.random()<.8){p.e=nxt[Math.floor(Math.random()*nxt.length)];p.t=0}else return false}
+      const a=nodes[p.e[0]],b=nodes[p.e[1]];cx.beginPath();cx.arc(a.x+(b.x-a.x)*p.t,a.y+(b.y-a.y)*p.t,2.2,0,7);cx.fill();return true});
+    cx.shadowBlur=0;
+  }
+  readCol();build();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>{readCol();draw(0)});
+  new MutationObserver(()=>{readCol();draw(0)}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  addEventListener("resize",()=>{build();draw(0)});
+  if(reduce){draw(0);return}
+  let last=performance.now(),vis=true;
+  new IntersectionObserver(([e])=>{vis=e.isIntersecting}).observe(cv);
+  const loop=t=>{const dt=Math.min(50,t-last);last=t;if(vis&&!document.hidden)draw(dt);requestAnimationFrame(loop)};
+  draw(0);requestAnimationFrame(loop);
+})();
+
+/* quiz */
+let qi=0,score=0,answers=[];
+const box=$("#quizbox");
+const pips=()=>`<div class="pips" aria-hidden="true">${QUIZ.map((_,i)=>{const a=answers[i];return `<i class="pip ${a?(a.ok?"ok":"no"):(i===qi?"cur":"")}"></i>`}).join("")}</div>`;
+function drawQ(){
+  const item=QUIZ[qi];
+  box.innerHTML=`<div class="q-top"><span>Question ${qi+1} of ${QUIZ.length}</span>${pips()}<span>Score ${score}</span></div>
+  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="${QUIZ.length}" aria-valuenow="${qi}"><i style="width:${qi/QUIZ.length*100}%"></i></div>
+  <p class="q-text">${esc(item.q)}</p>
+  <div class="opts">${item.o.map((o,i)=>`<button class="opt" data-i="${i}" style="--k:${i}"><span class="k">${"ABCD"[i]}</span><span>${esc(o)}</span><span class="res"></span></button>`).join("")}</div>
+  <div id="fb"></div>`;
+  box.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>choose(+b.dataset.i)));
+}
+function choose(i){
+  const item=QUIZ[qi],ok=i===item.a;
+  if(ok)score++;
+  answers[qi]={ok};
+  box.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;const r=b.querySelector(".res");
+    if(j===item.a){b.classList.add("right");r.innerHTML=ic("check")}else if(j===i){b.classList.add("wrong");r.innerHTML=ic("x")}else b.classList.add("dim")});
+  box.querySelector(".q-top").innerHTML=`<span>Question ${qi+1} of ${QUIZ.length}</span>${pips()}<span>Score ${score}</span>`;
+  box.querySelector(".progress i").style.width=`${(qi+1)/QUIZ.length*100}%`;
+  const last=qi===QUIZ.length-1;
+  $("#fb").innerHTML=`<div class="feedback ${ok?"ok":"no"}"><strong>${ic(ok?"check":"x")}${ok?"Correct.":"Not quite. The answer is "+"ABCD"[item.a]+"."}</strong><p>${esc(item.e)}</p><a href="#${item.s}">${ic("arrow")}Review: ${esc(byId[item.s].title)}</a></div>
+  <div class="q-actions" style="margin-top:1rem"><button class="btn" id="next">${last?"See my score":"Next question"}${ic("arrow")}</button></div>`;
+  const n=$("#next");n.focus({preventScroll:true});n.onclick=()=>{qi++;last?drawResult():drawQ()};
+}
+function drawResult(){
+  const pct=score/QUIZ.length,C=2*Math.PI*52;
+  const [title,msg]=pct===1?["Perfect score","You've got the day covered."]:pct>=.75?["Strong result","Review the ones you missed below."]:pct>=.5?["Good start","The sessions below are worth a second look."]:["Worth another pass","Read the brief and the sessions you missed, then try again."];
+  const missed=answers.map((a,i)=>({a,i})).filter(x=>!x.a.ok);
+  box.innerHTML=`<div class="result">
+  <div class="q-top"><span>Complete</span>${pips()}<span>Score ${score}</span></div>
+  <div class="score">
+    <div class="ring"><svg viewBox="0 0 120 120"><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--signal)"/></linearGradient></defs><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="arc" cx="60" cy="60" r="52" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><b>${score}/${QUIZ.length}</b></div>
+    <div><h3>${title}</h3><p>${msg}</p></div>
+  </div>
+  ${missed.length?`<div><p class="label">${ic("retry")}Review these</p><ul class="missed">${missed.map(({i})=>{const it=QUIZ[i];return `<li>${esc(it.q)}<a href="#${it.s}">${ic("arrow")}${esc(byId[it.s].title)}</a></li>`}).join("")}</ul></div>`:""}
+  <div class="q-actions" style="justify-content:flex-start"><button class="btn" id="restart">${ic("retry")}Restart quiz</button></div></div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{$("#arc").style.strokeDashoffset=C*(1-pct)}));
+  $("#restart").onclick=()=>{qi=0;score=0;answers=[];drawQ();box.scrollIntoView({block:"start"})};
+}
+drawQ();
+</script>
+
+</body>
+</html>

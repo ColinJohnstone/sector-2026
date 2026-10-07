@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SecTor 2026 Notes</title>
+<meta name="description" content="Colin Johnstone's notes and takeaways from SecTor 2026 in Toronto, one page per day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Hub: same console palette as the day pages; one column of day cards. */
+:root{
+  --bg:#09111a; --surface:#111c28; --surface2:#16232f; --ink:#e6eef5; --muted:#8fa2b3; --line:#1f2e3c;
+  --accent:#4cb3ff; --accent-soft:rgba(76,179,255,.13); --signal:#ffb547; --glow:rgba(76,179,255,.18);
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace; color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root{
+  --bg:#eef3f7; --surface:#ffffff; --surface2:#f4f7fa; --ink:#122130; --muted:#526474; --line:#d4dee7;
+  --accent:#0a62a3; --accent-soft:rgba(10,98,163,.09); --signal:#b25e00; --glow:rgba(10,98,163,.10); color-scheme:light}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(50rem 26rem at 85% -10%,var(--glow),transparent 70%),var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px)}
+.wrap{max-width:46rem;margin-inline:auto;padding-block:4rem 3rem;display:grid;gap:2rem}
+.eyebrow{font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-size:clamp(2.4rem,8vw,4rem);font-weight:820;font-stretch:122%;line-height:1;letter-spacing:-.02em;margin:.6rem 0 1rem;text-wrap:balance}
+h1 span{color:var(--accent)}
+.lead{color:var(--muted);font-size:1.1rem;margin:0;max-width:38rem}
+.days{display:grid;gap:.9rem;list-style:none;margin:0;padding:0}
+.day{display:grid;grid-template-columns:4.2rem 1fr auto;gap:1rem;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
+a.day:hover{border-color:var(--accent);transform:translateY(-2px)}
+a.day:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.num{font-family:var(--display);font-size:2.4rem;font-weight:820;font-stretch:115%;line-height:1;color:var(--accent);text-align:center}
+.day h2{font-family:var(--display);font-size:1.2rem;font-weight:720;margin:0 0 .2rem}
+.day p{margin:0;color:var(--muted);font-size:.92rem}
+.when{font-family:var(--mono);font-size:.76rem;color:var(--muted);display:block;margin-bottom:.25rem}
+.status{font-family:var(--mono);font-size:.72rem;font-weight:600;border-radius:999px;padding:.2rem .6rem;white-space:nowrap}
+.live{background:var(--accent-soft);color:var(--accent)}
+.soon{border:1px dashed var(--line);color:var(--muted)}
+.day.pending{opacity:.6}
+.day.pending .num{color:var(--muted)}
+footer{color:var(--muted);font-size:.86rem;border-top:1px solid var(--line);padding-top:1.2rem}
+footer strong{color:var(--ink);font-weight:600}
+@media (max-width:520px){.day{grid-template-columns:3rem 1fr}.status{grid-column:2;justify-self:start}.num{font-size:2rem}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Oct 6–8, 2026 · Metro Toronto Convention Centre</p>
+    <h1>SecTor <span>2026</span> notes</h1>
+    <p class="lead">My notes and takeaways from SecTor in Toronto, one page per day. Each page has session summaries, speakers, a glossary and a short quiz.</p>
+  </header>
+
+  <ol class="days">
+    <li><a class="day" href="/day-1/">
+      <span class="num">1</span>
+      <div><span class="when">Tue Oct 6</span><h2>AI x Cloud Security Summit</h2><p>Machine-speed attacks, agent identity, deception and who owns the AI.</p></div>
+      <span class="status live">Read now</span>
+    </a></li>
+    <li><div class="day pending">
+      <span class="num">2</span>
+      <div><span class="when">Wed Oct 7</span><h2>Day 2</h2><p>Notes coming soon.</p></div>
+      <span class="status soon">Coming soon</span>
+    </div></li>
+    <li><div class="day pending">
+      <span class="num">3</span>
+      <div><span class="when">Thu Oct 8</span><h2>Day 3</h2><p>Notes coming soon.</p></div>
+      <span class="status soon">Coming soon</span>
+    </div></li>
+  </ol>
+
+  <footer><strong>Written &amp; created by Colin Johnstone</strong> · Senior Consultant, Authentication Services @ CIBC. Personal conference notes; program details from the official SecTor schedule.</footer>
+</main>
+</body>
+</html>
