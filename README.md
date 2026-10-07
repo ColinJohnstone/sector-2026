@@ -6,7 +6,7 @@ Colin Johnstone's notes and takeaways from SecTor 2026 (Toronto, Oct 6–8), one
 |---|---|
 | `/` | Hub page linking each day |
 | `/day-1/` | Day 1: AI x Cloud Security Summit |
-| `/day-2/` | Day 2 (coming) |
+| `/day-2/` | Day 2: Keynote & Briefings |
 | `/day-3/` | Day 3 (coming) |
 
 Static HTML, no build step. Each day is a self-contained `index.html` (fonts from Google Fonts; speaker headshots are embedded).

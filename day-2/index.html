@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Colin Johnstone's notes from Day 2 of SecTor 2026: the Citizen Lab keynote, local LLM malware, GPU Rowhammer and AI pentest verification.">
+<title>SecTor 2026 Day 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: dark operations-console briefing. Animated network hero, then a single reading column (~48rem); sessions are tabbed runbook cards; quiz closes the page. */
+:root{
+  --bg:#09111a; --bg2:#0c1621; --surface:#111c28; --surface2:#16232f; --ink:#e6eef5; --muted:#8fa2b3; --line:#1f2e3c;
+  --accent:#4cb3ff; --accent-ink:#04101b; --accent-soft:rgba(76,179,255,.13); --signal:#ffb547; --signal-soft:rgba(255,181,71,.13);
+  --mark:#7a5a00; --mark-ink:#fff4cc; --good:#4fd18f; --good-soft:rgba(79,209,143,.13); --bad:#ff7b70; --bad-soft:rgba(255,123,112,.13);
+  --net:rgba(120,170,215,.22); --glow:rgba(76,179,255,.18); --avL:70%;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --col:48rem; --wide:70rem; color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#eef3f7; --bg2:#e4ecf3; --surface:#ffffff; --surface2:#f4f7fa; --ink:#122130; --muted:#526474; --line:#d4dee7;
+  --accent:#0a62a3; --accent-ink:#ffffff; --accent-soft:rgba(10,98,163,.09); --signal:#b25e00; --signal-soft:rgba(178,94,0,.09);
+  --mark:#ffe58a; --mark-ink:#122130; --good:#16743f; --good-soft:rgba(22,116,63,.1); --bad:#b0281e; --bad-soft:rgba(176,40,30,.09);
+  --net:rgba(10,98,163,.16); --glow:rgba(10,98,163,.10); --avL:34%; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#eef3f7; --bg2:#e4ecf3; --surface:#ffffff; --surface2:#f4f7fa; --ink:#122130; --muted:#526474; --line:#d4dee7;
+  --accent:#0a62a3; --accent-ink:#ffffff; --accent-soft:rgba(10,98,163,.09); --signal:#b25e00; --signal-soft:rgba(178,94,0,.09);
+  --mark:#ffe58a; --mark-ink:#122130; --good:#16743f; --good-soft:rgba(22,116,63,.1); --bad:#b0281e; --bad-soft:rgba(176,40,30,.09);
+  --net:rgba(10,98,163,.16); --glow:rgba(10,98,163,.10); --avL:34%; color-scheme:light}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.65;padding-inline:16px;overflow-x:hidden}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h2{font-size:clamp(1.65rem,4vw,2.25rem);font-weight:780;font-stretch:112%;letter-spacing:-.01em;line-height:1.12}
+h3{font-size:1.32rem;font-weight:720;font-stretch:104%;line-height:1.25}
+p{margin:0}
+svg.i{width:1.15em;height:1.15em;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
+.wrap{max-width:var(--col);margin-inline:auto}
+.eyebrow{font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.eyebrow svg.i{color:var(--accent)}
+.lead{font-size:1.1rem;color:var(--muted);max-width:40rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;margin-inline:-16px;padding:0 16px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--line)}
+.bar-in{max-width:var(--wide);margin-inline:auto;display:flex;align-items:center;gap:1rem;height:3.5rem}
+.brand{font-family:var(--display);font-weight:800;font-stretch:120%;white-space:nowrap;display:flex;align-items:center;gap:.5rem}
+.brand .dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--signal);box-shadow:0 0 0 0 var(--signal);animation:ping 2.4s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--signal) 60%,transparent)}70%,100%{box-shadow:0 0 0 .55rem transparent}}
+.brand span{color:var(--accent)}
+.bar nav{display:flex;gap:.2rem;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+.bar nav a{font-size:.88rem;font-weight:500;color:var(--muted);text-decoration:none;padding:.35rem .7rem;border-radius:6px;white-space:nowrap;display:flex;align-items:center;gap:.4rem;transition:color .2s,background .2s}
+.bar nav a:hover{color:var(--ink);background:var(--surface)}
+.bar nav a.quiz-link{color:var(--accent-ink);background:var(--accent)}
+.readbar{position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:left;transform:scaleX(var(--p,0));background:linear-gradient(90deg,var(--accent),var(--signal))}
+
+/* hero */
+.hero{position:relative;margin-inline:-16px;padding:4.5rem 16px 3rem;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(60rem 30rem at 85% -10%,var(--glow),transparent 70%),var(--bg)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-in{position:relative;max-width:var(--col);margin-inline:auto;display:grid;gap:1.3rem}
+.hero h1{font-size:clamp(2.5rem,8vw,4.8rem);font-weight:820;font-stretch:124%;line-height:.98;letter-spacing:-.025em}
+.hero h1 .w{display:inline-block;animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 em{font-style:normal;color:var(--accent);position:relative}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.08em;background:var(--signal);transform-origin:left;animation:draw 1s .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{transform:translateY(.35em);opacity:.35;filter:blur(3px)}}
+@keyframes draw{from{transform:scaleX(0)}}
+.hero .lead{font-size:1.15rem}
+.thenNow{display:grid;grid-template-columns:1fr auto 1fr;gap:.75rem;align-items:stretch;margin-top:.5rem}
+.tn{background:color-mix(in srgb,var(--surface) 88%,transparent);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;display:grid;gap:.25rem;backdrop-filter:blur(4px)}
+.tn .yr{font-family:var(--mono);font-size:.78rem;font-weight:600;color:var(--muted)}
+.tn b{font-family:var(--display);font-size:1.35rem;font-weight:800;font-stretch:112%;line-height:1.15}
+.tn p{font-size:.88rem;color:var(--muted)}
+.tn.now{border-color:color-mix(in srgb,var(--signal) 45%,var(--line))}
+.tn.now b{color:var(--signal)}
+.arrow{display:grid;place-items:center;color:var(--muted)}
+.arrow svg{width:1.6rem;height:1.6rem;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(4px)}}
+.howto{display:flex;flex-wrap:wrap;gap:.5rem}
+.howto a{font-size:.9rem;text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--surface) 90%,transparent);border:1px solid var(--line);padding:.45rem .85rem;border-radius:8px;display:flex;align-items:center;gap:.5rem;transition:border-color .2s,transform .2s}
+.howto a:hover{border-color:var(--accent);transform:translateY(-2px)}
+.howto b{font-family:var(--mono);font-size:.76rem;color:var(--accent)}
+.byline{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;font-size:.92rem;color:var(--muted);padding-top:1.1rem;border-top:1px solid var(--line)}
+.byline strong{color:var(--ink);font-weight:600}
+.byline .mono{font-family:var(--mono);font-size:.78rem}
+
+section{padding-block:3.5rem;border-bottom:1px solid var(--line)}
+.sec-head{display:grid;gap:.6rem;margin-bottom:1.9rem}
+
+/* scroll reveal: only where scroll-driven animation is supported; resting state is fully visible */
+@media (prefers-reduced-motion:no-preference){@supports (animation-timeline:view()){
+  .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
+  @keyframes rv{from{opacity:.25;transform:translateY(24px)}}
+}}
+
+/* brief */
+.big3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.idea{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.25rem;display:grid;gap:.45rem;align-content:start;overflow:hidden;transition:transform .25s,border-color .25s}
+.idea:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}
+.ico{width:2.6rem;height:2.6rem;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.ico svg.i{width:1.35rem;height:1.35rem}
+.idea p{color:var(--muted);font-size:.95rem}
+.numbers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:1.5rem}
+.num{background:var(--surface);padding:1rem}
+.num b{display:block;font-family:var(--display);font-size:clamp(1.6rem,4vw,2.1rem);font-weight:820;font-stretch:112%;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.num span{display:block;font-size:.82rem;color:var(--muted);margin-top:.35rem;line-height:1.35}
+.num small{display:block;font-family:var(--mono);font-size:.68rem;color:var(--accent);margin-top:.35rem;letter-spacing:.04em;text-transform:uppercase}
+blockquote{margin:2.2rem 0 0;padding:1.4rem 1.4rem 1.4rem 1.6rem;border-radius:12px;background:linear-gradient(120deg,var(--accent-soft),transparent 70%);border:1px solid var(--line);position:relative}
+blockquote::before{content:"“";position:absolute;top:-.35rem;left:.9rem;font-family:var(--display);font-size:4rem;line-height:1;color:var(--accent);opacity:.5}
+blockquote p{font-family:var(--display);font-size:clamp(1.3rem,3.4vw,1.8rem);font-weight:720;font-stretch:108%;line-height:1.25;text-wrap:balance}
+blockquote footer{margin-top:.6rem;color:var(--muted);font-size:.92rem}
+.after-q{margin-top:.9rem;color:var(--muted);max-width:40rem}
+
+/* agenda timeline */
+.agenda{margin-top:2.6rem}
+.agenda ol{list-style:none;margin:1rem 0 0;padding:0;position:relative}
+.agenda ol::before{content:"";position:absolute;left:4.35rem;top:.4rem;bottom:.4rem;width:2px;background:linear-gradient(var(--accent),var(--signal));opacity:.5}
+.agenda li{display:grid;grid-template-columns:3.6rem 1.5rem 1fr;gap:.25rem;align-items:start}
+.agenda time{font-family:var(--mono);font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:.6rem}
+.agenda .pin{width:.75rem;height:.75rem;border-radius:50%;margin:.82rem auto 0;background:var(--bg);border:2px solid var(--accent);position:relative;z-index:1}
+.agenda li.brk .pin{border-color:var(--line);background:var(--surface2)}
+.agenda a,.agenda .row{display:flex;gap:.7rem;align-items:flex-start;padding:.45rem .6rem;border-radius:8px;text-decoration:none;color:var(--ink);transition:background .2s}
+.agenda a:hover{background:var(--surface)}
+.agenda a:hover .pin-i{transform:scale(1.12) rotate(-6deg)}
+.pin-i{width:1.9rem;height:1.9rem;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none;transition:transform .25s}
+.brk .pin-i{background:var(--surface2);color:var(--muted)}
+.agenda b{font-weight:600;display:block;line-height:1.35;font-size:.96rem}
+.agenda small{color:var(--muted);font-size:.84rem;display:block}
+.brk b{font-weight:500;color:var(--muted)}
+
+/* tools */
+.tools{position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.5rem);z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);padding-block:.8rem;margin-bottom:1.1rem;display:grid;gap:.6rem;border-bottom:1px solid var(--line);margin-inline:-16px;padding-inline:16px}
+.search{position:relative;display:block}
+.search input{width:100%;font:inherit;font-size:1rem;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.72rem .9rem .72rem 2.5rem;transition:border-color .2s,box-shadow .2s}
+.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.search svg.i{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--muted)}
+.filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
+.chipbtn{font:inherit;font-size:.84rem;font-weight:500;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;transition:all .2s}
+.chipbtn:hover{color:var(--ink);border-color:var(--muted)}
+.chipbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.count{margin-left:auto;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+
+/* session card */
+.sessions{display:grid;gap:1.4rem}
+.session{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;scroll-margin-top:10rem;transition:border-color .3s,box-shadow .3s}
+.session:hover{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));box-shadow:0 10px 40px -20px var(--glow)}
+.s-top{padding:clamp(1.1rem,3vw,1.6rem) clamp(1.1rem,3vw,1.75rem) 1rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;background:linear-gradient(180deg,var(--bg2),transparent)}
+.s-icon{width:3.1rem;height:3.1rem;border-radius:12px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);position:relative}
+.s-icon svg.i{width:1.6rem;height:1.6rem;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.session:hover .s-icon svg.i{transform:scale(1.12) rotate(-8deg)}
+.s-icon .n{position:absolute;bottom:-.45rem;right:-.45rem;font-family:var(--mono);font-size:.64rem;font-weight:600;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:0 .35rem;color:var(--muted)}
+.s-head{display:grid;gap:.45rem;min-width:0}
+.s-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .55rem}
+.s-time{font-family:var(--mono);font-weight:600;font-size:.82rem;color:var(--accent);font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:.3rem}
+.fmt{font-size:.74rem;font-weight:600;color:var(--signal);background:var(--signal-soft);border-radius:4px;padding:.08rem .45rem}
+.tag{font-family:var(--mono);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:.05rem .4rem}
+.speakers{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.6rem;margin-top:.2rem}
+.spk{display:flex;align-items:flex-start;gap:.65rem;min-width:0;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:.6rem .7rem;transition:border-color .2s,transform .2s}
+.spk:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));transform:translateY(-1px)}
+.av{width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-stretch:110%;font-size:.95rem;font-weight:800;flex:none;
+  color:hsl(var(--h) 65% var(--avL));background:radial-gradient(circle at 30% 25%,hsl(var(--h) 70% 60% / .35),hsl(var(--h) 60% 45% / .12));box-shadow:inset 0 0 0 1.5px hsl(var(--h) 65% var(--avL) / .55)}
+.av.photo{object-fit:cover;background:var(--surface);box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px color-mix(in srgb,var(--accent) 55%,transparent);transition:transform .3s}
+.spk:hover .av.photo{transform:scale(1.08)}
+.agenda .faces{display:flex;margin-top:.3rem}
+.agenda .faces img{width:1.5rem;height:1.5rem;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--bg);margin-right:-.35rem}
+.spk>div{line-height:1.3;min-width:0}
+.spk b{font-size:.92rem;font-weight:600;display:block}
+.spk small{font-size:.78rem;color:var(--muted);display:block}
+.spk-links{display:flex;flex-wrap:wrap;gap:.15rem .7rem;margin-top:.3rem;font-size:.76rem}
+.spk-links a{text-decoration:none;display:inline-flex;align-items:center;gap:.25rem;color:var(--accent)}
+.spk-links a:hover{text-decoration:underline}
+.spk-links .loc{display:inline-flex;align-items:center;gap:.25rem;color:var(--muted)}
+.oneline{margin:0 clamp(1.1rem,3vw,1.75rem);font-size:1.08rem;font-weight:500;line-height:1.5;padding:.15rem 0 .15rem .9rem;border-left:3px solid var(--signal)}
+.tabs{display:flex;gap:.2rem;margin:1.1rem clamp(1.1rem,3vw,1.75rem) 0;border-bottom:1px solid var(--line);position:relative;overflow-x:auto;scrollbar-width:none}
+.tab{font:inherit;font-size:.88rem;font-weight:600;color:var(--muted);background:none;border:0;padding:.6rem .8rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;position:relative;white-space:nowrap;transition:color .2s}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent)}
+.tab::after{content:"";position:absolute;left:.5rem;right:.5rem;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.tab[aria-selected="true"]::after{transform:scaleX(1)}
+.tab .hit{width:.4rem;height:.4rem;border-radius:50%;background:var(--signal)}
+.panel{padding:1.2rem clamp(1.1rem,3vw,1.75rem) clamp(1.1rem,3vw,1.6rem);display:grid;gap:1.15rem;animation:fade .35s ease both}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}}
+.label{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;display:flex;align-items:center;gap:.4rem}
+.label svg.i{color:var(--accent)}
+.bul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+.bul li{position:relative;padding-left:1.25rem}
+.bul li::before{content:"";position:absolute;left:.15rem;top:.62em;width:.42rem;height:.42rem;border-radius:2px;background:var(--accent);transform:rotate(45deg)}
+.prog .bul li::before{background:var(--signal)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+.stat{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:.8rem .9rem}
+.stat b{display:block;font-family:var(--display);font-size:1.7rem;font-weight:820;font-stretch:110%;font-variant-numeric:tabular-nums;line-height:1.05;color:var(--signal)}
+.stat span{font-size:.8rem;color:var(--muted);line-height:1.35;display:block;margin-top:.25rem}
+.chain{overflow-x:auto;padding-bottom:.2rem}
+.chain ol{list-style:none;margin:0;padding:0;display:flex;min-width:max-content}
+.chain li{position:relative;background:var(--surface2);border:1px solid var(--line);padding:.5rem 1rem .5rem 1.35rem;font-size:.83rem;font-weight:500;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);margin-left:-3px;animation:lit 6s infinite;animation-delay:calc(var(--k) * .45s)}
+.chain li:first-child{clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);padding-left:1rem;margin-left:0}
+@keyframes lit{0%,12%{background:var(--surface2);color:var(--ink)}5%{background:var(--accent);color:var(--accent-ink)}}
+.chain small{display:block;color:var(--muted);font-size:.78rem;margin-top:.4rem}
+.concepts{display:flex;flex-wrap:wrap;gap:.4rem}
+.concept{font-size:.84rem;text-decoration:none;color:var(--accent);background:var(--accent-soft);border:1px solid transparent;border-radius:999px;padding:.2rem .7rem;transition:border-color .2s,transform .2s}
+.concept:hover{border-color:var(--accent);transform:translateY(-1px)}
+.takeaway{background:linear-gradient(120deg,var(--signal-soft),transparent 80%);border:1px solid color-mix(in srgb,var(--signal) 30%,var(--line));border-radius:10px;padding:1rem 1.1rem}
+.takeaway .label,.takeaway .label svg.i{color:var(--signal)}
+.takeaway p{font-weight:500}
+.ask{display:flex;gap:.6rem;font-size:.95rem;color:var(--muted);background:var(--surface2);border-radius:10px;padding:.8rem 1rem}
+.ask svg.i{color:var(--accent);margin-top:.15rem}
+.ask strong{color:var(--ink);font-weight:600}
+.briefnote{font-size:.85rem;color:var(--muted);font-style:italic;display:flex;gap:.4rem;align-items:center}
+.pmeta{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:.86rem;color:var(--muted)}
+.pmeta span{display:inline-flex;align-items:center;gap:.35rem}
+.official{font-size:.88rem;display:inline-flex;align-items:center;gap:.35rem;text-decoration:none}
+.official:hover{text-decoration:underline}
+.links{display:grid}
+.links a{display:grid;grid-template-columns:auto 1fr;gap:.1rem .7rem;padding:.7rem 0;border-bottom:1px solid var(--line);text-decoration:none}
+.links a:last-child{border-bottom:0}
+.links a svg.i{grid-row:span 2;color:var(--muted);margin-top:.2rem;transition:transform .2s,color .2s}
+.links a:hover svg.i{transform:translate(2px,-2px);color:var(--accent)}
+.links a strong{color:var(--ink);font-weight:600;font-size:.93rem}
+.links a:hover strong{color:var(--accent)}
+.links a span{font-size:.84rem;color:var(--muted)}
+mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:2.2rem;text-align:center;color:var(--muted);display:grid;gap:.8rem;justify-items:center}
+
+/* remember */
+.six{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.six>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;display:grid;grid-template-columns:auto 1fr;gap:.25rem .9rem;transition:transform .25s,border-color .25s}
+.six>div:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.six .ico{grid-row:span 2}
+.six h3{font-size:1.06rem}
+.six p{color:var(--muted);font-size:.93rem}
+.closing{margin-top:2rem}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:0}
+.gloss div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;scroll-margin-top:5rem;transition:border-color .3s,background .3s}
+.gloss dt{font-weight:600;display:flex;align-items:center;gap:.45rem}
+.gloss dt svg.i{color:var(--accent)}
+.gloss dd{margin:.2rem 0 0;color:var(--muted);font-size:.92rem}
+.gloss div:target{border-color:var(--signal);background:var(--signal-soft);animation:flash 1.2s ease}
+@keyframes flash{30%{transform:scale(1.02)}}
+
+/* quiz */
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(1.1rem,3vw,1.75rem);display:grid;gap:1.15rem}
+.q-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.pips{display:flex;gap:4px;flex-wrap:wrap}
+.pip{width:.7rem;height:.7rem;border-radius:3px;background:var(--surface2);border:1px solid var(--line);transition:background .3s}
+.pip.ok{background:var(--good);border-color:var(--good)}
+.pip.no{background:var(--bad);border-color:var(--bad)}
+.pip.cur{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.progress{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--signal));transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.q-text{font-family:var(--display);font-size:clamp(1.2rem,3vw,1.45rem);font-weight:720;font-stretch:104%;line-height:1.3;animation:fade .35s ease both}
+.opts{display:grid;gap:.5rem}
+.opt{font:inherit;text-align:left;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:.8rem .95rem;cursor:pointer;display:grid;grid-template-columns:1.8rem 1fr auto;gap:.6rem;align-items:center;transition:border-color .2s,transform .15s,background .2s;animation:fade .35s ease both;animation-delay:calc(var(--k) * 60ms)}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt:disabled{cursor:default}
+.opt .k{width:1.8rem;height:1.8rem;border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:.8rem;color:var(--muted);background:var(--surface);border:1px solid var(--line)}
+.opt .res{opacity:0;transform:scale(.4);transition:all .35s cubic-bezier(.3,1.6,.5,1)}
+.opt.right{background:var(--good-soft);border-color:var(--good);animation:pop .4s ease}
+.opt.right .k{color:var(--good);border-color:var(--good)}
+.opt.right .res{opacity:1;transform:none;color:var(--good)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad);animation:shake .4s ease}
+.opt.wrong .k{color:var(--bad);border-color:var(--bad)}
+.opt.wrong .res{opacity:1;transform:none;color:var(--bad)}
+.opt.dim{opacity:.5}
+@keyframes pop{50%{transform:scale(1.02)}}
+@keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.feedback{border-radius:10px;padding:1rem 1.1rem;display:grid;gap:.35rem;animation:fade .35s ease both}
+.feedback.ok{background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 35%,transparent)}
+.feedback.no{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 35%,transparent)}
+.feedback strong{font-weight:600;display:flex;align-items:center;gap:.4rem}
+.feedback.ok strong{color:var(--good)}
+.feedback.no strong{color:var(--bad)}
+.feedback a{font-size:.88rem;display:inline-flex;align-items:center;gap:.3rem}
+.q-actions{display:flex;justify-content:flex-end;gap:.5rem}
+.btn{font:inherit;font-weight:600;font-size:.95rem;border-radius:10px;padding:.65rem 1.15rem;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);display:inline-flex;align-items:center;gap:.45rem;transition:transform .15s,filter .2s}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.result{display:grid;gap:1.3rem;animation:fade .4s ease both}
+.score{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.ring{width:8rem;height:8rem;position:relative;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}
+.ring .bg{stroke:var(--surface2)}
+.ring .fg{stroke:url(#rg);stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:1.9rem;font-weight:820;font-stretch:112%;font-variant-numeric:tabular-nums}
+.score h3{font-size:1.4rem}
+.score p{color:var(--muted);max-width:28rem}
+.missed{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+.missed li{font-size:.93rem;background:var(--surface2);border-radius:8px;padding:.7rem .9rem;display:grid;gap:.2rem}
+.missed a{font-size:.86rem;display:inline-flex;align-items:center;gap:.3rem}
+
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin-top:.5rem}
+.trio .tn{text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
+.trio .tn:hover{border-color:var(--accent);transform:translateY(-2px)}
+.trio .yr{display:flex;align-items:center;gap:.4rem}
+.trio .yr svg.i{color:var(--signal)}
+.trio b{font-size:1.15rem}
+@media (max-width:760px){.trio{grid-template-columns:1fr}}
+.page-foot{padding-block:2.5rem 3rem;color:var(--muted);font-size:.88rem;display:grid;gap:.35rem}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+@media (max-width:760px){
+  .big3,.six,.gloss,.stats{grid-template-columns:1fr}
+  .numbers{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .thenNow{grid-template-columns:1fr}
+  .arrow svg{transform:rotate(90deg);animation:none}
+  .brand{display:none}
+  .bar nav{margin-left:0}
+  .bar nav a .i{display:none}
+  .s-top{grid-template-columns:1fr}
+  .session{scroll-margin-top:12.5rem}
+  .agenda ol::before{left:4.1rem}
+  .agenda li{grid-template-columns:3.3rem 1.5rem 1fr}
+}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h10.5a4 4 0 0 0 .4-8A6 6 0 0 0 6.3 9.5 4.3 4.3 0 0 0 7 18z"/></symbol>
+    <symbol id="i-badge" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="10" r="2.6"/><path d="M8 17c.8-1.8 2.2-2.6 4-2.6s3.2.8 4 2.6M10 6h4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6.4-6.4"/><circle cx="16" cy="9" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="9" cy="7" rx="5" ry="2.5"/><path d="M4 7v4c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V7"/><path d="M10 15.4c.6 1.2 2.6 2.1 5 2.1 2.8 0 5-1.1 5-2.5v-4c0-1.2-1.6-2.2-3.8-2.5"/><path d="M14 11.5c.3.1.7.1 1 .1 2.8 0 5-1.1 5-2.5"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
+    <symbol id="i-fork" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6 7v2a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7M12 12v5"/></symbol>
+    <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><circle cx="12" cy="10" r="1.6"/><path d="M7 7l3.6 2.2M17 7l-3.6 2.2M12 11.6v4.2"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/><circle cx="12" cy="3.5" r="1"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M5 16l4-5 4 3 6-8"/><path d="M15 6h4v4"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></symbol>
+    <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.7.3-1.1.9-1.1 1.6v.5M12 17h.01"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 12h8M8 16h6"/></symbol>
+    <symbol id="i-retry" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"/></symbol>
+    <symbol id="i-li" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V17M8 7.3v.01M12 17v-6.5M12 13.5c0-1.8 1-3 2.6-3S17 11.7 17 13.5V17"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-browser" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M6.5 6.5h.01M9 6.5h.01"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.7-3 2.8-4.5 5.5-4.5s4.8 1.5 5.5 4.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.6c2 .2 3.4 1.6 4 4.4"/></symbol>
+  </defs>
+</svg>
+
+<header class="bar"><div class="bar-in">
+  <a class="brand" href="../" style="color:inherit;text-decoration:none" title="All days"><i class="dot"></i>SecTor <span>2026</span></a>
+  <nav aria-label="Page sections">
+    <a href="#brief"><svg class="i"><use href="#i-bolt"/></svg>Brief</a>
+    <a href="#sessions"><svg class="i"><use href="#i-note"/></svg>Sessions</a>
+    <a href="#remember"><svg class="i"><use href="#i-key"/></svg>Remember</a>
+    <a href="#glossary"><svg class="i"><use href="#i-book"/></svg>Glossary</a>
+    <a href="#quiz" class="quiz-link"><svg class="i"><use href="#i-q"/></svg>Quiz</a>
+  </nav>
+</div><div class="readbar" id="readbar"></div></header>
+
+<main>
+<div class="hero">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <p class="eyebrow"><svg class="i"><use href="#i-pin"/></svg>SecTor 2026 · Day 2 · Wed Oct 7 · MTCC Toronto · Keynote + Briefings</p>
+    <h1 id="h1">The threat is <em>already</em> on the device.</h1>
+    <p class="lead">My notes from the keynote and three briefings: mercenary spyware on phones, malware written by the AI model in your browser, Rowhammer on GPUs, and why proving a vulnerability is now harder than finding one.</p>
+    <div class="trio" aria-label="Three devices from Day 2">
+      <a class="tn" href="#k1"><span class="yr"><svg class="i"><use href="#i-phone"/></svg>Phone</span><b>Zero-click spyware</b><p>Pegasus infected phones without the owner clicking anything.</p></a>
+      <a class="tn" href="#llm"><span class="yr"><svg class="i"><use href="#i-browser"/></svg>Browser</span><b>A model you didn't install</b><p>Chrome downloads Gemini Nano, and it can be made to write malware.</p></a>
+      <a class="tn" href="#gpu"><span class="yr"><svg class="i"><use href="#i-chip"/></svg>GPU</span><b>Bit flips to root</b><p>Rowhammer on a GPU led all the way to a root shell on the host.</p></a>
+    </div>
+    <div class="howto" aria-label="Ways to use this page">
+      <a href="#brief"><svg class="i"><use href="#i-bolt"/></svg><b>2 MIN</b>Read the brief</a>
+      <a href="#sessions"><svg class="i"><use href="#i-note"/></svg><b>12 MIN</b>Go through the sessions</a>
+      <a href="#quiz"><svg class="i"><use href="#i-q"/></svg><b>5 MIN</b>Take the quiz</a>
+    </div>
+    <div class="byline"><strong>Written &amp; created by Colin Johnstone</strong><span>Senior Consultant, Authentication Services @ CIBC</span><a href="../" class="mono" style="margin-left:auto">← All days</a></div>
+  </div>
+</div>
+
+<section id="brief"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-bolt"/></svg>The brief</p>
+    <h2>If you only read one thing</h2>
+    <p class="lead">Day 1 was about attacks moving at machine speed. Day 2 was about where they land: the phones, browsers and GPUs we already trust, and how hard it has become to prove what's real.</p>
+  </div>
+  <div class="big3">
+    <div class="idea rv"><div class="ico"><svg class="i"><use href="#i-chip"/></svg></div><p class="eyebrow">Device</p><h3>Your hardware is attack surface</h3><p>Local AI models, GPUs and phones run code we never chose to trust, and each can be turned against us.</p></div>
+    <div class="idea rv"><div class="ico"><svg class="i"><use href="#i-check"/></svg></div><p class="eyebrow">Proof</p><h3>Finding is cheap, proving isn't</h3><p>AI floods us with findings. Verification is the bottleneck, so build around the proof.</p></div>
+    <div class="idea rv"><div class="ico"><svg class="i"><use href="#i-eye"/></svg></div><p class="eyebrow">People</p><h3>Spyware targets people</h3><p>Commercial spyware goes after journalists, lawyers and activists, and exposing it is what brings consequences.</p></div>
+  </div>
+
+  <div class="numbers rv" aria-label="Day 2 by the numbers">
+    <div class="num"><b data-count>29,439</b><span>Vulnerabilities Mythos found; 516 were patched, as presented</span><small>AI pentest pipeline</small></div>
+    <div class="num"><b data-count>82 / 629</b><span>Threat-intel reports that covered civil society</span><small>Keynote</small></div>
+    <div class="num"><b data-count>60%</b><span>Less analyst time after adding an independent verifier</span><small>AI pentest pipeline</small></div>
+    <div class="num"><b data-count>$20K</b><span>Reported cost to find a decades-old OpenBSD bug with Mythos</span><small>AI pentest pipeline</small></div>
+  </div>
+
+  <blockquote class="rv">
+    <p>These are the worst models that will ever run on your endpoint.</p>
+    <footer>ATLAS-AI Lab @ Technion, Large Local Malware</footer>
+  </blockquote>
+  <p class="after-q">Local models only get more capable from here. Whatever they can be made to do today, they'll do better next year, so limiting what they can touch is worth doing now.</p>
+
+  <div class="agenda">
+    <p class="label"><svg class="i"><use href="#i-clock"/></svg>The day at a glance · My path through five parallel tracks</p>
+    <ol id="agenda"></ol>
+  </div>
+</div></section>
+
+<section id="sessions"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-note"/></svg>Session notes</p>
+    <h2>The four sessions</h2>
+    <p class="lead">The keynote plus the three briefings I picked. Each card has my notes, what the program said the session would cover, and further reading. Tap a concept to jump to its definition.</p>
+  </div>
+  <div class="tools">
+    <label class="search" for="q">
+      <span class="sr">Search session notes</span>
+      <svg class="i"><use href="#i-search"/></svg>
+      <input id="q" type="search" placeholder="Search notes, speakers or topics: Pegasus, Rowhammer, verifier…" autocomplete="off">
+    </label>
+    <div class="filter-row" role="group" aria-label="Filter by topic">
+      <button class="chipbtn" data-tag="all" aria-pressed="true">All</button>
+      <button class="chipbtn" data-tag="ai" aria-pressed="false"><svg class="i"><use href="#i-bot"/></svg>AI</button>
+      <button class="chipbtn" data-tag="offense" aria-pressed="false"><svg class="i"><use href="#i-target"/></svg>Offense</button>
+      <button class="chipbtn" data-tag="hardware" aria-pressed="false"><svg class="i"><use href="#i-chip"/></svg>Hardware</button>
+      <button class="chipbtn" data-tag="surveillance" aria-pressed="false"><svg class="i"><use href="#i-eye"/></svg>Surveillance</button>
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+  </div>
+  <div class="sessions" id="list"></div>
+</div></section>
+
+<section id="remember"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-key"/></svg>What I'm taking away</p>
+    <h2>Six things to remember</h2>
+  </div>
+  <div class="six">
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-browser"/></svg></div><h3>Local models help attackers live off the land</h3><p>They're already installed, trusted and able to read files and write code. Attackers don't need to bring their own tools.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-shield"/></svg></div><h3>Scope what local AI can touch</h3><p>Zero trust for models: only the files they're working on right now, and remove them where they aren't needed.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-check"/></svg></div><h3>Finding is cheap, proving is expensive</h3><p>AI can produce thousands of findings. Verification is the bottleneck, and plausibility isn't proof.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-target"/></svg></div><h3>Buy the hunter, own the verifier</h3><p>Discovery tools are a commodity. The step that proves a finding is where our own context matters.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-chip"/></svg></div><h3>Hardware isn't a safe boundary</h3><p>Bit flips in GPU memory reached root on the host. Shared GPUs, ECC and driver patching deserve attention.</p></div>
+    <div class="rv"><div class="ico"><svg class="i"><use href="#i-eye"/></svg></div><h3>Spyware is aimed at people</h3><p>Journalists, lawyers and activists are prime targets, and public-interest research is often the first warning everyone else gets.</p></div>
+  </div>
+  <blockquote class="closing rv">
+    <p>AI is unpredictable. The proof isn't. We check the proof, not the AI.</p>
+    <footer>Rahul Jaisinghani, BrowserStack</footer>
+  </blockquote>
+</div></section>
+
+<section id="glossary"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-book"/></svg>Glossary</p>
+    <h2>Key concepts</h2>
+    <p class="lead">Plain-language definitions for the terms that came up on Day 2.</p>
+  </div>
+  <dl class="gloss" id="gloss"></dl>
+</div></section>
+
+<section id="quiz"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow"><svg class="i"><use href="#i-q"/></svg>Knowledge check</p>
+    <h2>Day 2 quiz</h2>
+    <p class="lead">Twelve questions, three from each session. You'll see the answer and a short explanation after each one.</p>
+  </div>
+  <div class="quiz" id="quizbox" aria-live="polite"></div>
+</div></section>
+
+<footer class="wrap page-foot">
+  <strong style="color:var(--ink)">SecTor 2026 · Day 2 · Keynote &amp; Briefings</strong>
+  <span>Wednesday, October 7, 2026 · Metro Toronto Convention Centre · Keynote on the Main Stage, Hall F; briefings in Rooms 701A, 718AB and 701B</span>
+  <span>Personal notes and observations by Colin Johnstone. Program details come from the official <a href="https://blackhat.com/sector/briefings/schedule/?day=wednesday" target="_blank" rel="noopener">briefings schedule</a> and <a href="https://blackhat.com/sector/features/schedule/index.html#keynote-on-counterintelligence-for-civil-society-57538" target="_blank" rel="noopener">keynote listing</a>. Figures are as presented by the speakers. <a href="../">Back to all days</a>.</span>
+</footer>
+</main>
+
+<script>
+const OFFICIAL="https://blackhat.com/sector/briefings/schedule/?day=wednesday";
+const ic=(n,c="")=>`<svg class="i ${c}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+
+const GLOSS={
+  attribution:["Attribution","Working out who is behind an attack. Researchers can often trace where an attack came from but can only infer who ordered it.","q"],
+  devtools:["Chrome DevTools Protocol","A debugging interface for controlling Chrome from other programs. The researchers used it to reach Chrome's local model from the command line.","browser"],
+  ecc:["ECC memory","Error-correcting code memory that detects and fixes some bit flips. It helps against Rowhammer but isn't foolproof.","check"],
+  edr:["EDR","Endpoint detection and response: security software that watches device behaviour to spot and stop attacks.","shield"],
+  exploreexploit:["Explore vs. exploit","The choice between spending testing budget going deeper on known weaknesses or searching for new attack surface.","fork"],
+  gemininano:["Gemini Nano","Google's small on-device model, which Chrome can download to power its built-in AI features.","browser"],
+  harness:["Harness","The tools, prompts and code wrapped around a model that let it act: reading files, running tests, calling APIs.","layers"],
+  iommu:["IOMMU","Hardware that limits which parts of system memory a device such as a GPU can reach.","shield"],
+  localmodel:["Local model (SLM)","A small language model that runs on the device itself instead of in the cloud.","chip"],
+  lotl:["Living off the land","Attacking with tools already present on the system, so the activity blends in with normal use.","layers"],
+  mercenary:["Mercenary spyware","Commercial surveillance tools sold to governments, such as NSO Group's Pegasus, Intellexa's Predator and Paragon's Graphite.","eye"],
+  mythos:["Claude Mythos Preview","Anthropic's model used in Project Glasswing to find vulnerabilities in critical software. It isn't publicly available.","bot"],
+  pagetable:["Page table","The structure that maps the virtual addresses a program uses to physical memory. Corrupting one can expose memory you shouldn't reach.","layers"],
+  promptinjection:["Prompt injection","Text that hijacks a model's instructions, either typed directly or hidden in content the model reads.","target"],
+  rowhammer:["Rowhammer","Repeatedly accessing a row of memory so electrical charge leaks and flips bits in neighbouring rows.","chip"],
+  semantictrigger:["Semantic trigger","Malware that decides when to act based on what a model understands about the target, instead of a fixed check.","bolt"],
+  threatnotif:["Threat notification","An alert Apple, Google and others send when they believe a user was targeted by state-sponsored spyware.","phone"],
+  transnational:["Transnational repression","Governments reaching across borders to watch, threaten or harm dissidents who have left the country.","globe"],
+  verifier:["Independent verifier","A separate step that replays each AI finding to prove it's real before a person acts on it.","check"],
+  zeroclick:["Zero-click exploit","An attack that compromises a device without the target clicking or opening anything.","phone"],
+  zerotrust:["Zero Trust","Giving each user, app or model only the access it needs right now, and verifying every request.","shield"]
+};
+
+const S=[
+{id:"k1",time:"9:00",end:"10:00",room:"Main Stage, Hall F",url:"https://blackhat.com/sector/features/schedule/index.html#keynote-on-counterintelligence-for-civil-society-57538",icon:"eye",fmt:"Keynote",short:"Counterintelligence for civil society",sub:"Citizen Lab on mercenary spyware",tags:["surveillance"],
+ title:"Keynote: On Counterintelligence for Civil Society",
+ speakers:[["Ron Deibert","Director, The Citizen Lab, University of Toronto"]],
+ line:"Mercenary spyware is aimed at journalists, activists and lawyers, and almost nobody's threat intel covers them.",
+ covered:[
+  "It started with Ahmed Mansoor, a UAE human rights defender who received suspicious texts in 2016. Citizen Lab opened the links in a sandbox and captured NSO Group's Pegasus spyware and the iPhone zero-days it used. Apple shipped emergency iOS and macOS patches.",
+  "NSO's CEO had said that if you aren't a criminal you have nothing to be afraid of. Deibert's lesson from the decade since: you should be afraid.",
+  "Attribution is hard. You can usually tell where an attack came from but can only infer who ordered it. A Reuters investigation into Project Raven, a UAE hacking unit staffed by former US intelligence operatives, filled in the picture: former NSA analyst Lori Stroud became a whistleblower and confirmed Mansoor and British journalist Rori Donaghy were targets, down to the floor plan of where the operation ran.",
+  "A later New York Times investigation found the same operation, run through the firm DarkMatter, had also targeted Citizen Lab itself.",
+  "Saudi activist Loujain al-Hathloul, jailed after campaigning for women's right to drive, was hit with a zero-click Pegasus exploit: no interaction, any device. Citizen Lab's discovery led to another emergency Apple patch, and from 2021 Apple began sending threat notifications to users it believed were targeted.",
+  "Those notifications keep surfacing cases: an Italian journalist infected with spyware from Israeli vendor Paragon, which led to investigations in Italy where the team testified, and last month Pegasus used against student protesters in Serbia.",
+  "Citizen Lab is at the University of Toronto, takes no government direction and sells nothing. Deibert said only 82 of 629 commercial threat-intel reports covered targeted threats to civil society, because civil society isn't a paying client.",
+  "The work is risky: no cover identities, no extraction plan, and the adversaries are governments. NSO Group pulled Citizen Lab into its US legal fight, costing about $250,000 in legal fees.",
+  "Exposure brings consequences. In Spain, where 65 phones were confirmed hacked with Pegasus, the head of the intelligence agency was dismissed. A US judge found NSO liable for hacking WhatsApp. The US Treasury sanctioned Intellexa, maker of Predator, and its founder. Sandvine threatened to sue the university over a report on its deep packet inspection gear, was then added to the US Entity List and filed for bankruptcy protection. QuaDream shut down after a report Deibert called the final nail in the coffin.",
+  "Abuse goes beyond politics. A UK court found Dubai's ruler used Pegasus against his ex-wife, her lawyers and her security team during a custody battle. In Mexico, Pegasus targeted the experts investigating the disappearance of 43 students. In Poland it was used against political opponents, and the former justice minister whose ministry's fund paid for it is now in the US while Poland seeks his extradition. Citizen Lab also found signs the Ontario Provincial Police may be a Paragon customer.",
+  "After journalist Jamal Khashoggi's murder, Citizen Lab showed people close to him had spyware on their phones. Strangers then approached the team under false identities; one meeting became a sting that exposed an operative working for private intelligence firm Black Cube.",
+  "Citizen Lab is also a disinformation target: Polish prime-time TV aired a diagram claiming it reported to Julian Assange and Russian intelligence, shortly after it published research on Russian espionage.",
+  "Why now: Deibert pointed to two decades of decline in global freedom and argued democracy is more fragile than it feels. He was critical of the current US administration, its cuts to foreign aid and tech leaders aligning with it, and noted NSO's new executive chairman is David Friedman, Trump's former ambassador to Israel and former lawyer.",
+  "Governments use these tools for transnational repression, tracking dissidents who fled abroad, in some cases ahead of physical attacks. His close: democracies depend on openness that adversaries exploit, polite advocacy isn't enough, and civil society needs its own counterintelligence."],
+ stats:[["82 / 629","Threat-intel reports that covered civil society"],["65","Phones confirmed hacked with Pegasus in Spain"],["0","Clicks needed for a zero-click Pegasus infection"]],
+ chain:{steps:["Suspicious message or threat notification","Forensics in a sandbox","Exploit captured","Vendor patches","Public report","Sanctions, lawsuits, firings"],note:"How a Citizen Lab case typically unfolds"},
+ program:[
+  "What counterintelligence looks like outside the spy-thriller image: Citizen Lab has practised it for 25 years in the public interest, not on behalf of states or companies.",
+  "What the work involves in practice, the methods used and the risks.",
+  "How it protects high-risk groups: journalists, human rights defenders, lawyers, activists, refugees and immigrants.",
+  "How advances in AI are changing the threat landscape, and why the work matters more than ever."],
+ concepts:["mercenary","zeroclick","threatnotif","transnational","attribution"],
+ why:"Spyware sold to governments ends up aimed at journalists, lawyers and activists, and the same zero-click exploits work on anyone's phone. Most commercial threat intel ignores these targets, so research like Citizen Lab's is often the first warning the rest of us get, along with the emergency patches.",
+ takeaway:"Commercial spyware is a real, everyday threat, and public-interest research is often what forces the patch, the sanction or the shutdown.",
+ ask:"If someone on our team got a state-sponsored threat notification on their phone, would they know who to tell?",
+ links:[
+  ["https://citizenlab.ca/2016/08/million-dollar-dissident-iphone-zero-day-nso-group-uae/","Citizen Lab: The Million Dollar Dissident","The 2016 report on Ahmed Mansoor and the first Pegasus iPhone zero-days."],
+  ["https://citizenlab.ca/2021/09/forcedentry-nso-group-imessage-zero-click-exploit-captured-in-the-wild/","Citizen Lab: FORCEDENTRY","The zero-click iMessage exploit captured in the wild in 2021."],
+  ["https://citizenlab.ca/2025/03/a-first-look-at-paragons-proliferating-spyware-operations/","Citizen Lab: Virtue or Vice?","A first look at Paragon's spyware, including the Italy cases and the possible Ontario link."],
+  ["https://citizenlab.ca","The Citizen Lab","All of the lab's research and reports."]]},
+
+{id:"gpu",time:"10:15",end:"10:55",room:"Room 701A",icon:"chip",fmt:"Briefing",short:"GPUBreach",sub:"Rowhammer on GPUs, all the way to host root",tags:["hardware","offense"],
+ title:"GPUBreach: Privilege Escalation Attacks on GPUs Using Rowhammer",
+ speakers:[["Gururaj Saileshwar","Assistant Professor, University of Toronto"],["Chris S. Lin","PhD Student, University of Toronto"],["Yuqin Yan","PhD Student, University of Toronto"],["Guozhen Ding","Master's Student, University of Toronto"],["Joyce Qu","Undergraduate Student, University of Toronto"],["Joseph Zhu","Machine Learning Engineer, Google"],["David Lie","Professor & Canada Research Chair, University of Toronto"]],
+ line:"Flipping bits in GPU memory can take an unprivileged program all the way to root on the host.",
+ covered:[
+  "Rowhammer: memory stores bits as tiny charges. Hammering a row with rapid repeated access can leak charge into its neighbours and flip a 1 to a 0 or back. It's been known for a decade; in 2015 Mark Seaborn and Google Project Zero used it to gain kernel privileges and escape sandboxes on CPUs.",
+  "Each memory generation (DDR4, DDR5) needs exponentially fewer accesses to cause a flip, so memory is getting more vulnerable, not less.",
+  "The team showed GPUs flip too, on an NVIDIA RTX A6000. GPUs are what most local and hosted AI models run on.",
+  "GPUBreach targets the GPU's page tables, which translate virtual to physical addresses. The hard part is getting a page table placed where bits can be flipped: page tables sit about 200 MB away from user data, and filling that region naively would take 256 GB.",
+  "They shaped memory with standard CUDA allocations and unified virtual memory to create dense regions of small page tables (about 97% dense), then used a timing side channel to tell when a new page table was being allocated. No driver access or elevated privileges needed.",
+  "It worked on A6000 driver versions from 2023 to 2026 and gave arbitrary read and write across GPU memory.",
+  "With read access, an attacker can quietly copy another process's model weights or dump cryptographic keys, even keys that sit in GPU memory for only milliseconds. Keys can be located through shared libraries or by profiling how a victim's pages change.",
+  "With write access, tampering with model weights is easy to catch with an integrity check, but tampering with the libraries the model uses degrades everything and is harder to spot.",
+  "To reach the CPU: the GPU's aperture bits let page-table entries point at CPU memory. The IOMMU limits that to a small region, but the NVIDIA driver trusted data copied from the GPU without sanitizing it, which allowed a buffer overflow that overwrote driver pointers and gave a root shell on the host.",
+  "It's a hardware problem, not just a GPU problem. Mitigation needs several layers: sanitize GPU-side input in the driver, isolate GPU page tables from data, and use ECC memory on GPUs. The researchers note ECC isn't foolproof and there's no known fix yet for desktop and laptop GPUs.",
+  "The work was disclosed to NVIDIA, earned a Google bug bounty, and is published at gpubreach.ca."],
+ stats:[["~97%","Page-table density reached by shaping memory"],["4 years","Of A6000 drivers shown vulnerable (2023–2026)"],["0","Privileges needed to start the attack"]],
+ chain:{steps:["Unprivileged CUDA program","Hammer GPU memory","Flip a page-table bit","Read/write all GPU memory","Steal keys & weights","Abuse driver trust","Root on host"],note:"GPUBreach, end to end"},
+ program:[
+  "Rowhammer on NVIDIA GPUs turned into privilege escalation by reverse engineering how GPU page tables are allocated.",
+  "An unprivileged CUDA kernel flips bits in page-table entries to gain arbitrary read and write to GPU memory.",
+  "Demonstrated extracting cryptographic keys and model weights, then chaining a previously unknown NVIDIA driver memory-safety bug and malicious DMA to get root on the host.",
+  "Mitigations: enable ECC on GPUs and harden drivers against malicious devices."],
+ concepts:["rowhammer","pagetable","ecc","iommu"],
+ why:"GPUs now hold some of our most valuable data: model weights, and keys used by AI and other workloads. Shared GPU servers and cloud GPU instances assume one tenant's code can't read another's memory, and this research breaks that assumption.",
+ takeaway:"Hardware isn't a boundary we can take for granted. Wherever we run or share GPUs, ECC should be on, drivers patched, and multi-tenant use given a second look.",
+ ask:"Where do we share GPUs between users or workloads, and is ECC turned on there?",
+ links:[
+  ["https://gpubreach.ca","GPUBreach","The project page: summary, FAQ, disclosure timeline and mitigations."],
+  ["https://gururaj-s.github.io/assets/pdf/SP26_GPUBreach.pdf","GPUBreach paper (IEEE S&P 2026)","The full research paper."],
+  ["https://nvidia.custhelp.com/app/answers/detail/a_id/5671","NVIDIA: Rowhammer security notice","NVIDIA's guidance on Rowhammer and GPU memory."],
+  ["https://projectzero.google/2015/03/exploiting-dram-rowhammer-bug-to-gain.html","Project Zero: Exploiting the DRAM Rowhammer bug","Mark Seaborn's 2015 write-up that first turned Rowhammer into kernel privileges."]]},
+
+{id:"llm",time:"11:10",end:"11:50",room:"Room 718AB",icon:"browser",fmt:"Briefing",short:"Large Local Malware",sub:"Your local LLM as a malware engine",tags:["ai","offense"],
+ title:"Large Local Malware: Weaponizing Your Local LLM for Runtime Malware Generation",
+ speakers:[["Chaggai Heching","AI Safety & Security Researcher, ATLAS-AI Lab @ Technion"],["Ori Levy","AI Security Researcher, ATLAS-AI Lab @ Technion"],["Adar Peleg","AI Security Researcher, ATLAS-AI Lab @ Technion"]],
+ line:"The AI models vendors quietly install on our endpoints can be turned into a malware engine that lives off the land.",
+ covered:[
+  "Chrome downloads a local model, Gemini Nano, onto many machines without the user switching anything on. Vendors are putting local models into operating systems, phones and apps, mostly without asking.",
+  "Why vendors do it: it's cheap (it runs on your hardware, not theirs), fast, private and works offline, and it lets companies add AI features without building their own models. Example given: a site like Netflix could use the local model to answer questions about its catalogue right on your machine. Chrome's on-device internals page lets you query the model directly and tune its responses.",
+  "Background: prompt injection, direct and indirect, is the most common attack on any model. Morris II showed a self-replicating worm spreading between AI email agents. IBM's DeepLocker kept malware dormant until an AI model recognized its intended target. Autonomous hacking agents are now used in real attacks, and APT28 has used LLMs as part of its attack chain.",
+  "Small local models aren't good coders, but attackers can still use them: steal the weights and run their own inference, or reach the model through Chrome's DevTools Protocol from the command line. The guardrails were weak and easy to bypass.",
+  "Where they shine is understanding context. The team built a harness that let the model decide which files to read and how much, and it built a detailed profile of the user. The researcher tried it on himself.",
+  "Semantic triggers: instead of the simple checks traditional malware uses to decide when to run, the model decides based on what it understands about the machine and the person.",
+  "Code merging: the model hid attack code inside a file the user already runs, chose where to insert each piece and obfuscated it well enough to avoid detection.",
+  "The local model does the profiling, the deciding and the merging, so attackers weaponize your own data and tools. It's another living-off-the-land option, and it's hard to tell a legitimate AI action from an attacker's.",
+  "Defences discussed: remove the local model where it isn't needed; add EDR rules for this behaviour, including blocking command-line use of Chrome's DevTools Protocol; and apply zero trust, scoping local models to only the files they're working on right now."],
+ chain:{steps:["Local model already installed","Attacker reaches the model","Model profiles the user's files","Semantic trigger picks the moment","Code merged into a trusted file"],note:"The attack flow as described in the talk"},
+ program:[
+  "Malware generated at runtime by an on-device model such as Chrome's built-in AI, instead of being dropped as a file.",
+  "The model first profiles the security tools running on the host, so the payload has no file for static scanners to find and no known signature.",
+  "A demonstration of the full attack chain on a fully patched machine.",
+  "Proposed detection: monitor suspicious local AI API calls, prompt-driven code generation and unexpected child processes from trusted applications."],
+ concepts:["localmodel","gemininano","promptinjection","semantictrigger","lotl","devtools"],
+ why:"Many endpoints may already carry a local model nobody approved, and it can read files and write code. Security tools are built to catch malicious files and known signatures; malware written on the device by a trusted app's model has neither, so detection has to watch behaviour instead.",
+ takeaway:"These are the worst models that will ever run on our endpoints. They'll only get more capable, so now is the time to find where local models exist and limit what they can touch.",
+ ask:"Do we know which of our managed devices have a local AI model installed, and what it's allowed to read?",
+ links:[
+  ["https://developer.chrome.com/docs/ai/built-in","Chrome for Developers: Built-in AI","How Chrome's on-device models and AI APIs work, including Gemini Nano."],
+  ["https://arxiv.org/abs/2403.02817","Here Comes the AI Worm (Morris II)","The research paper on self-replicating worms that spread between AI agents."],
+  ["https://genai.owasp.org/llmrisk/llm01-prompt-injection/","OWASP: LLM01 Prompt Injection","Types, impacts and mitigations for prompt injection."],
+  ["https://infocondb.org/con/black-hat/black-hat-usa-2018/deeplocker-concealing-targeted-attacks-with-ai-locksmithing","IBM DeepLocker (Black Hat USA 2018)","The talk that showed AI-triggered, targeted malware."]]},
+
+{id:"pen",time:"2:25",end:"3:05",room:"Room 701B",icon:"check",fmt:"Briefing",short:"AI pentest pipeline",sub:"Verification is the new bottleneck",tags:["ai","offense"],
+ title:"The Model Isn't the Bottleneck: Building an AI Pentest Pipeline When You're Not in Mythos",
+ speakers:[["Rahul Jaisinghani","Lead Security Engineer, BrowserStack"]],
+ line:"AI made finding vulnerabilities cheap. Proving they're real is now the slow, expensive part.",
+ covered:[
+  "The old equation: a traditional pentest is roughly 5 days, 3 apps and 10,000 possible paths, with the tester constantly deciding where to look and what to abandon. Coverage = human capability × time.",
+  "Attackers, bug bounty hunters, scanner vendors and the engineers writing our code all use AI now, so defenders should too. AI removed the time limit: Coverage = AI compute × human judgment.",
+  "Every bottleneck you remove exposes the next one. Discovery and execution got fast, and the time moved to verification. Finding got cheap, proving didn't, and proof replaces reputation.",
+  "The Mythos numbers, as presented: 29,439 vulnerabilities found, 6,123 reviewed, 516 patched. Human triage is the rate-limiting step. Firefox went from 2 to 181 vulnerabilities found, and an OpenBSD bug up to 27 years old took about 1,000 runs and $20,000 to find. The UK AI Security Institute saw the full attack chain succeed only 3 times in 10.",
+  "The model is the engine and the harness is the body of the car, and their contribution is closer to 50/50 than people assume. With the same model but different tools, detection went from 5% to 30% to 45%.",
+  "A vulnerability is a claim until it's proven, and plausibility isn't proof. Build the system around proof: the model is one box, and an independent verifier at the core re-proves every finding.",
+  "Know whether you're testing production or a dev copy the AI spun up. Without real production context, you risk hallucinated vulnerabilities.",
+  "The pipeline (below): a context layer with approved scope, repositories, architecture docs, a STRIDE or ATT&CK threat model and lessons from past engagements; a mapper that maps once; hunters that each own one vulnerability; a chain synthesizer; a pentest agent for recon, payload generation, a safety gate and exploit execution; then an independent verifier that replays every finding to a pass or fail before human review and a structured report.",
+  "Agents share findings to sharpen each other's context, and signals track which tests actually ran versus which were simply blocked.",
+  "Results after adding the verifier: 60% less analyst time, 100% of findings independently replayed, 90% lower cost per verified finding and 94% coverage, with 60% of findings rated high or critical.",
+  "Pentesting is now a search-budget problem: exploit (go deep on known weaknesses) or explore (look for new attack surface)."],
+ stats:[["60%","Less analyst time once the verifier was added"],["90%","Lower cost per verified finding"],["94%","Coverage with the full pipeline"]],
+ chain:{steps:["Context & scope","Mapper","Hunters","Chain synthesizer","Pentest agent","Independent verifier","Human review & report"],note:"The pipeline as presented"},
+ program:[
+  "How to build an AI-assisted pentest pipeline without access to frontier models like Anthropic's Mythos.",
+  "A four-agent white-box scanner, an eleven-subagent Claude Code plugin, an evaluation harness, and cost and accuracy metrics.",
+  "An early phase with a false-positive rate around 70%, and the fixes that brought it down.",
+  "The goal: have the AI prove that a specific suspected vulnerability is actually exploitable."],
+ concepts:["verifier","harness","mythos","exploreexploit"],
+ why:"Whether we run AI testing ourselves or receive AI-generated findings from vendors and bug bounty programs, the volume will outrun our ability to triage. Unverified findings waste engineering time; a verification step is what turns AI output into work worth acting on.",
+ takeaway:"“Buy the hunter, own the verifier.” Discovery tools will keep improving and are easy to buy. The proof step is where our own context and judgment matter.",
+ ask:"When an AI tool or a bug bounty report hands us a finding, how do we prove it's real before engineers spend time on it?",
+ links:[
+  ["https://www.anthropic.com/glasswing","Anthropic: Project Glasswing","The program behind the Mythos vulnerability numbers."],
+  ["https://www.anthropic.com/news/expanding-project-glasswing","Anthropic: Expanding Project Glasswing","The 2026 expansion and reported findings in partner codebases."],
+  ["https://www.computing.co.uk/news/2026/security/claude-mythos-preview-shows-unprecedented-attack-capability","Computing: AI Security Institute on Mythos Preview","Coverage of the UK AISI's evaluation of Mythos attack capability."]]}
+];
+
+const DAY=[
+ ["8:00","Breakfast",null,"coffee"],
+ "k1","gpu","llm",
+ ["11:45","Lunch",null,"coffee"],
+ "pen",
+ ["3:05","Refreshment break",null,"coffee"],
+ ["3:25","Missed this slot","Five talks, including three years of LLM-assisted pentesting under NDA","x"],
+ ["4:20","Missed this slot","Five talks, including Demystifying EDR Evasion","x"]
+];
+
+const QUIZ=[
+ {s:"k1",q:"What did Citizen Lab capture when it opened the links texted to Ahmed Mansoor in a sandbox?",o:["Ransomware from a criminal gang","NSO Group's Pegasus spyware and the iPhone zero-days it used","A phishing kit that stole passwords","Adware bundled with a fake app"],a:1,e:"The 2016 discovery led to emergency Apple patches and started a decade of Pegasus investigations."},
+ {s:"k1",q:"What makes a zero-click exploit like the one used against Loujain al-Hathloul so dangerous?",o:["It only works on jailbroken phones","It needs the target to open an attachment","It infects the device with no interaction from the target","A VPN blocks it"],a:2,e:"No click, no interaction, any device. The only defence is the vendor's patch, which is why these discoveries matter to everyone."},
+ {s:"k1",q:"Why did Deibert say civil society gets so little coverage in commercial threat intelligence?",o:["Attacks on it are rare","Civil society isn't a paying client","Governments forbid reporting on it","The attacks use no malware"],a:1,e:"Only 82 of 629 reports he reviewed covered threats to civil society. Threat intel follows the customers who pay for it."},
+ {s:"gpu",q:"What is Rowhammer?",o:["A password-spraying technique","Rapidly accessing memory rows so charge leaks and flips bits in neighbouring rows","A GPU overclocking exploit","A network flood attack"],a:1,e:"It's been known for a decade on CPUs, and each new memory generation needs fewer accesses to cause a flip."},
+ {s:"gpu",q:"Which GPU structure does GPUBreach corrupt to gain arbitrary memory access?",o:["The shader cache","Page tables that map virtual to physical addresses","The display buffer","Fan controller firmware"],a:1,e:"Flipping a bit in a page-table entry let an unprivileged program read and write all of GPU memory."},
+ {s:"gpu",q:"How did GPUBreach get from the GPU to root on the host?",o:["By guessing an admin password","Through a driver that trusted data copied from the GPU without sanitizing it","By physically swapping the GPU","Through a phishing email"],a:1,e:"The unsanitized copy allowed a buffer overflow that overwrote driver pointers, even with the IOMMU enabled."},
+ {s:"llm",q:"Why are vendors putting AI models directly on devices?",o:["Regulations require it","It's cheap, fast and private, and runs on the user's hardware","Cloud AI has been banned","To replace antivirus"],a:1,e:"Vendors save on compute and get AI features without building their own models. Most don't ask first."},
+ {s:"llm",q:"What is a “semantic trigger”?",o:["A keyword that unlocks a software licence","Malware that fires based on what a model understands about the machine and user","A Chrome setting","A type of SQL injection"],a:1,e:"Instead of a fixed check, the model decides when to act, which makes the behaviour much harder to predict or detect."},
+ {s:"llm",q:"Which defence did the researchers recommend for local models?",o:["Give them admin rights so EDR can watch them","Scope them to only the files they're working on, and remove them where not needed","Run them only after hours","Disable the GPU"],a:1,e:"Zero trust for models: local models have far too much freedom today. EDR rules for this behaviour help too."},
+ {s:"pen",q:"According to Rahul Jaisinghani, what is the new bottleneck in AI-driven pentesting?",o:["Model quality","Compute cost","Verifying that findings are real","Finding targets"],a:2,e:"Mythos found 29,439 vulnerabilities but only 516 were patched, as presented. Human triage is the rate-limiting step."},
+ {s:"pen",q:"What does “Buy the hunter, own the verifier” mean?",o:["Outsource everything to vendors","Discovery tools are easy to buy; the step that proves findings should be your own","Only hire senior pentesters","Train your own model"],a:1,e:"The proof step is where your own context, scope and judgment make the difference."},
+ {s:"pen",q:"What happened when the same model was given different tools on each run?",o:["Nothing; only the model matters","Detection rose from 5% to 30% to 45%","It found fewer bugs","Costs tripled"],a:1,e:"The harness matters about as much as the model. He compared the model to an engine and the harness to the car's body."}
+];
+
+const PHOTO={};
+
+/* speaker extras: company, verified company site, known location, direct LinkedIn where confirmed */
+const UOFT={co:"University of Toronto",site:"https://www.utoronto.ca"};
+const TECH={co:"ATLAS-AI Lab, Technion",site:"https://www.technion.ac.il"};
+const SP={
+ "Ron Deibert":{co:"The Citizen Lab",site:"https://citizenlab.ca"},
+ "Chaggai Heching":TECH,"Ori Levy":TECH,"Adar Peleg":TECH,
+ "Rahul Jaisinghani":{co:"BrowserStack",site:"https://www.browserstack.com"},
+ "Gururaj Saileshwar":UOFT,"Chris S. Lin":UOFT,"Yuqin Yan":UOFT,"Guozhen Ding":UOFT,"Joyce Qu":UOFT,"David Lie":UOFT,
+ "Joseph Zhu":{co:"Google"}
+};
+
+const hue=n=>[...n].reduce((h,c)=>(h*31+c.charCodeAt(0))%360,7);
+function speaker(n,r){
+  const x=SP[n]||{},li=x.li||`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(n+" "+(x.co||""))}`;
+  return `<div class="spk">${PHOTO[n]?`<img class="av photo" src="data:image/jpeg;base64,${PHOTO[n]}" alt="${esc(n)}" width="88" height="88" loading="lazy">`:`<span class="av" style="--h:${hue(n)}" aria-hidden="true">${initials(n)}</span>`}<div>
+    <b>${hl(n)}</b><small>${hl(r)}</small>
+    <span class="spk-links">${x.loc?`<span class="loc">${ic("pin")}${esc(x.loc)}</span>`:""}
+      <a href="${li}" target="_blank" rel="noopener" title="${x.li?"LinkedIn profile":"Find on LinkedIn"}">${ic("li")}LinkedIn</a>
+      ${x.site?`<a href="${x.site}" target="_blank" rel="noopener" title="${esc(x.co)} website">${ic("globe")}${esc(x.co)}</a>`:""}</span>
+  </div></div>`;
+}
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const byId=Object.fromEntries(S.map(s=>[s.id,s]));
+const initials=n=>n.split(" ").map(w=>w[0]).slice(0,2).join("");
+const TAGI={offense:"target",cloud:"cloud",agents:"bot",governance:"scale"};
+
+/* hero word split */
+(()=>{const h=$("#h1");let k=0;h.querySelectorAll(":scope > *, :scope").forEach(()=>{});
+  const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(w=>{if(!w.trim()){f.append(w);return}const s=document.createElement("span");s.className="w";s.style.animationDelay=(k++*70)+"ms";s.textContent=w;f.append(s)});c.replaceWith(f)}else walk(c)})};walk(h);})();
+
+/* agenda */
+$("#agenda").innerHTML=DAY.map(d=>{
+  if(typeof d==="string"){const s=byId[d];return `<li><time>${s.time}</time><i class="pin"></i><a href="#${s.id}"><span class="pin-i">${ic(s.icon)}</span><span><b>${esc(s.short)}</b><small>${esc(s.speakers.map(x=>x[0]).join(", "))}</small><span class="faces" aria-hidden="true">${s.speakers.filter(x=>PHOTO[x[0]]).map(x=>`<img src="data:image/jpeg;base64,${PHOTO[x[0]]}" alt="">`).join("")}</span></span></a></li>`}
+  return `<li class="brk"><time>${d[0]}</time><i class="pin"></i><div class="row"><span class="pin-i">${ic(d[3])}</span><span><b>${esc(d[1])}</b>${d[2]?`<small>${esc(d[2])}</small>`:""}</span></div></li>`}).join("");
+
+/* glossary */
+$("#gloss").innerHTML=Object.entries(GLOSS).sort((a,b)=>a[1][0].localeCompare(b[1][0])).map(([k,[t,d,i]])=>`<div id="g-${k}" class="rv"><dt>${ic(i)}${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join("");
+
+/* sessions */
+let query="",tag="all";const tabState={};
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+function hl(t){const safe=esc(t);if(!query)return safe;return safe.replace(new RegExp("("+reEsc(esc(query))+")","gi"),"<mark>$1</mark>");}
+const txt={
+  head:s=>[s.title,s.line,s.fmt,...s.speakers.flat(),...s.tags].join(" "),
+  notes:s=>[...s.covered,s.why,s.takeaway||"",s.ask,...s.concepts.map(c=>GLOSS[c][0]),...(s.chain?s.chain.steps:[]),...(s.stats?s.stats.flat():[])].join(" "),
+  program:s=>s.program.join(" "),
+  reading:s=>s.links.map(l=>l[1]+" "+l[2]).join(" ")
+};
+const has=(t,q)=>t.toLowerCase().includes(q);
+function panel(s,which){
+  if(which==="program") return `<div class="panel prog">
+    <div class="pmeta"><span>${ic("clock")}${s.time}–${s.end}</span><span>${ic("pin")}${esc(s.room)}</span><span>${ic("mic")}${esc(s.fmt)}</span></div>
+    <div><p class="label">${ic("note")}What the program promised</p><ul class="bul">${s.program.map(c=>`<li>${hl(c)}</li>`).join("")}</ul></div>
+    <a class="official" href="${s.url||OFFICIAL}" target="_blank" rel="noopener">${ic("ext")}Official session listing</a></div>`;
+  if(which==="reading") return `<div class="panel"><div class="links">${s.links.map(([u,t,d])=>`<a href="${u}" target="_blank" rel="noopener">${ic("ext")}<strong>${hl(t)}</strong><span>${hl(d)}</span></a>`).join("")}</div></div>`;
+  return `<div class="panel">
+    <div><p class="label">${ic("check")}What was covered</p><ul class="bul">${s.covered.map(c=>`<li>${hl(c)}</li>`).join("")}</ul></div>
+    ${s.stats?`<div class="stats">${s.stats.map(([b,t])=>`<div class="stat"><b data-count>${hl(b)}</b><span>${hl(t)}</span></div>`).join("")}</div>`:""}
+    ${s.chain?`<div class="chain"><ol>${s.chain.steps.map((x,k)=>`<li style="--k:${k}">${hl(x)}</li>`).join("")}</ol><small>${esc(s.chain.note)}</small></div>`:""}
+    <div><p class="label">${ic("spark")}Key concepts</p><div class="concepts">${s.concepts.map(c=>`<a class="concept" href="#g-${c}">${hl(GLOSS[c][0])}</a>`).join("")}</div></div>
+    <div><p class="label">${ic("bolt")}Why it matters</p><p>${hl(s.why)}</p></div>
+    ${s.takeaway?`<div class="takeaway"><p class="label">${ic("key")}My takeaway</p><p>${hl(s.takeaway)}</p></div>`:""}
+    <p class="ask">${ic("q")}<span><strong>Ask yourself:</strong> ${hl(s.ask)}</span></p></div>`;
+}
+function card(s,i){
+  const q=query.toLowerCase();
+  const hits={notes:q&&has(txt.notes(s),q),program:q&&has(txt.program(s),q),reading:q&&has(txt.reading(s),q)};
+  let t=tabState[s.id]||"notes";
+  if(q&&!hits[t]){t=["notes","program","reading"].find(k=>hits[k])||t}
+  const tab=(k,label,icon)=>`<button class="tab" role="tab" aria-selected="${t===k}" data-s="${s.id}" data-t="${k}">${ic(icon)}${label}${hits[k]?'<i class="hit" title="Has matches"></i>':""}</button>`;
+  return `<article class="session rv" id="${s.id}">
+  <div class="s-top">
+    <div class="s-icon">${ic(s.icon)}<span class="n">${String(i+1).padStart(2,"0")}</span></div>
+    <div class="s-head">
+      <div class="s-meta"><span class="s-time">${ic("clock")}${s.time}–${s.end}</span><span class="fmt">${esc(s.fmt)}</span>${s.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+      <h3>${hl(s.title)}</h3>
+      <div class="speakers">${s.speakers.map(([n,r])=>speaker(n,r)).join("")}</div>
+    </div>
+  </div>
+  <p class="oneline">${hl(s.line)}</p>
+  <div class="tabs" role="tablist" aria-label="${esc(s.title)}">${tab("notes","My notes","note")}${tab("program","Program","mic")}${tab("reading",`Reading (${s.links.length})`,"book")}</div>
+  <div class="panel-wrap">${panel(s,t)}</div>
+  </article>`;
+}
+function render(){
+  const q=query.toLowerCase();
+  const all=s=>Object.values(txt).map(f=>f(s)).join(" ");
+  const shown=S.filter(s=>(tag==="all"||s.tags.includes(tag))&&(!q||has(all(s),q)));
+  $("#list").innerHTML=shown.length?shown.map(s=>card(s,S.indexOf(s))).join(""):`<div class="empty">${ic("search")}<p>No sessions match${query?` “${esc(query)}”`:""}${tag!=="all"?` in ${tag}`:""}.</p><button class="btn ghost" id="clear">${ic("retry")}Clear search and filters</button></div>`;
+  $("#count").textContent=`${shown.length} of ${S.length} sessions`;
+  const c=$("#clear");if(c)c.onclick=()=>{query="";$("#q").value="";setTag("all")};
+  observeCounts();
+}
+$("#list").addEventListener("click",e=>{
+  const b=e.target.closest(".tab");if(!b)return;
+  const s=byId[b.dataset.s];tabState[s.id]=b.dataset.t;
+  const art=b.closest(".session");
+  art.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===b));
+  art.querySelector(".panel-wrap").innerHTML=panel(s,b.dataset.t);observeCounts();
+});
+function setTag(t){tag=t;document.querySelectorAll(".chipbtn").forEach(b=>b.setAttribute("aria-pressed",b.dataset.tag===t));render();}
+document.querySelectorAll(".chipbtn").forEach(b=>b.addEventListener("click",()=>setTag(b.dataset.tag)));
+$("#q").addEventListener("input",e=>{query=e.target.value.trim();render();});
+
+/* count-up numbers (resting text is already the final value) */
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const cio="IntersectionObserver" in window?new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;cio.unobserve(en.target);countUp(en.target)}),{threshold:.6}):null;
+function observeCounts(){if(!cio||reduce)return;document.querySelectorAll("[data-count]:not([data-done])").forEach(el=>{if(el.querySelector("mark"))return;el.dataset.done=1;cio.observe(el)})}
+function countUp(el){
+  const full=el.textContent,m=full.match(/[\d,.]+/);if(!m)return;
+  const raw=m[0].replace(/,/g,""),target=parseFloat(raw),dec=(raw.split(".")[1]||"").length,pre=full.slice(0,m.index),post=full.slice(m.index+m[0].length);
+  const t0=performance.now(),dur=1100;
+  const step=t=>{const p=Math.min(1,(t-t0)/dur),v=target*(1-Math.pow(1-p,3));el.textContent=pre+v.toFixed(dec)+post;if(p<1)requestAnimationFrame(step);else el.textContent=full};
+  requestAnimationFrame(step);
+}
+render();
+
+/* reading progress */
+const rb=$("#readbar");
+addEventListener("scroll",()=>{const h=document.documentElement;rb.style.setProperty("--p",(h.scrollTop/((h.scrollHeight-h.clientHeight)||1)).toFixed(3))},{passive:true});
+
+/* hero network canvas */
+(()=>{
+  const cv=$("#net"),cx=cv.getContext("2d");let W,H,dpr,nodes=[],edges=[],packets=[],col,colP;
+  const readCol=()=>{const cs=getComputedStyle(document.documentElement);col=cs.getPropertyValue("--net").trim();colP=cs.getPropertyValue("--signal").trim();};
+  function build(){
+    dpr=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(Math.min(46,Math.max(18,W*H/26000)));
+    nodes=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,r:Math.random()*1.6+1}));
+    edges=[];nodes.forEach((a,i)=>{nodes.map((b,j)=>[j,Math.hypot(a.x-b.x,a.y-b.y)]).filter(([j])=>j!==i).sort((p,q)=>p[1]-q[1]).slice(0,2).forEach(([j])=>{if(!edges.some(e=>(e[0]===j&&e[1]===i)))edges.push([i,j])})});
+    packets=[];
+  }
+  function draw(dt){
+    cx.clearRect(0,0,W,H);cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=1;
+    edges.forEach(([i,j])=>{const a=nodes[i],b=nodes[j];cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()});
+    nodes.forEach(n=>{cx.beginPath();cx.arc(n.x,n.y,n.r,0,7);cx.fill()});
+    if(!dt)return;
+    nodes.forEach(n=>{n.x+=n.vx*dt;n.y+=n.vy*dt;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1});
+    if(packets.length<9&&Math.random()<.06){const e=edges[Math.floor(Math.random()*edges.length)];if(e)packets.push({e,t:0,s:.0012+Math.random()*.0016})}
+    cx.fillStyle=colP;cx.shadowColor=colP;cx.shadowBlur=10;
+    packets=packets.filter(p=>{p.t+=p.s*dt;if(p.t>=1){const nxt=edges.filter(x=>x[0]===p.e[1]);if(nxt.length&&Math.random()<.8){p.e=nxt[Math.floor(Math.random()*nxt.length)];p.t=0}else return false}
+      const a=nodes[p.e[0]],b=nodes[p.e[1]];cx.beginPath();cx.arc(a.x+(b.x-a.x)*p.t,a.y+(b.y-a.y)*p.t,2.2,0,7);cx.fill();return true});
+    cx.shadowBlur=0;
+  }
+  readCol();build();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>{readCol();draw(0)});
+  new MutationObserver(()=>{readCol();draw(0)}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  addEventListener("resize",()=>{build();draw(0)});
+  if(reduce){draw(0);return}
+  let last=performance.now(),vis=true;
+  new IntersectionObserver(([e])=>{vis=e.isIntersecting}).observe(cv);
+  const loop=t=>{const dt=Math.min(50,t-last);last=t;if(vis&&!document.hidden)draw(dt);requestAnimationFrame(loop)};
+  draw(0);requestAnimationFrame(loop);
+})();
+
+/* quiz */
+let qi=0,score=0,answers=[];
+const box=$("#quizbox");
+const pips=()=>`<div class="pips" aria-hidden="true">${QUIZ.map((_,i)=>{const a=answers[i];return `<i class="pip ${a?(a.ok?"ok":"no"):(i===qi?"cur":"")}"></i>`}).join("")}</div>`;
+function drawQ(){
+  const item=QUIZ[qi];
+  box.innerHTML=`<div class="q-top"><span>Question ${qi+1} of ${QUIZ.length}</span>${pips()}<span>Score ${score}</span></div>
+  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="${QUIZ.length}" aria-valuenow="${qi}"><i style="width:${qi/QUIZ.length*100}%"></i></div>
+  <p class="q-text">${esc(item.q)}</p>
+  <div class="opts">${item.o.map((o,i)=>`<button class="opt" data-i="${i}" style="--k:${i}"><span class="k">${"ABCD"[i]}</span><span>${esc(o)}</span><span class="res"></span></button>`).join("")}</div>
+  <div id="fb"></div>`;
+  box.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>choose(+b.dataset.i)));
+}
+function choose(i){
+  const item=QUIZ[qi],ok=i===item.a;
+  if(ok)score++;
+  answers[qi]={ok};
+  box.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;const r=b.querySelector(".res");
+    if(j===item.a){b.classList.add("right");r.innerHTML=ic("check")}else if(j===i){b.classList.add("wrong");r.innerHTML=ic("x")}else b.classList.add("dim")});
+  box.querySelector(".q-top").innerHTML=`<span>Question ${qi+1} of ${QUIZ.length}</span>${pips()}<span>Score ${score}</span>`;
+  box.querySelector(".progress i").style.width=`${(qi+1)/QUIZ.length*100}%`;
+  const last=qi===QUIZ.length-1;
+  $("#fb").innerHTML=`<div class="feedback ${ok?"ok":"no"}"><strong>${ic(ok?"check":"x")}${ok?"Correct.":"Not quite. The answer is "+"ABCD"[item.a]+"."}</strong><p>${esc(item.e)}</p><a href="#${item.s}">${ic("arrow")}Review: ${esc(byId[item.s].title)}</a></div>
+  <div class="q-actions" style="margin-top:1rem"><button class="btn" id="next">${last?"See my score":"Next question"}${ic("arrow")}</button></div>`;
+  const n=$("#next");n.focus({preventScroll:true});n.onclick=()=>{qi++;last?drawResult():drawQ()};
+}
+function drawResult(){
+  const pct=score/QUIZ.length,C=2*Math.PI*52;
+  const [title,msg]=pct===1?["Perfect score","You've got the day covered."]:pct>=.75?["Strong result","Review the ones you missed below."]:pct>=.5?["Good start","The sessions below are worth a second look."]:["Worth another pass","Read the brief and the sessions you missed, then try again."];
+  const missed=answers.map((a,i)=>({a,i})).filter(x=>!x.a.ok);
+  box.innerHTML=`<div class="result">
+  <div class="q-top"><span>Complete</span>${pips()}<span>Score ${score}</span></div>
+  <div class="score">
+    <div class="ring"><svg viewBox="0 0 120 120"><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--signal)"/></linearGradient></defs><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="arc" cx="60" cy="60" r="52" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><b>${score}/${QUIZ.length}</b></div>
+    <div><h3>${title}</h3><p>${msg}</p></div>
+  </div>
+  ${missed.length?`<div><p class="label">${ic("retry")}Review these</p><ul class="missed">${missed.map(({i})=>{const it=QUIZ[i];return `<li>${esc(it.q)}<a href="#${it.s}">${ic("arrow")}${esc(byId[it.s].title)}</a></li>`}).join("")}</ul></div>`:""}
+  <div class="q-actions" style="justify-content:flex-start"><button class="btn" id="restart">${ic("retry")}Restart quiz</button></div></div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{$("#arc").style.strokeDashoffset=C*(1-pct)}));
+  $("#restart").onclick=()=>{qi=0;score=0;answers=[];drawQ();box.scrollIntoView({block:"start"})};
+}
+drawQ();
+</script>
+
+</body>
+</html>
