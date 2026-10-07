@@ -794,7 +794,7 @@ const SP={
  "Brian Deitch":{co:"Zscaler",site:"https://www.zscaler.com"},
  "Alessandro Brucato":{co:"Tracebit",site:"https://tracebit.com"},
  "Yigael Berger":{co:"Sweet Security",site:"https://www.sweet.security"},
- "Helen Oakley":{co:"AI & Cybersecurity"},
+ "Helen Oakley":{co:"AI security"},
  "Francis Odum":{co:"Software Analyst Cyber Research",site:"https://substack.com/@softwareanalyst"},
  "Ian Paterson":{co:"Plurilock",site:"https://plurilock.com"},
  "Guillaume Ross":{co:"Caffeine Security",loc:"Montreal, QC"},
@@ -809,11 +809,11 @@ const SP={
 const LIQ={"Matt Johansen":"Matt Johansen Vulnerable U","Eric Broda":"Eric Broda","Rachel Clark":"Rachel Clark SKADI","Brian Deitch":"Brian Deitch Zscaler","Alessandro Brucato":"Alessandro Brucato Tracebit","Yigael Berger":"Yigael Berger","Helen Oakley":"Helen Oakley","Francis Odum":"Francis Odum","Ian Paterson":"Ian Paterson Plurilock","Guillaume Ross":"Guillaume Ross","Kunal Modasiya":"Kunal Modasiya","Jay Thurston":"Jay Thurston Thales","Fernando Tucci":"Fernando Tucci","Ryoji Betchaku":"Ryoji Betchaku","Ali Dehghantanha":"Ali Dehghantanha","Iain Paterson":"Iain Paterson WELL Health","Olivera Zatezalo":"Olivera Zatezalo"};
 const hue=n=>[...n].reduce((h,c)=>(h*31+c.charCodeAt(0))%360,7);
 function speaker(n,r){
-  const x=SP[n]||{},li=x.li||`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(LIQ[n]||n)}`;
+  const x=SP[n]||{},li=x.li||`https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/in "${n==="Chris S. Lin"?"Shaopeng Lin":n}" ${(x.co||"").replace(/[&,()]/g," ")}`)}`;
   return `<div class="spk">${PHOTO[n]?`<img class="av photo" src="data:image/jpeg;base64,${PHOTO[n]}" alt="${esc(n)}" width="88" height="88" loading="lazy">`:`<span class="av" style="--h:${hue(n)}" aria-hidden="true">${initials(n)}</span>`}<div>
     <b>${hl(n)}</b><small>${hl(r)}</small>
     <span class="spk-links">${x.loc?`<span class="loc">${ic("pin")}${esc(x.loc)}</span>`:""}
-      <a href="${li}" target="_blank" rel="noopener" title="${x.li?"LinkedIn profile":"Search LinkedIn for "+esc(n)}">${ic("li")}LinkedIn</a>
+      <a href="${li}" target="_blank" rel="noopener" title="${x.li?"LinkedIn profile":"Find "+esc(n)+" on LinkedIn"}">${ic("li")}LinkedIn</a>
       ${x.site?`<a href="${x.site}" target="_blank" rel="noopener" title="${esc(x.co)} website">${ic("globe")}${esc(x.co)}</a>`:""}</span>
   </div></div>`;
 }
