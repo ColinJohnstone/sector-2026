@@ -14,9 +14,11 @@ Static HTML, no build step. Each day is a self-contained `index.html` (fonts fro
 ## Adding a day
 
 1. Create `day-N/index.html`.
-2. In `index.html`, turn that day's placeholder `<div class="day pending">` into `<a class="day" href="/day-N/">` and change the status chip to `Read now`.
-3. Push to `main`. Vercel redeploys automatically.
+2. In `index.html`, turn that day's placeholder `<div class="day pending">` into `<a class="day" href="day-N/">` and change the status chip to `Read now`.
+3. Push to `main`. GitHub Pages republishes automatically within a minute or two.
+
+Keep links relative (`day-N/`, `../`): the site is served from a sub-path, `https://<user>.github.io/sector-2026/`.
 
 ## Deploy
 
-Vercel project imported from this repo with the **Other** framework preset, no build command, output directory `.` (repo root).
+GitHub Pages: Settings → Pages → Deploy from a branch → `main`, folder `/ (root)`. `.nojekyll` tells Pages to serve the files as-is.
