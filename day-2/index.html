@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Colin Johnstone's notes from Day 2 of SecTor 2026: the Citizen Lab keynote, local LLM malware, GPU Rowhammer and AI pentest verification.">
+<meta name="description" content="Colin Johnstone's notes from Day 2 of SecTor 2026: the Citizen Lab keynote, local LLM malware, GPU Rowhammer, AI pentest verification, web archive tampering and an Azure AI gateway attack.">
 <title>SecTor 2026 Day 2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=JetBrains+Mono:wght@500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
 /* Layout: dark operations-console briefing. Animated network hero, then a single reading column (~48rem); sessions are tabbed runbook cards; quiz closes the page. */
 :root{
@@ -299,9 +299,10 @@ mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1p
 .trio .tn{text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
 .trio .tn:hover{border-color:var(--accent);transform:translateY(-2px)}
 .trio .yr{display:flex;align-items:center;gap:.4rem}
-.trio .yr svg.i{color:var(--signal)}
 .trio b{font-size:1.15rem}
 @media (max-width:760px){.trio{grid-template-columns:1fr}}
+.home-link{color:var(--ink)!important;border:1px solid var(--line);margin-right:.35rem}
+.home-link svg.i{transform:rotate(180deg)}
 .page-foot{padding-block:2.5rem 3rem;color:var(--muted);font-size:.88rem;display:grid;gap:.35rem}
 
 @media (prefers-reduced-motion:reduce){
@@ -321,6 +322,60 @@ mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1p
   .agenda ol::before{left:4.1rem}
   .agenda li{grid-template-columns:3.3rem 1.5rem 1fr}
 }
+/* ===== Day 2 identity: "memory chip". Graphite + amber, teal for flipped bits; condensed grotesque display, mono figures, square corners, dot-grid ground. ===== */
+:root{
+  --bg:#0d0e11; --bg2:#121419; --surface:#15181e; --surface2:#1b1f26; --ink:#ecebe6; --muted:#a19e96; --line:#272b33;
+  --accent:#f0a63a; --accent-ink:#1b1204; --accent-soft:rgba(240,166,58,.13); --signal:#4fd0c1; --signal-soft:rgba(79,208,193,.12);
+  --mark:#6a4a00; --mark-ink:#fff3d6; --net:rgba(240,166,58,.30); --glow:rgba(240,166,58,.10); --avL:72%; --dot:rgba(236,235,230,.055);
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#eef0f2; --bg2:#e5e8ec; --surface:#ffffff; --surface2:#f5f6f8; --ink:#16181c; --muted:#585c64; --line:#d6d9df;
+  --accent:#9a5500; --accent-ink:#ffffff; --accent-soft:rgba(154,85,0,.09); --signal:#0b766b; --signal-soft:rgba(11,118,107,.09);
+  --mark:#ffe08a; --mark-ink:#16181c; --net:rgba(154,85,0,.2); --glow:rgba(154,85,0,.07); --avL:32%; --dot:rgba(22,24,28,.07); color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#eef0f2; --bg2:#e5e8ec; --surface:#ffffff; --surface2:#f5f6f8; --ink:#16181c; --muted:#585c64; --line:#d6d9df;
+  --accent:#9a5500; --accent-ink:#ffffff; --accent-soft:rgba(154,85,0,.09); --signal:#0b766b; --signal-soft:rgba(11,118,107,.09);
+  --mark:#ffe08a; --mark-ink:#16181c; --net:rgba(154,85,0,.2); --glow:rgba(154,85,0,.07); --avL:32%; --dot:rgba(22,24,28,.07); color-scheme:light}
+
+body{background-color:var(--bg);background-image:radial-gradient(var(--dot) 1px,transparent 1.2px);background-size:22px 22px}
+.hero{background:radial-gradient(50rem 26rem at 90% 0%,var(--glow),transparent 70%)}
+.hero h1{font-weight:800;font-stretch:82%;letter-spacing:-.015em;line-height:.95;font-size:clamp(2.6rem,9vw,5.4rem)}
+.hero h1 em::after{background:var(--signal)}
+h2{font-stretch:88%;font-weight:780}
+h3{font-stretch:92%}
+.brand{font-family:var(--mono);font-weight:600;letter-spacing:-.02em}
+.brand .dot{background:var(--signal);border-radius:1px;animation:blink 1.6s steps(1) infinite;box-shadow:none}
+@keyframes blink{50%{opacity:.25}}
+
+/* square, engineered corners */
+.idea,.session,.quiz,.tn,.six>div,.numbers,.stat,.spk,.gloss div,.takeaway,.ask,.opt,.opt .k,.feedback,.btn,.search input,.howto a,.missed li,.empty,blockquote,.s-icon,.ico,.pin-i,.bar nav a,.agenda a,.agenda .row{border-radius:3px}
+.chipbtn,.concept,.fmt,.tag,.s-icon .n,.progress,.progress i,.pip{border-radius:2px}
+.agenda .pin{border-radius:1px;transform:rotate(45deg)}
+
+/* figures read like instrument output */
+.num b,.stat b,.ring b,.score b{font-family:var(--mono);font-weight:600;font-stretch:100%;letter-spacing:-.03em}
+.num b{font-size:clamp(1.4rem,3.6vw,1.85rem)}
+.stat b{font-size:1.45rem}
+
+blockquote{background:var(--surface);border-left:3px solid var(--accent)}
+blockquote::before{content:"//";font-family:var(--mono);font-size:1.6rem;top:.55rem;left:auto;right:1rem;opacity:.35}
+blockquote p{font-stretch:90%}
+
+.session{border-top:1px solid var(--line)}
+.s-top{background:linear-gradient(180deg,var(--bg2),transparent)}
+.s-icon{background:transparent;border:1px dashed color-mix(in srgb,var(--accent) 55%,transparent)}
+.oneline{border-left-color:var(--signal)}
+.tab::after{height:3px}
+.chain li{font-family:var(--mono);font-size:.76rem}
+@keyframes lit{0%,12%{background:var(--surface2);color:var(--ink)}5%{background:var(--signal);color:var(--bg)}}
+.bul li::before{border-radius:0;transform:none;width:.45rem;height:.45rem;top:.6em}
+.prog .bul li::before{background:transparent;border:1.5px solid var(--signal)}
+.trio .yr svg.i{color:var(--accent)}
+.bar nav a.quiz-link{border-radius:3px}
 </style>
 
 </head>
@@ -370,6 +425,7 @@ mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1p
 <header class="bar"><div class="bar-in">
   <a class="brand" href="../" style="color:inherit;text-decoration:none" title="All days"><i class="dot"></i>SecTor <span>2026</span></a>
   <nav aria-label="Page sections">
+    <a href="../" class="home-link"><svg class="i"><use href="#i-arrow"/></svg>All days</a>
     <a href="#brief"><svg class="i"><use href="#i-bolt"/></svg>Brief</a>
     <a href="#sessions"><svg class="i"><use href="#i-note"/></svg>Sessions</a>
     <a href="#remember"><svg class="i"><use href="#i-key"/></svg>Remember</a>
@@ -433,8 +489,8 @@ mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1p
 <section id="sessions"><div class="wrap">
   <div class="sec-head rv">
     <p class="eyebrow"><svg class="i"><use href="#i-note"/></svg>Session notes</p>
-    <h2>The four sessions</h2>
-    <p class="lead">The keynote plus the three briefings I picked. Each card has my notes, what the program said the session would cover, and further reading. Tap a concept to jump to its definition.</p>
+    <h2>The six sessions</h2>
+    <p class="lead">The keynote and the three briefings I picked, plus the two late-afternoon talks I couldn't make, summarized from the program. Each card has notes, what the program said the session would cover, and further reading. Tap a concept to jump to its definition.</p>
   </div>
   <div class="tools">
     <label class="search" for="q">
@@ -486,14 +542,14 @@ mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1p
   <div class="sec-head rv">
     <p class="eyebrow"><svg class="i"><use href="#i-q"/></svg>Knowledge check</p>
     <h2>Day 2 quiz</h2>
-    <p class="lead">Twelve questions, three from each session. You'll see the answer and a short explanation after each one.</p>
+    <p class="lead">Fourteen questions drawn from the sessions. You'll see the answer and a short explanation after each one.</p>
   </div>
   <div class="quiz" id="quizbox" aria-live="polite"></div>
 </div></section>
 
 <footer class="wrap page-foot">
   <strong style="color:var(--ink)">SecTor 2026 · Day 2 · Keynote &amp; Briefings</strong>
-  <span>Wednesday, October 7, 2026 · Metro Toronto Convention Centre · Keynote on the Main Stage, Hall F; briefings in Rooms 701A, 718AB and 701B</span>
+  <span>Wednesday, October 7, 2026 · Metro Toronto Convention Centre · Keynote on the Main Stage, Hall F; briefings in Rooms 701A, 701B and 718AB</span>
   <span>Personal notes and observations by Colin Johnstone. Program details come from the official <a href="https://blackhat.com/sector/briefings/schedule/?day=wednesday" target="_blank" rel="noopener">briefings schedule</a> and <a href="https://blackhat.com/sector/features/schedule/index.html#keynote-on-counterintelligence-for-civil-society-57538" target="_blank" rel="noopener">keynote listing</a>. Figures are as presented by the speakers. <a href="../">Back to all days</a>.</span>
 </footer>
 </main>
@@ -523,6 +579,13 @@ const GLOSS={
   transnational:["Transnational repression","Governments reaching across borders to watch, threaten or harm dissidents who have left the country.","globe"],
   verifier:["Independent verifier","A separate step that replays each AI finding to prove it's real before a person acts on it.","check"],
   zeroclick:["Zero-click exploit","An attack that compromises a device without the target clicking or opening anything.","phone"],
+  snapshot:["Web archive snapshot","A saved copy of a web page at a point in time, kept by services like the Wayback Machine.","book"],
+  evasive:["Evasive publisher","A website that detects archive crawlers and hides from them or shows them different content.","eye"],
+  anachronistic:["Anachronistic attack","Changing what an archived snapshot shows long after it was captured.","retry"],
+  mcp:["Model Context Protocol (MCP)","An open standard that lets AI agents discover and call tools and data sources.","bot"],
+  confuseddeputy:["Confused deputy","A trusted component tricked into using its own privileges on an attacker's behalf.","shield"],
+  ssrf:["SSRF","Server-side request forgery: tricking a server into making requests for the attacker, often to internal-only services.","target"],
+  managedidentity:["Managed identity","An Azure identity assigned to a service so it can reach other resources without stored credentials.","key"],
   zerotrust:["Zero Trust","Giving each user, app or model only the access it needs right now, and verifying every request.","shield"]
 };
 
@@ -656,7 +719,57 @@ const S=[
  links:[
   ["https://www.anthropic.com/glasswing","Anthropic: Project Glasswing","The program behind the Mythos vulnerability numbers."],
   ["https://www.anthropic.com/news/expanding-project-glasswing","Anthropic: Expanding Project Glasswing","The 2026 expansion and reported findings in partner codebases."],
-  ["https://www.computing.co.uk/news/2026/security/claude-mythos-preview-shows-unprecedented-attack-capability","Computing: AI Security Institute on Mythos Preview","Coverage of the UK AISI's evaluation of Mythos attack capability."]]}
+  ["https://www.computing.co.uk/news/2026/security/claude-mythos-preview-shows-unprecedented-attack-capability","Computing: AI Security Institute on Mythos Preview","Coverage of the UK AISI's evaluation of Mythos attack capability."]]},
+{id:"arc",fromProgram:true,time:"3:25",end:"4:05",room:"Room 701A",url:"https://blackhat.com/sector/briefings/schedule/?day=wednesday#we-have-always-been-at-war-with-eastasia-attacks-against-web-archives-55132",icon:"book",fmt:"Briefing",short:"Attacks on web archives",sub:"Rewriting history in the Wayback Machine",tags:["offense"],
+ title:"“We Have Always Been at War With Eastasia”: Attacks Against Web Archives",
+ speakers:[["Robin Kirchner","PhD Candidate, TU Braunschweig · Software Engineer, Google"],["Martin Johns","Professor, TU Braunschweig"]],
+ line:"A website can hide from web archives, or quietly change its archived snapshots long after they were captured.",
+ covered:[
+  "Web archives are widely treated as a truthful record and are relied on in research, everyday reference and legal filings. The talk challenges that assumption with five attacks under two threat models.",
+  "The evasive publisher: a site that hides from archives and selectively shows them different content than real visitors see.",
+  "The anachronistic publisher: a site that exploits archiving flaws to change its snapshots long after they were captured.",
+  "The researchers tested eight popular archives, including the Wayback Machine, Archive.today and Harvard Library's Perma.cc. All eight were vulnerable to multiple attacks, and in seven of them stored snapshots could be altered after the fact.",
+  "The attacks proved hard to fix: archives were still vulnerable after several patches, a year after disclosure, and the presenters could still change their own snapshots at will.",
+  "Because the manipulation happens client-side, it can be detected, and the talk covers how.",
+  "The research is published as “The Power to Never Be Wrong: Evasions and Anachronistic Attacks Against Web Archives” (ACM CCS 2025)."],
+ stats:[["8","Popular web archives tested"],["7 of 8","Let stored snapshots be altered after capture"],["1 year","After disclosure, still vulnerable"]],
+ program:[
+  "Technical background on how web archives capture and replay pages.",
+  "Five new attacks across two threat models, presented before malicious actors start using them.",
+  "Evidence that current archives fall short: sites can selectively hide and reliably alter snapshots after capture.",
+  "How to detect the client-side manipulations."],
+ concepts:["snapshot","evasive","anachronistic"],
+ why:"Archived pages get used as evidence in disputes, investigations, legal filings and research, and in our own work when we need to show what a site or vendor said at a point in time. If a site can change its own past, a snapshot on its own isn't proof.",
+ ask:"When we rely on an archived web page as evidence, do we also keep our own copy from the time?",
+ links:[
+  ["https://www.securitee.org/files/kirchner_power_ccs2025.pdf","The Power to Never Be Wrong (ACM CCS 2025)","The full research paper behind the talk."],
+  ["https://magazin.tu-braunschweig.de/en/pi-post/memories-at-risk/","TU Braunschweig: Web archives found open to tampering","A plain-language summary of the findings."],
+  ["https://rewritinghistory.cs.washington.edu/","Rewriting History (University of Washington, 2017)","Earlier research on manipulating the archived web from the present."]]},
+
+{id:"mcp",fromProgram:true,time:"4:20",end:"5:00",room:"Room 718AB",url:"https://blackhat.com/sector/briefings/schedule/?day=wednesday#secrets-breaking-azures-ai-gateway-through-the-model-context-protocol-55320",icon:"key",fmt:"Briefing",short:"Breaking Azure's AI gateway",sub:"One MCP tool call to Key Vault secrets",tags:["ai","offense"],
+ title:"../../secrets: Breaking Azure's AI Gateway Through the Model Context Protocol",
+ speakers:[["Simon Maxwell-Stewart","Staff Security Researcher, BeyondTrust"]],
+ line:"A crafted argument in one MCP tool call could make Azure's API gateway fetch Key Vault secrets with its own credentials.",
+ covered:[
+  "Azure API Management (APIM) added support for the Model Context Protocol, so REST APIs it manages can be exposed as tools AI agents call, from Copilot Studio and Microsoft 365 Copilot to third-party agents such as Claude.",
+  "The researcher reverse engineered APIM's MCP handler and found it didn't properly validate tool arguments. A crafted path in an argument could redirect the call to a different API on the same gateway: cross-API server-side request forgery.",
+  "The impact grows in Microsoft's “AI Hub Gateway” reference architecture, which puts Key Vault, Azure OpenAI, Storage, Azure Resource Manager and Service Bus behind one APIM instance, each authenticated with the gateway's managed identity.",
+  "Because the redirected request comes from the gateway itself, its managed-identity policies fire and attach the gateway's credentials. A single MCP tool call with a crafted argument could read Key Vault secrets.",
+  "The attack gets past IP filters and managed-identity isolation; the talk also covers which controls it doesn't defeat. The presenter argued Microsoft's own documentation steers customers toward the vulnerable setup.",
+  "Indirect prompt injection makes it worse: the requirement changes from “the attacker needs a key” to “the attacker needs to put a string in front of an AI agent.”"],
+ chain:{steps:["Crafted text reaches an AI agent","Agent calls an MCP tool","Path traversal in the argument","Gateway calls an internal API","Managed identity attaches credentials","Key Vault secrets returned"],note:"The attack path as described in the program"},
+ program:[
+  "A model of the confused deputy pattern in API Management and AI infrastructure, with a method others can replicate.",
+  "How to audit APIM instances for this class of vulnerability, plus an updated hardening guide.",
+  "A demonstration from a user's point of view, through an AI agent.",
+  "How AI red teamers can extend prompt injection techniques to older APIM infrastructure."],
+ concepts:["mcp","confuseddeputy","ssrf","managedidentity","promptinjection"],
+ why:"Organizations are putting AI gateways in front of internal APIs so agents can call them. When the gateway's own identity can reach secrets, anything that can steer one tool call, including text an agent happens to read, can turn the gateway into a confused deputy.",
+ ask:"If we expose internal APIs to AI agents through a gateway, what can the gateway's own identity reach?",
+ links:[
+  ["https://learn.microsoft.com/en-us/azure/api-management/secure-mcp-servers","Microsoft Learn: Secure access to MCP servers in API Management","Microsoft's guidance on inbound and outbound auth for MCP in APIM."],
+  ["https://modelcontextprotocol.io/specification/draft/basic/security_best_practices","MCP: Security best practices","The protocol's own guidance on confused deputy, SSRF and scope minimization."],
+  ["https://genai.owasp.org/llmrisk/llm01-prompt-injection/","OWASP: LLM01 Prompt Injection","Why a string in front of an agent can be enough."]]}
 ];
 
 const DAY=[
@@ -665,8 +778,7 @@ const DAY=[
  ["11:45","Lunch",null,"coffee"],
  "pen",
  ["3:05","Refreshment break",null,"coffee"],
- ["3:25","Missed this slot","Five talks, including three years of LLM-assisted pentesting under NDA","x"],
- ["4:20","Missed this slot","Five talks, including Demystifying EDR Evasion","x"]
+ "arc","mcp"
 ];
 
 const QUIZ=[
@@ -681,6 +793,8 @@ const QUIZ=[
  {s:"llm",q:"Which defence did the researchers recommend for local models?",o:["Give them admin rights so EDR can watch them","Scope them to only the files they're working on, and remove them where not needed","Run them only after hours","Disable the GPU"],a:1,e:"Zero trust for models: local models have far too much freedom today. EDR rules for this behaviour help too."},
  {s:"pen",q:"According to Rahul Jaisinghani, what is the new bottleneck in AI-driven pentesting?",o:["Model quality","Compute cost","Verifying that findings are real","Finding targets"],a:2,e:"Mythos found 29,439 vulnerabilities but only 516 were patched, as presented. Human triage is the rate-limiting step."},
  {s:"pen",q:"What does “Buy the hunter, own the verifier” mean?",o:["Outsource everything to vendors","Discovery tools are easy to buy; the step that proves findings should be your own","Only hire senior pentesters","Train your own model"],a:1,e:"The proof step is where your own context, scope and judgment make the difference."},
+ {s:"arc",q:"What is an “anachronistic” attack on a web archive?",o:["Deleting an archive's servers","Changing what an archived snapshot shows long after it was captured","Blocking an archive in one country","Flooding an archive with fake pages"],a:1,e:"In seven of eight archives tested, stored snapshots could be altered after capture, and archives were still vulnerable a year after disclosure."},
+ {s:"mcp",q:"Why could one MCP tool call read Key Vault secrets in the AI Hub Gateway setup?",o:["Key Vault had no password","The redirected request came from the gateway itself, so its managed identity attached credentials","Copilot stores secrets in plain text","The attacker stole an admin's laptop"],a:1,e:"Cross-API SSRF made the gateway a confused deputy: it used its own identity on the attacker's behalf."},
  {s:"pen",q:"What happened when the same model was given different tools on each run?",o:["Nothing; only the model matters","Detection rose from 5% to 30% to 45%","It found fewer bugs","Costs tripled"],a:1,e:"The harness matters about as much as the model. He compared the model to an engine and the harness to the car's body."}
 ];
 
@@ -694,7 +808,9 @@ const SP={
  "Chaggai Heching":TECH,"Ori Levy":TECH,"Adar Peleg":TECH,
  "Rahul Jaisinghani":{co:"BrowserStack",site:"https://www.browserstack.com"},
  "Gururaj Saileshwar":UOFT,"Chris S. Lin":UOFT,"Yuqin Yan":UOFT,"Guozhen Ding":UOFT,"Joyce Qu":UOFT,"David Lie":UOFT,
- "Joseph Zhu":{co:"Google"}
+ "Joseph Zhu":{co:"Google"},
+ "Robin Kirchner":{co:"TU Braunschweig",site:"https://www.tu-braunschweig.de"},"Martin Johns":{co:"TU Braunschweig",site:"https://www.tu-braunschweig.de"},
+ "Simon Maxwell-Stewart":{co:"BeyondTrust",site:"https://www.beyondtrust.com"}
 };
 
 const hue=n=>[...n].reduce((h,c)=>(h*31+c.charCodeAt(0))%360,7);
@@ -767,7 +883,7 @@ function card(s,i){
     </div>
   </div>
   <p class="oneline">${hl(s.line)}</p>
-  <div class="tabs" role="tablist" aria-label="${esc(s.title)}">${tab("notes","My notes","note")}${tab("program","Program","mic")}${tab("reading",`Reading (${s.links.length})`,"book")}</div>
+  <div class="tabs" role="tablist" aria-label="${esc(s.title)}">${tab("notes",s.fromProgram?"Summary":"My notes","note")}${tab("program","Program","mic")}${tab("reading",`Reading (${s.links.length})`,"book")}</div>
   <div class="panel-wrap">${panel(s,t)}</div>
   </article>`;
 }
@@ -808,37 +924,43 @@ render();
 const rb=$("#readbar");
 addEventListener("scroll",()=>{const h=document.documentElement;rb.style.setProperty("--p",(h.scrollTop/((h.scrollHeight-h.clientHeight)||1)).toFixed(3))},{passive:true});
 
-/* hero network canvas */
+/* hero memory grid: a row gets "hammered", bits in neighbouring rows flip */
 (()=>{
-  const cv=$("#net"),cx=cv.getContext("2d");let W,H,dpr,nodes=[],edges=[],packets=[],col,colP;
-  const readCol=()=>{const cs=getComputedStyle(document.documentElement);col=cs.getPropertyValue("--net").trim();colP=cs.getPropertyValue("--signal").trim();};
+  const cv=$("#net"),cx=cv.getContext("2d");
+  let W,H,dpr,cols,rows,bits,flash,col,colA,colS,colB,mono,cell=20,hammer=-1,hStart=0,last=0;
+  const read=()=>{const cs=getComputedStyle(document.documentElement);col=cs.getPropertyValue("--net").trim();colA=cs.getPropertyValue("--accent").trim();colS=cs.getPropertyValue("--signal").trim();colB=cs.getPropertyValue("--bg").trim();mono=cs.getPropertyValue("--mono").trim()||"monospace";};
   function build(){
     dpr=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
-    const n=Math.round(Math.min(46,Math.max(18,W*H/26000)));
-    nodes=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,r:Math.random()*1.6+1}));
-    edges=[];nodes.forEach((a,i)=>{nodes.map((b,j)=>[j,Math.hypot(a.x-b.x,a.y-b.y)]).filter(([j])=>j!==i).sort((p,q)=>p[1]-q[1]).slice(0,2).forEach(([j])=>{if(!edges.some(e=>(e[0]===j&&e[1]===i)))edges.push([i,j])})});
-    packets=[];
+    cell=W<600?16:20;cols=Math.ceil(W/cell);rows=Math.ceil(H/cell);
+    bits=new Uint8Array(cols*rows).map(()=>Math.random()<.5?1:0);flash=new Float32Array(cols*rows);
   }
-  function draw(dt){
-    cx.clearRect(0,0,W,H);cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=1;
-    edges.forEach(([i,j])=>{const a=nodes[i],b=nodes[j];cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()});
-    nodes.forEach(n=>{cx.beginPath();cx.arc(n.x,n.y,n.r,0,7);cx.fill()});
-    if(!dt)return;
-    nodes.forEach(n=>{n.x+=n.vx*dt;n.y+=n.vy*dt;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1});
-    if(packets.length<9&&Math.random()<.06){const e=edges[Math.floor(Math.random()*edges.length)];if(e)packets.push({e,t:0,s:.0012+Math.random()*.0016})}
-    cx.fillStyle=colP;cx.shadowColor=colP;cx.shadowBlur=10;
-    packets=packets.filter(p=>{p.t+=p.s*dt;if(p.t>=1){const nxt=edges.filter(x=>x[0]===p.e[1]);if(nxt.length&&Math.random()<.8){p.e=nxt[Math.floor(Math.random()*nxt.length)];p.t=0}else return false}
-      const a=nodes[p.e[0]],b=nodes[p.e[1]];cx.beginPath();cx.arc(a.x+(b.x-a.x)*p.t,a.y+(b.y-a.y)*p.t,2.2,0,7);cx.fill();return true});
-    cx.shadowBlur=0;
+  function draw(now){
+    cx.clearRect(0,0,W,H);
+    cx.font=`500 ${cell*.55}px ${mono}`;cx.textAlign="center";cx.textBaseline="middle";
+    if(hammer>=0){const k=Math.min(1,(now-hStart)/500);cx.globalAlpha=.10*(1-Math.abs(k*2-1))+.04;cx.fillStyle=colA;cx.fillRect(0,hammer*cell,W,cell);}
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+      const i=r*cols+c,x=c*cell+cell/2,y=r*cell+cell/2,edge=Math.max(0,Math.min(1,(x/W-.42)*2.4))*Math.min(1,(1-y/H)*1.6+.2);
+      const f=flash[i];
+      if(f>0){cx.globalAlpha=Math.min(1,.25+f);cx.fillStyle=colS;cx.fillRect(c*cell+2,r*cell+2,cell-4,cell-4);cx.globalAlpha=1;cx.fillStyle=colB;}
+      else{cx.globalAlpha=edge;cx.fillStyle=r===hammer?colA:col;}
+      cx.fillText(bits[i],x,y+1);
+    }
+    cx.globalAlpha=1;
   }
-  readCol();build();
-  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>{readCol();draw(0)});
-  new MutationObserver(()=>{readCol();draw(0)}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
-  addEventListener("resize",()=>{build();draw(0)});
+  function tick(now){
+    if(hammer<0||now-hStart>900){
+      if(hammer>=0){for(let n=0;n<1+Math.floor(Math.random()*3);n++){const r=Math.max(0,Math.min(rows-1,hammer+(Math.random()<.5?-1:1))),c=Math.floor(cols*.25+Math.random()*cols*.75),i=r*cols+c;bits[i]^=1;flash[i]=1;}}
+      hammer=Math.floor(Math.random()*rows);hStart=now;
+    }
+    for(let i=0;i<flash.length;i++)if(flash[i]>0)flash[i]=Math.max(0,flash[i]-.012);
+  }
+  read();build();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>{read();draw(performance.now())});
+  new MutationObserver(()=>{read();draw(performance.now())}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  addEventListener("resize",()=>{build();draw(performance.now())});
   if(reduce){draw(0);return}
-  let last=performance.now(),vis=true;
-  new IntersectionObserver(([e])=>{vis=e.isIntersecting}).observe(cv);
-  const loop=t=>{const dt=Math.min(50,t-last);last=t;if(vis&&!document.hidden)draw(dt);requestAnimationFrame(loop)};
+  let vis=true;new IntersectionObserver(([e])=>{vis=e.isIntersecting}).observe(cv);
+  const loop=t=>{if(vis&&!document.hidden&&t-last>50){tick(t);draw(t);last=t}requestAnimationFrame(loop)};
   draw(0);requestAnimationFrame(loop);
 })();
 

@@ -295,6 +295,8 @@ mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1p
 .missed li{font-size:.93rem;background:var(--surface2);border-radius:8px;padding:.7rem .9rem;display:grid;gap:.2rem}
 .missed a{font-size:.86rem;display:inline-flex;align-items:center;gap:.3rem}
 
+.home-link{color:var(--ink)!important;border:1px solid var(--line);margin-right:.35rem}
+.home-link svg.i{transform:rotate(180deg)}
 .page-foot{padding-block:2.5rem 3rem;color:var(--muted);font-size:.88rem;display:grid;gap:.35rem}
 
 @media (prefers-reduced-motion:reduce){
@@ -359,6 +361,7 @@ mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1p
 <header class="bar"><div class="bar-in">
   <a class="brand" href="../" style="color:inherit;text-decoration:none" title="All days"><i class="dot"></i>SecTor <span>2026</span></a>
   <nav aria-label="Page sections">
+    <a href="../" class="home-link"><svg class="i"><use href="#i-arrow"/></svg>All days</a>
     <a href="#brief"><svg class="i"><use href="#i-bolt"/></svg>Brief</a>
     <a href="#sessions"><svg class="i"><use href="#i-note"/></svg>Sessions</a>
     <a href="#remember"><svg class="i"><use href="#i-key"/></svg>Remember</a>
