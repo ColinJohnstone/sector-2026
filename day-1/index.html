@@ -788,7 +788,7 @@ const PHOTO={"Matt Johansen":"/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQ
 /* speaker extras: company, verified company site, known location, direct LinkedIn where confirmed */
 const SP={
  "Matt Johansen":{co:"Vulnerable U",loc:"Austin, TX"},
- "Gal Ordo":{co:"Native",site:"https://native.security",li:"https://www.linkedin.com/in/galordo"},
+ "Gal Ordo":{co:"Native",site:"https://native.security",li:"https://www.linkedin.com/in/galordo/"},
  "Eric Broda":{co:"Broda Group Software"},
  "Rachel Clark":{co:"SKADI Cyber Defense"},
  "Brian Deitch":{co:"Zscaler",site:"https://www.zscaler.com"},
@@ -806,13 +806,14 @@ const SP={
  "Iain Paterson":{co:"WELL Health Technologies",site:"https://well.company"},
  "Olivera Zatezalo":{co:"Ontario Power Generation",site:"https://www.opg.com"}
 };
+const LIQ={"Matt Johansen":"Matt Johansen Vulnerable U","Eric Broda":"Eric Broda","Rachel Clark":"Rachel Clark SKADI","Brian Deitch":"Brian Deitch Zscaler","Alessandro Brucato":"Alessandro Brucato Tracebit","Yigael Berger":"Yigael Berger","Helen Oakley":"Helen Oakley","Francis Odum":"Francis Odum","Ian Paterson":"Ian Paterson Plurilock","Guillaume Ross":"Guillaume Ross","Kunal Modasiya":"Kunal Modasiya","Jay Thurston":"Jay Thurston Thales","Fernando Tucci":"Fernando Tucci","Ryoji Betchaku":"Ryoji Betchaku","Ali Dehghantanha":"Ali Dehghantanha","Iain Paterson":"Iain Paterson WELL Health","Olivera Zatezalo":"Olivera Zatezalo"};
 const hue=n=>[...n].reduce((h,c)=>(h*31+c.charCodeAt(0))%360,7);
 function speaker(n,r){
-  const x=SP[n]||{},li=x.li||`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(n+" "+(x.co||""))}`;
+  const x=SP[n]||{},li=x.li||`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(LIQ[n]||n)}`;
   return `<div class="spk">${PHOTO[n]?`<img class="av photo" src="data:image/jpeg;base64,${PHOTO[n]}" alt="${esc(n)}" width="88" height="88" loading="lazy">`:`<span class="av" style="--h:${hue(n)}" aria-hidden="true">${initials(n)}</span>`}<div>
     <b>${hl(n)}</b><small>${hl(r)}</small>
     <span class="spk-links">${x.loc?`<span class="loc">${ic("pin")}${esc(x.loc)}</span>`:""}
-      <a href="${li}" target="_blank" rel="noopener" title="${x.li?"LinkedIn profile":"Find on LinkedIn"}">${ic("li")}LinkedIn</a>
+      <a href="${li}" target="_blank" rel="noopener" title="${x.li?"LinkedIn profile":"Search LinkedIn for "+esc(n)}">${ic("li")}LinkedIn</a>
       ${x.site?`<a href="${x.site}" target="_blank" rel="noopener" title="${esc(x.co)} website">${ic("globe")}${esc(x.co)}</a>`:""}</span>
   </div></div>`;
 }

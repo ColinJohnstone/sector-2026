@@ -813,13 +813,14 @@ const SP={
  "Simon Maxwell-Stewart":{co:"BeyondTrust",site:"https://www.beyondtrust.com"}
 };
 
+const LIQ={"Ron Deibert":"Ron Deibert","Chaggai Heching":"Chaggai Heching","Ori Levy":"Ori Levy Technion","Adar Peleg":"Adar Peleg","Rahul Jaisinghani":"Rahul Jaisinghani","Gururaj Saileshwar":"Gururaj Saileshwar","Chris S. Lin":"Shaopeng Lin","Yuqin Yan":"Yuqin Yan Toronto","Guozhen Ding":"Guozhen Ding","Joyce Qu":"Joyce Qu Toronto","Joseph Zhu":"Joseph Zhu Google","David Lie":"David Lie Toronto","Robin Kirchner":"Robin Kirchner","Martin Johns":"Martin Johns Braunschweig","Simon Maxwell-Stewart":"Simon Maxwell-Stewart"};
 const hue=n=>[...n].reduce((h,c)=>(h*31+c.charCodeAt(0))%360,7);
 function speaker(n,r){
-  const x=SP[n]||{},li=x.li||`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(n+" "+(x.co||""))}`;
+  const x=SP[n]||{},li=x.li||`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(LIQ[n]||n)}`;
   return `<div class="spk">${PHOTO[n]?`<img class="av photo" src="data:image/jpeg;base64,${PHOTO[n]}" alt="${esc(n)}" width="88" height="88" loading="lazy">`:`<span class="av" style="--h:${hue(n)}" aria-hidden="true">${initials(n)}</span>`}<div>
     <b>${hl(n)}</b><small>${hl(r)}</small>
     <span class="spk-links">${x.loc?`<span class="loc">${ic("pin")}${esc(x.loc)}</span>`:""}
-      <a href="${li}" target="_blank" rel="noopener" title="${x.li?"LinkedIn profile":"Find on LinkedIn"}">${ic("li")}LinkedIn</a>
+      <a href="${li}" target="_blank" rel="noopener" title="${x.li?"LinkedIn profile":"Search LinkedIn for "+esc(n)}">${ic("li")}LinkedIn</a>
       ${x.site?`<a href="${x.site}" target="_blank" rel="noopener" title="${esc(x.co)} website">${ic("globe")}${esc(x.co)}</a>`:""}</span>
   </div></div>`;
 }
