@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>SecTor 2026 Executive Brief</title>
-<meta name="description" content="SecTor 2026 in eight minutes: major findings, what changed, identity and AI implications, and recommended security actions. Personal analysis by Colin Johnstone, not an official CIBC publication.">
+<meta name="description" content="SecTor 2026 in ten minutes: major findings, what changed, identity and AI implications, and recommended security actions. Personal analysis by Colin Johnstone, not an official CIBC publication.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Public+Sans:wght@400..700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="../assets/base.css?v=20261007f">
-<link rel="stylesheet" href="../assets/site.css?v=20261007f">
-<link rel="stylesheet" href="../assets/report.css?v=20261007f">
+<link rel="stylesheet" href="../assets/base.css?v=20261008a">
+<link rel="stylesheet" href="../assets/site.css?v=20261008a">
+<link rel="stylesheet" href="../assets/report.css?v=20261008a">
 </head>
 <body class="site">
 <header class="bar"><div class="bar-in">
@@ -19,20 +19,21 @@
     <a href="../" class="home-link"><svg class="i"><use href="#i-home"/></svg>Home</a>
     <a href="../day-1/">Day 1</a>
     <a href="../day-2/">Day 2</a>
+    <a href="../day-3/">Day 3</a>
     <a href="../glossary/">Glossary</a>
     <a href="../challenge/" class="quiz-link"><svg class="i"><use href="#i-trophy"/></svg>Challenge</a>
   </nav>
 </div><div class="readbar" id="readbar"></div></header>
 <main>
 <section class="doc-hero"><div class="wrap">
-  <p class="eyebrow"><svg class="i"><use href="#i-note"/></svg>Executive security brief · About 8 minutes · Covers Days 1–2</p>
+  <p class="eyebrow"><svg class="i"><use href="#i-note"/></svg>Executive security brief · About 10 minutes · Covers all three days</p>
   <h1 id="h1">SecTor 2026 for people who <em>weren't</em> there.</h1>
   <p class="lead">The condensed view: what changed, why it matters, and what I'd do about it. Each finding links back to the detailed session notes and their sources.</p>
   <div class="byline"><img class="me" src="../assets/colin.jpg" alt="Colin Johnstone" width="46" height="46"><div class="who"><a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a><span>Senior Consultant, Authentication Services @ CIBC</span></div><a class="li" href="https://www.linkedin.com/in/colin-johnstone-7a982a187/">LinkedIn</a></div>
   <p class="disclaimer"><svg class="i"><use href="#i-note"/></svg>Personal conference notes, analysis and observations by <a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a>. Not an official CIBC publication or position.</p>
   <nav class="toc" aria-label="Contents">
     <a href="#sixty">SecTor 2026 in 60 seconds</a>
-    <a href="#findings">Nine major findings</a>
+    <a href="#findings">Twelve major findings</a>
     <a href="#changed">What changed</a>
     <a href="#care">What organizations should care about</a>
     <a href="#identity">Identity implications</a>
@@ -43,9 +44,9 @@
 
 <section><div class="doc">
   <h2 id="sixty">SecTor 2026 in 60 seconds</h2>
-  <p class="sixty">Across the first two days, almost nothing presented was a brand-new class of attack. Instead, speaker after speaker showed familiar techniques (SSRF, credential theft, privilege escalation, prompt injection, Rowhammer, spyware exploits) running faster, cheaper and with less skill than before. Autonomous agents chained cloud attacks in minutes, a full intrusion demo cost about $500, and AI found tens of thousands of vulnerabilities faster than people could verify them. At the same time, the attack surface moved onto devices we already trust: AI models built into browsers, GPUs shared between workloads, and phones carrying our authenticators. The defences that held up were the fundamentals: identity, least privilege, segmentation, deception and independent verification.</p>
+  <p class="sixty">Across the three days, almost nothing presented was a brand-new class of attack. Instead, speaker after speaker showed familiar techniques (SSRF, credential theft, privilege escalation, prompt injection, Rowhammer, spyware exploits) running faster, cheaper and with less skill than before. Autonomous agents chained cloud attacks in minutes, a full intrusion demo cost about $500, and AI found tens of thousands of vulnerabilities faster than people could verify them. At the same time, the attack surface moved onto devices we already trust: AI models built into browsers, GPUs shared between workloads, and phones carrying our authenticators. The final day turned to control: agents quietly widening a narrow request into a public exposure, a fleet of military robots sharing one password, and data stolen today to decrypt with tomorrow's quantum computers. The defences that held up were the fundamentals: identity, least privilege, segmentation, deception, independent verification, and checking authority at the moment of action.</p>
 
-  <h2 id="findings">Nine major findings</h2>
+  <h2 id="findings">Twelve major findings</h2>
   <ol class="findings">
     <li><b>Attack chains now complete in minutes.</b><p>Agents connect old techniques (SSRF to the metadata service, credential theft, privilege escalation) without pausing. Detection that takes longer than the chain can't prevent it.</p><p class="ev-line">~3 min for a chain's critical steps; ~13 min average from a low-privileged key to admin. Both presented during the sessions.</p><div class="from"><a href="../day-1/#s2">Cloud hardening</a><a href="../day-1/#s5">Deception</a></div></li>
     <li><b>Nation-state capability is commoditized.</b><p>The things that once separated state operators from everyone else (money, teams, custom tools) are eroding. In 2026, US agencies warned of AI-written scripts aimed at the same PLC family Stuxnet targeted.</p><p class="ev-line">“You are not defending against China: you are defending against $250 a month.” Source for the 2026 warning: <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-231a" target="_blank" rel="noopener">CISA AA26-231A</a>.</p><div class="from"><a href="../day-1/#s1">Nation-state keynote</a></div></li>
@@ -56,6 +57,9 @@
     <li><b>Endpoints now ship AI runtimes attackers can use.</b><p>Chrome downloads a local model (Gemini Nano) onto many machines. Researchers used local models to profile a user's files, decide when to act and hide attack code inside a trusted file, with no malicious file for scanners to find.</p><div class="from"><a href="../day-2/#llm">Large Local Malware</a></div></li>
     <li><b>Hardware boundaries leak.</b><p>Rowhammer bit flips in NVIDIA GPU memory gave an unprivileged program read and write access to all GPU memory, then root on the host through a driver bug. Model weights and cryptographic keys were exposed.</p><p class="ev-line">Source: <a href="https://gpubreach.ca" target="_blank" rel="noopener">GPUBreach, IEEE S&amp;P 2026</a>.</p><div class="from"><a href="../day-2/#gpu">GPUBreach</a></div></li>
     <li><b>AI gateways create confused deputies, and spyware targets people.</b><p>One crafted MCP tool call made an Azure API gateway fetch Key Vault secrets with its own identity. Separately, commercial spyware continues to target journalists, lawyers and activists through zero-click exploits that work on anyone's unpatched phone.</p><div class="from"><a href="../day-2/#mcp">Azure AI gateway</a><a href="../day-2/#k1">Citizen Lab keynote</a></div></li>
+    <li><b>Agents turn requests into decisions nobody approved.</b><p>A request for temporary access ended with an admin console open to the internet, with no attacker involved. The agent's service identity could change network rules and nothing checked the change against the request. Authority has to be enforced at the point of action and preserved across every handoff.</p><p class="ev-line">Real-world parallels cited: Replit's agent deleting production data, and Invariant Labs' <a href="https://invariantlabs.ai/blog/mcp-github-vulnerability" target="_blank" rel="noopener">GitHub MCP research</a>.</p><div class="from"><a href="../day-3/#k3">Who gets to decide?</a></div></li>
+    <li><b>Long-lived systems carry their old decisions forward.</b><p>A PackBot built in 2021 still ran Python 2.5 on Linux 2.6, with one SSH and web root password shared across the fleet. The research produced six CVEs, one scored 10. Cryptography chosen years ago is the same kind of debt: encrypted data is being harvested now to decrypt once quantum computers can.</p><p class="ev-line">CVSS 10.0: <a href="https://app.opencve.io/cve/CVE-2026-55393" target="_blank" rel="noopener">CVE-2026-55393</a>. Canada's federal deadline for post-quantum migration is 2035: <a href="https://cyber.gc.ca/en/guidance/roadmap-migration-post-quantum-cryptography-government-canada-itsm40001" target="_blank" rel="noopener">ITSM.40.001</a>.</p><div class="from"><a href="../day-3/#bot">Hacking the PackBot</a><a href="../day-3/#pq">Harvest now, decrypt later</a></div></li>
+    <li><b>AI makes defence practice affordable, and takedowns less reliable.</b><p>Open-source labs now let red and blue agents run full purple team exercises that most teams never had budget for. Meanwhile, a ransomware group moved its negotiation portals onto a blockchain where they can't be seized like a server.</p><div class="from"><a href="../day-3/#purple">Agentic purple teaming</a><a href="../day-3/#cry0">Unseizable extortion</a></div></li>
   </ol>
 
   <h2 id="changed">What changed</h2>
@@ -64,10 +68,11 @@
     <li><strong>Cost.</strong> Finding a vulnerability and running an intrusion both trend toward near zero, so attackers can try low-probability paths at scale.</li>
     <li><strong>Expertise.</strong> Agents and AI-written tooling let less skilled attackers run tradecraft that used to need a funded team.</li>
     <li><strong>Attack surface.</strong> The newest targets are things we already trust: browsers with built-in models, shared GPUs, AI gateways and the phones that hold our credentials.</li>
+    <li><strong>Authority.</strong> The actor requesting an outcome, the agent planning it and the identity carrying it out are now often different. Risk comes from what an agent is authorized to cause, not just what it can do.</li>
   </ul>
 
   <h2 id="care">What organizations should care about</h2>
-  <p>The practical question isn't whether to buy “AI security.” It's whether existing controls still work when attacks move at machine speed. Programs built around detecting and then responding assume time we no longer have. Prevention through architecture (segmentation, least privilege, identity-based access) and automated, pre-approved response for high-confidence signals carry more weight. Inventory is the other recurring theme: you can't govern agents, models or local AI runtimes you haven't found.</p>
+  <p>The practical question isn't whether to buy “AI security.” It's whether existing controls still work when attacks move at machine speed. Programs built around detecting and then responding assume time we no longer have. Prevention through architecture (segmentation, least privilege, identity-based access) and automated, pre-approved response for high-confidence signals carry more weight. Inventory is the other recurring theme: you can't govern agents, models, local AI runtimes, long-lived devices or cryptography you haven't found.</p>
 
   <h2 id="identity">Identity implications</h2>
   <div class="cols2">
@@ -76,12 +81,16 @@
       <li>Logs must separate actions taken by an agent from actions taken by the person who triggered it.</li>
       <li>Workload identities are high-value targets. Require IMDSv2 or equivalent and remove long-lived keys.</li>
       <li>Gateways that call internal APIs need per-backend identities, not one powerful shared identity.</li>
+      <li>Carry the requester's scope through to the action: an agent's service account must not stand in for the task's authority.</li>
+      <li>Time-boxed access must also reverse what it opened; expiring the credential isn't enough.</li>
     </ul></div>
     <div class="box"><h3><svg class="i"><use href="#i-phone"/></svg>People and devices</h3><ul>
       <li>Phishing-resistant authentication (passkeys) assumes a trustworthy device. Spyware and local malware break that assumption.</li>
       <li>Stolen session tokens bypass strong sign-in. Short token lifetimes and device-bound sessions limit replay.</li>
       <li>High-risk staff need a defined response to spyware threat notifications, including credential and session revocation.</li>
       <li>Canary credentials are cheap, high-signal identities worth planting in cloud environments.</li>
+      <li>Fleet-wide shared passwords on devices remove device identity entirely; each device needs its own credential.</li>
+      <li>Passkeys and token signing rely on elliptic-curve signatures; add them to the post-quantum migration inventory.</li>
     </ul></div>
   </div>
 
@@ -92,6 +101,8 @@
     <li><strong>Assume prompt injection reaches tools.</strong> Anything that can put text in front of an agent can try to steer its tool calls, so authorization must hold even for your own agents.</li>
     <li><strong>Earn autonomy in security operations.</strong> Start with triage and enrichment; keep irreversible actions behind controls that can absorb a bad decision.</li>
     <li><strong>Don't lock in.</strong> Models change quickly; build controls around models rather than into one.</li>
+    <li><strong>Separate reasoning from execution.</strong> Let the model propose; let a policy check decide whether the change is in scope before it runs.</li>
+    <li><strong>Practise against AI attackers.</strong> Agentic purple team labs show how AI attackers behave against your own detection stack.</li>
   </ul>
 
   <h2 id="actions">Recommended security actions</h2>
@@ -108,18 +119,22 @@
       <tr><td>08</td><td>Add EDR detections for local AI misuse: unusual local AI API calls and unexpected child processes.</td><td><span class="when next">Next</span></td><td><a href="../day-2/#llm">Day 2</a></td></tr>
       <tr><td>09</td><td>Turn on ECC and patch drivers on shared GPUs; isolate sensitive AI workloads.</td><td><span class="when next">Next</span></td><td><a href="../day-2/#gpu">Day 2</a></td></tr>
       <tr><td>10</td><td>Define a response for spyware threat notifications for high-risk staff.</td><td><span class="when next">Next</span></td><td><a href="../day-2/#k1">Day 2</a></td></tr>
+      <tr><td>11</td><td>Put a policy check between agent plans and production changes, and give agent workflows task-scoped, expiring authority.</td><td><span class="when now">Now</span></td><td><a href="../day-3/#k3">Day 3</a></td></tr>
+      <tr><td>12</td><td>Start a cryptographic inventory, including vendor products and identity systems, and tier data by how long it must stay secret.</td><td><span class="when now">Now</span></td><td><a href="../day-3/#pq">Day 3</a></td></tr>
+      <tr><td>13</td><td>Audit long-lived devices (OT, IoT, specialized equipment) for shared passwords and unauthenticated control traffic.</td><td><span class="when next">Next</span></td><td><a href="../day-3/#bot">Day 3</a></td></tr>
+      <tr><td>14</td><td>Stand up an agentic purple team lab and re-run attacks to prove fixes work.</td><td><span class="when next">Next</span></td><td><a href="../day-3/#purple">Day 3</a></td></tr>
     </tbody>
   </table></div>
-  <p class="hint" style="margin-top:1rem">“Now” and “Next” reflect my view of effort versus risk reduction, not any organization's actual priorities. Day 3 findings will be added after the conference.</p>
+  <p class="hint" style="margin-top:1rem">“Now” and “Next” reflect my view of effort versus risk reduction, not any organization's actual priorities.</p>
 </div></section>
 
 <footer class="wrap page-foot">
   <strong style="color:var(--ink)">SecTor 2026 · Executive security brief</strong>
   <span>Personal conference notes, analysis and observations by <a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a>. Not an official CIBC publication or position.</span>
-  <span>Statistics are as presented by speakers unless a source is linked. Full notes: <a href="../day-1/">Day 1</a> · <a href="../day-2/">Day 2</a>.</span>
+  <span>Statistics are as presented by speakers unless a source is linked. Full notes: <a href="../day-1/">Day 1</a> · <a href="../day-2/">Day 2</a> · <a href="../day-3/">Day 3</a>.</span>
 </footer>
 </main>
-<script src="../assets/core.js?v=20261007f"></script>
+<script src="../assets/core.js?v=20261008a"></script>
 <script>splitWords(document.getElementById("h1"));readProgress();</script>
 </body>
 </html>

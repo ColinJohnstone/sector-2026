@@ -1,0 +1,46 @@
+/* Day 3: decision record. Spectral headlines, Work Sans text and Red Hat Mono labels on pale
+   sage paper with a forest-green accent. Sections read like an approvals log: each kicker has a
+   box that gets ticked, and the headline's key word is stamped. */
+html:root:root{
+  --bg:#f4f6f1; --bg2:#e8ece3; --surface:#f4f6f1; --surface2:#e8ece3; --ink:#18201a; --muted:#56605a; --line:#d2d9cd; --rule:#18201a;
+  --accent:#2f6b3f; --accent-soft:rgba(47,107,63,.07); --signal:#2f6b3f; --signal-soft:rgba(47,107,63,.07); --mark:#dbe9c9;
+  --display:"Spectral",Georgia,serif; --body:"Work Sans",system-ui,sans-serif; --ui:"Work Sans",system-ui,sans-serif; --mono:"Red Hat Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){html:root:root:not([data-theme="light"]){
+  --bg:#131713; --bg2:#1b211b; --surface:#131713; --surface2:#1b211b; --ink:#e6ebe3; --muted:#9fa99f; --line:#2f3830; --rule:#c9d3c6;
+  --accent:#8cc79a; --accent-soft:rgba(140,199,154,.08); --signal:#8cc79a; --mark:#29402c}}
+body{font-size:1.02rem;line-height:1.66}
+.hero h1{font-weight:600;letter-spacing:-.02em;line-height:1.04}
+.hero h1 em{font-style:normal;font-weight:700;color:var(--accent);display:inline-block;border:.06em solid currentColor;padding:0 .14em .02em;line-height:1;transform:rotate(-2.5deg);border-radius:.06em}
+h2{font-weight:600}
+h3{font-family:var(--body);font-weight:650;letter-spacing:-.01em}
+.session h3,.tn b,.idea h3{font-family:var(--display);font-weight:600}
+.eyebrow{font-family:var(--mono)!important;font-size:.74rem;letter-spacing:.06em}
+.s-time,.prov,.fmt,.tag,.cat,.legend,.count,.q-top,.chain li{font-family:var(--mono)!important}
+
+/* kickers carry a checkbox, ticked as the section arrives */
+.sec-head .eyebrow::before{content:"\2713";flex:none;display:inline-grid;place-items:center;width:1.05em;height:1.05em;font-size:.9em;font-weight:700;line-height:1;
+  color:var(--bg);border:1.5px solid var(--accent);border-radius:2px;
+  background:linear-gradient(var(--accent),var(--accent)) center/100% 100% no-repeat}
+
+.session{border-top:2px solid var(--accent)!important}
+.oneline{font-family:var(--display);font-size:1.25rem;font-style:italic}
+.lens{background:none!important;border:1.5px dashed var(--accent)!important}
+.lens-h{font-family:var(--mono)!important}
+.takeaway{border-left:0!important;background:var(--accent-soft)!important;padding:1rem 1.1rem!important;position:relative}
+.takeaway .label{color:var(--accent)}
+.num b,.stat b,.statc b{font-family:var(--display)!important;font-weight:600!important}
+blockquote{border-left-width:2px!important}
+
+/* motion */
+@keyframes stamp{0%{opacity:0;transform:rotate(-9deg) scale(1.9)}60%{opacity:1;transform:rotate(-1deg) scale(.96)}100%{opacity:1;transform:rotate(-2.5deg) scale(1)}}
+@keyframes ink{from{border-color:transparent}}
+@media (prefers-reduced-motion:no-preference){
+  .hero h1 em{animation:stamp .55s 1.15s cubic-bezier(.3,1.4,.5,1) both}
+  .motion .sec-head .eyebrow::before{transition:background-size .35s cubic-bezier(.3,1.5,.5,1) .35s,color .2s .6s}
+  .motion .sec-head:not(.seen) .eyebrow::before{background-size:0% 0%;color:transparent}
+  .motion .takeaway{transition:background-color .9s .3s}
+  .motion .session:not(.seen) .takeaway{background-color:transparent!important}
+  .motion .lens{transition:border-color 1s .2s}
+  .motion .session:not(.seen) .lens{border-color:transparent!important}
+}

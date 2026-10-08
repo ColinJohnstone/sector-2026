@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>SecTor 2026 Challenge</title>
-<meta name="description" content="37 questions across AI, cloud, identity, endpoint, hardware, offensive security and governance, drawn from Colin Johnstone's SecTor 2026 notes.">
+<meta name="description" content="50 questions across AI, cloud, identity, endpoint, hardware, offensive security and governance, drawn from Colin Johnstone's SecTor 2026 notes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Public+Sans:wght@400..700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="../assets/base.css?v=20261007f">
-<link rel="stylesheet" href="../assets/site.css?v=20261007f">
-<link rel="stylesheet" href="../assets/report.css?v=20261007f">
+<link rel="stylesheet" href="../assets/base.css?v=20261008a">
+<link rel="stylesheet" href="../assets/site.css?v=20261008a">
+<link rel="stylesheet" href="../assets/report.css?v=20261008a">
 </head>
 <body class="site">
 <header class="bar"><div class="bar-in">
@@ -19,13 +19,14 @@
     <a href="../" class="home-link"><svg class="i"><use href="#i-home"/></svg>Home</a>
     <a href="../day-1/">Day 1</a>
     <a href="../day-2/">Day 2</a>
+    <a href="../day-3/">Day 3</a>
     <a href="../brief/">Exec brief</a>
     <a href="../glossary/">Glossary</a>
   </nav>
 </div></header>
 <main>
 <section class="doc-hero"><div class="wrap">
-  <p class="eyebrow"><svg class="i"><use href="#i-trophy"/></svg><span>The SecTor 2026 Challenge · <span id="count">37</span> questions · About 10 minutes</span></p>
+  <p class="eyebrow"><svg class="i"><use href="#i-trophy"/></svg><span>The SecTor 2026 Challenge · <span id="count">50</span> questions · About 15 minutes</span></p>
   <h1 id="h1">How much of SecTor did <em>you</em> take away?</h1>
   <p class="lead">Every question comes from a session in my notes, across all seven topics. You get immediate feedback, a link back to the session behind each answer, a score by category and a rank at the end. Answer order is shuffled every time.</p>
   <div class="cat-count" id="catcount"></div>
@@ -34,7 +35,7 @@
 
 <section id="quiz"><div class="wrap">
   <div class="quiz" id="challengebox" aria-live="polite"></div>
-  <p class="hint" style="margin-top:1rem">Ranks: 34+ Security Architect · 28+ Threat Hunter · 20+ Conference Regular · below 20 Conference Survivor. Day 3 questions will be added after the conference.</p>
+  <p class="hint" style="margin-top:1rem" id="rankhint"></p>
 </div></section>
 
 <footer class="wrap page-foot">
@@ -43,10 +44,11 @@
   <span>Want to study first? Read the <a href="../brief/">executive brief</a> or the <a href="../glossary/">glossary</a>.</span>
 </footer>
 </main>
-<script src="../assets/core.js?v=20261007f"></script>
-<script src="../assets/glossary.js?v=20261007f"></script>
-<script src="../day-1/data.js?v=20261007f"></script>
-<script src="../day-2/data.js?v=20261007f"></script>
+<script src="../assets/core.js?v=20261008a"></script>
+<script src="../assets/glossary.js?v=20261008a"></script>
+<script src="../day-1/data.js?v=20261008a"></script>
+<script src="../day-2/data.js?v=20261008a"></script>
+<script src="../day-3/data.js?v=20261008a"></script>
 <script>
 (function(){
 /* Extra questions written for the challenge. "s" is day:session. */
@@ -101,12 +103,13 @@ Quiz($("#challengebox"),all,{
   resultLabel:"Your SecTor rank",
   resolve:k=>byKey[k]||null,
   ranks:[
-    [at(34/37),"Security Architect","You could have given half these talks. Send the brief to someone who wasn't there."],
-    [at(28/37),"Threat Hunter","Sharp. Check the categories below for the one area to brush up on."],
-    [at(20/37),"Conference Regular","You took a lot away. The sessions in “Review these” are worth a second read."],
+    [at(.92),"Security Architect","You could have given half these talks. Send the brief to someone who wasn't there."],
+    [at(.76),"Threat Hunter","Sharp. Check the categories below for the one area to brush up on."],
+    [at(.54),"Conference Regular","You took a lot away. The sessions in “Review these” are worth a second read."],
     [0,"Conference Survivor","You made it through the lanyards. Start with the executive brief, then try again."]
   ]
 });
+document.getElementById("rankhint").textContent=`Ranks: ${at(.92)}+ Security Architect · ${at(.76)}+ Threat Hunter · ${at(.54)}+ Conference Regular · below ${at(.54)} Conference Survivor.`;
 splitWords(document.getElementById("h1"));
 })();
 </script>

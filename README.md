@@ -7,10 +7,11 @@ Live: https://colinjohnstone.github.io/sector-2026/
 | Path | Content |
 |---|---|
 | `/` | Home: thesis, day cards, timeline, site-wide search |
-| `/brief/` | Executive security brief (about 8 minutes) |
+| `/brief/` | Executive security brief (about 10 minutes) |
 | `/day-1/` | Day 1: AI x Cloud Security Summit, "AI changed the speed of the attack" |
 | `/day-2/` | Day 2: Keynote & Briefings, "The threat is already on the device" |
-| `/challenge/` | The SecTor 2026 Challenge: 37 questions with category scores and a rank |
+| `/day-3/` | Day 3: Keynote & Briefings, "The real question is who gets to decide" |
+| `/challenge/` | The SecTor 2026 Challenge: 50 questions with category scores and a rank |
 | `/glossary/` | Full glossary with "used in" links to sessions |
 
 Static site, no build step and no dependencies beyond Google Fonts. Keep every link relative: the site is served from the `/sector-2026/` sub-path.
@@ -46,14 +47,16 @@ Provenance rules for `stats[].src`:
 
 Only use links to primary or technical sources (research, advisories, papers, docs). No company homepages, generic vendor pages, search pages or guessed LinkedIn URLs. `linkedin` on the day object takes direct profile URLs only.
 
-## Adding Day 3
+## Adding a day
 
-1. Copy `day-2/` to `day-3/`. Replace `data.js` (set `n: 3`, register as `SECTOR.days[3]`) and `photos.js`, and write a new `theme.css` with its own fonts, paper, accent and motion (update the Google Fonts link to match).
-2. In `day-3/index.html`, set `<body data-day="3">` and add Day 3 to the day nav.
-3. Home (`index.html`): turn the pending Day 3 card into a link, fill in its facts and topics, and add `<script src="day-3/data.js">` before `assets/search.js`.
-4. Add Day 3 to the nav on every page, and update the brief.
-5. Challenge (`challenge/index.html`) and glossary (`glossary/index.html`): add `<script src="../day-3/data.js">`. Day 3 quiz items join the challenge automatically; adjust the rank thresholds text if the count changes.
-6. Add any new terms to `assets/glossary.js`.
+All three days are published. To add another page in the same style (for example a follow-up event):
+
+1. Copy `day-3/` to `day-N/`. Replace `data.js` (set `n`, register as `SECTOR.days[N]`) and `photos.js`, and write a new `theme.css` with its own fonts, paper, accent and motion (update the Google Fonts link to match).
+2. In `day-N/index.html`, set `<body data-day="N">` and add it to the day nav.
+3. Home (`index.html`): add a day card with its facts and topics, and add `<script src="day-N/data.js">` before `assets/search.js`.
+4. Add the day to the nav on every page, and update the brief.
+5. Challenge (`challenge/index.html`) and glossary (`glossary/index.html`): add `<script src="../day-N/data.js">`. Its quiz items join the challenge automatically, and rank thresholds scale with the question count.
+6. Add any new terms to `assets/glossary.js`, and a `--dN` accent colour plus `.daycard.dN` rule in `assets/report.css`.
 7. Bump the `?v=` query string on assets in every HTML file so browsers fetch the new files.
 
 ## Deploy
