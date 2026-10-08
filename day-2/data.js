@@ -218,7 +218,20 @@ window.SECTOR.days[2]={
   "title": "SecTor 2026 · Day 2 · Keynote & Briefings",
   "place": "Wednesday, October 7, 2026 · Metro Toronto Convention Centre · Keynote on the Main Stage, Hall F; briefings in Rooms 701A, 701B and 718AB"
  },
- "linkedin": {},
+ "linkedin": {
+  "Ron Deibert": "https://www.linkedin.com/in/ronald-deibert-8b93171/",
+  "Chaggai Heching": "https://www.linkedin.com/in/chaggai-heching/",
+  "Ori Levy": "https://www.linkedin.com/in/ori-levy-a48236235/",
+  "Adar Peleg": "https://www.linkedin.com/in/adarpeleg/",
+  "Rahul Jaisinghani": "https://www.linkedin.com/in/rahul-jaisinghani/",
+  "Gururaj Saileshwar": "https://www.linkedin.com/in/gururaj-saileshwar-080a4526/",
+  "Chris S. Lin": "https://www.linkedin.com/in/shaopeng-lin/",
+  "Guozhen Ding": "https://www.linkedin.com/in/guozhen-ding/",
+  "David Lie": "https://www.linkedin.com/in/david-lie-a1b4563/",
+  "Robin Kirchner": "https://www.linkedin.com/in/robin-kirchner-3073971a3/",
+  "Martin Johns": "https://www.linkedin.com/in/martinjohns/",
+  "Simon Maxwell-Stewart": "https://www.linkedin.com/in/simon-maxwell-stewart-46b848a2/"
+ },
  "sessions": [
   {
    "id": "k1",
@@ -1154,5 +1167,67 @@ window.SECTOR.days[2]={
     "cat": "identity"
    }
   ]
+ }
+};
+/* Speaker organisations: name -> {co, site, loc}. LinkedIn profiles live in "linkedin" above. */
+window.SECTOR.days[2].people={
+ "Ron Deibert": {
+  "co": "The Citizen Lab",
+  "site": "https://citizenlab.ca"
+ },
+ "Chaggai Heching": {
+  "co": "ATLAS-AI Lab, Technion",
+  "site": "https://www.technion.ac.il"
+ },
+ "Ori Levy": {
+  "co": "ATLAS-AI Lab, Technion",
+  "site": "https://www.technion.ac.il"
+ },
+ "Adar Peleg": {
+  "co": "ATLAS-AI Lab, Technion",
+  "site": "https://www.technion.ac.il"
+ },
+ "Rahul Jaisinghani": {
+  "co": "BrowserStack",
+  "site": "https://www.browserstack.com"
+ },
+ "Gururaj Saileshwar": {
+  "co": "University of Toronto",
+  "site": "https://www.utoronto.ca"
+ },
+ "Chris S. Lin": {
+  "co": "University of Toronto",
+  "site": "https://www.utoronto.ca"
+ },
+ "Yuqin Yan": {
+  "co": "University of Toronto",
+  "site": "https://www.utoronto.ca"
+ },
+ "Guozhen Ding": {
+  "co": "University of Toronto",
+  "site": "https://www.utoronto.ca"
+ },
+ "Joyce Qu": {
+  "co": "University of Toronto",
+  "site": "https://www.utoronto.ca"
+ },
+ "David Lie": {
+  "co": "University of Toronto",
+  "site": "https://www.utoronto.ca"
+ },
+ "Joseph Zhu": {
+  "co": "Google"
+ },
+ "Robin Kirchner": {
+  "co": "TU Braunschweig",
+  "site": "https://www.tu-braunschweig.de"
+ },
+ "Martin Johns": {
+  "co": "TU Braunschweig",
+  "site": "https://www.tu-braunschweig.de"
+ },
+ "Simon Maxwell-Stewart": {
+  "co": "BeyondTrust",
+  "site": "https://www.beyondtrust.com"
  }
 };

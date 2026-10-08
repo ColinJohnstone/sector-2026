@@ -64,7 +64,7 @@ const has=(t,q)=>t.toLowerCase().includes(q);
 function speaker(n,r){
   const li=(D.linkedin||{})[n];
   return `<div class="spk">${PH[n]?`<img class="av photo" src="data:image/jpeg;base64,${PH[n]}" alt="${esc(n)}" width="88" height="88" loading="lazy">`:`<span class="av" style="--h:${hue(n)}" aria-hidden="true">${initials(n)}</span>`}<div>
-    <b>${hl(n)}</b><small>${hl(r)}</small>${li?`<span class="spk-links"><a href="${li}" target="_blank" rel="noopener">${ic("li")}LinkedIn</a></span>`:""}</div></div>`;
+    <b>${hl(n)}</b><small>${hl(r)}</small>${(()=>{const o=(D.people||{})[n]||{};const parts=[o.site?`<a href="${o.site}" target="_blank" rel="noopener">${esc(o.co)}</a>`:"",o.loc?`<span class="loc">${esc(o.loc)}</span>`:"",li?`<a href="${li}" target="_blank" rel="noopener">LinkedIn</a>`:""].filter(Boolean);return parts.length?`<span class="spk-links">${parts.join("")}</span>`:""})()}</div></div>`;
 }
 function briefingPanel(s){
   const covLabel=s.fromProgram?`<i class="prov program">From the official program</i>`:`<i class="prov presented">Presented</i>`;

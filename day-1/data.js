@@ -226,7 +226,24 @@ window.SECTOR.days[1]={
   "place": "Tuesday, October 6, 2026 · Metro Toronto Convention Centre, Room 718AB · Emcee: Francis Odum, SACR"
  },
  "linkedin": {
-  "Gal Ordo": "https://www.linkedin.com/in/galordo/"
+  "Matt Johansen": "https://www.linkedin.com/in/matthewjohansen/",
+  "Gal Ordo": "https://www.linkedin.com/in/galordo/",
+  "Eric Broda": "https://www.linkedin.com/in/ericbroda/",
+  "Rachel Clark": "https://www.linkedin.com/in/rachellaurenclark/",
+  "Brian Deitch": "https://www.linkedin.com/in/cloud-god/",
+  "Alessandro Brucato": "https://www.linkedin.com/in/alessandro-brucato/",
+  "Yigael Berger": "https://www.linkedin.com/in/yigaelberger/",
+  "Helen Oakley": "https://www.linkedin.com/in/helen-oakley/",
+  "Francis Odum": "https://www.linkedin.com/in/francis-odum-0a8673100/",
+  "Ian Paterson": "https://www.linkedin.com/in/ianlpaterson/",
+  "Guillaume Ross": "https://www.linkedin.com/in/guillaumeross/",
+  "Kunal Modasiya": "https://www.linkedin.com/in/kunalmodasiya/",
+  "Jay Thurston": "https://www.linkedin.com/in/jay-thurston-365566/",
+  "Fernando Tucci": "https://www.linkedin.com/in/jftucci24/",
+  "Ryoji Betchaku": "https://www.linkedin.com/in/ryoji-betchaku/",
+  "Ali Dehghantanha": "https://www.linkedin.com/in/alide/",
+  "Iain Paterson": "https://www.linkedin.com/in/iainpaterson/",
+  "Olivera Zatezalo": "https://www.linkedin.com/in/oliverazatezalo/"
  },
  "sessions": [
   {
@@ -1356,5 +1373,79 @@ window.SECTOR.days[1]={
     "cat": "governance"
    }
   ]
+ }
+};
+/* Speaker organisations: name -> {co, site, loc}. LinkedIn profiles live in "linkedin" above. */
+window.SECTOR.days[1].people={
+ "Matt Johansen": {
+  "co": "Vulnerable U",
+  "loc": "Austin, TX"
+ },
+ "Gal Ordo": {
+  "co": "Native",
+  "site": "https://native.security"
+ },
+ "Eric Broda": {
+  "co": "Broda Group Software"
+ },
+ "Rachel Clark": {
+  "co": "SKADI Cyber Defense"
+ },
+ "Brian Deitch": {
+  "co": "Zscaler",
+  "site": "https://www.zscaler.com"
+ },
+ "Alessandro Brucato": {
+  "co": "Tracebit",
+  "site": "https://tracebit.com"
+ },
+ "Yigael Berger": {
+  "co": "Sweet Security",
+  "site": "https://www.sweet.security"
+ },
+ "Helen Oakley": {
+  "co": "AI security"
+ },
+ "Francis Odum": {
+  "co": "Software Analyst Cyber Research",
+  "site": "https://substack.com/@softwareanalyst"
+ },
+ "Ian Paterson": {
+  "co": "Plurilock",
+  "site": "https://plurilock.com"
+ },
+ "Guillaume Ross": {
+  "co": "Caffeine Security",
+  "loc": "Montreal, QC"
+ },
+ "Kunal Modasiya": {
+  "co": "Qualys",
+  "site": "https://www.qualys.com"
+ },
+ "Jay Thurston": {
+  "co": "Thales",
+  "site": "https://www.thalesgroup.com"
+ },
+ "Fernando Tucci": {
+  "co": "Trend Micro",
+  "site": "https://www.trendmicro.com"
+ },
+ "Ryoji Betchaku": {
+  "co": "Wiz",
+  "site": "https://www.wiz.io",
+  "loc": "Canada"
+ },
+ "Ali Dehghantanha": {
+  "co": "University of Guelph",
+  "site": "https://www.uoguelph.ca",
+  "loc": "Guelph, ON"
+ },
+ "Iain Paterson": {
+  "co": "WELL Health Technologies",
+  "site": "https://well.company"
+ },
+ "Olivera Zatezalo": {
+  "co": "Ontario Power Generation",
+  "site": "https://www.opg.com"
  }
 };

@@ -182,3 +182,4 @@ a.daycard:hover .go{letter-spacing:.02em}
   .motion .tl li{transition-delay:calc(var(--i,0) * 180ms + .2s)}
 }
 @media (max-width:860px){.motion .tl::before{transform-origin:top}.motion .tl:not(.seen)::before{transform:scaleY(0)}}
+.spk-links{font-family:var(--ui)}
