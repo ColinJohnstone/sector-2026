@@ -16,8 +16,8 @@ $("#hero-in").innerHTML=`
   <p class="lead">${esc(D.lead)}</p>
   ${D.heroExtra||""}
   <div class="howto" aria-label="Ways to use this page">${D.howto.map(([m,l,h,i])=>`<a href="${h}">${ic(i)}<b>${esc(m)}</b>${esc(l)}</a>`).join("")}</div>
-  <div class="byline"><strong>Colin Johnstone</strong><span>Senior Consultant, Authentication Services @ CIBC</span></div>
-  <p class="disclaimer">${ic("note")}Personal conference notes, analysis and observations by Colin Johnstone. Not an official CIBC publication or position.</p>`;
+  <div class="byline"><img class="me" src="../assets/colin.jpg" alt="Colin Johnstone" width="46" height="46"><div class="who"><a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a><span>Senior Consultant, Authentication Services @ CIBC</span></div><a class="li" href="https://www.linkedin.com/in/colin-johnstone-7a982a187/">LinkedIn</a></div>
+  <p class="disclaimer">${ic("note")}Personal conference notes, analysis and observations by <a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a>. Not an official CIBC publication or position.</p>`;
 splitWords($("#h1"));
 
 /* ---------- brief ---------- */
@@ -159,7 +159,7 @@ Quiz($("#quizbox"),D.quiz.items,{resolve:id=>byId[id]?{title:byId[id].title,href
 
 /* ---------- footer ---------- */
 $("#foot").innerHTML=`<strong style="color:var(--ink)">${esc(D.footer.title)}</strong><span>${esc(D.footer.place)}</span>
-  <span>Personal conference notes, analysis and observations by Colin Johnstone. Not an official CIBC publication or position.</span>
+  <span>Personal conference notes, analysis and observations by <a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a>. Not an official CIBC publication or position.</span>
   <span>Program details from the official <a href="${D.official}" target="_blank" rel="noopener">SecTor 2026 schedule</a>. Statistics marked “Presented during the session” are as stated by the speakers and haven't been independently verified. <a href="../">Back to all days</a>.</span>`;
 
 observeCounts();readProgress();

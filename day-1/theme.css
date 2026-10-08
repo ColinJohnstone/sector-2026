@@ -1,0 +1,38 @@
+/* Day 1: technical whitepaper. IBM Plex Serif headlines, Plex Sans text, Plex Mono labels and
+   numbered sections on cool grey paper, with a cobalt accent. */
+html:root:root{
+  --bg:#f6f7f9; --bg2:#eceff3; --surface:#f6f7f9; --surface2:#eceff3; --ink:#14181d; --muted:#56606c; --line:#d3d9e0; --rule:#14181d;
+  --accent:#0f4c81; --accent-soft:rgba(15,76,129,.06); --signal:#0f4c81; --signal-soft:rgba(15,76,129,.06); --mark:#dce9f6;
+  --display:"IBM Plex Serif",Georgia,serif; --body:"IBM Plex Sans",system-ui,sans-serif; --ui:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){html:root:root:not([data-theme="light"]){
+  --bg:#121518; --bg2:#1a1e23; --surface:#121518; --surface2:#1a1e23; --ink:#e6eaee; --muted:#9aa5b1; --line:#2f363e; --rule:#c9d1d9;
+  --accent:#7fb0e0; --accent-soft:rgba(127,176,224,.08); --signal:#7fb0e0; --mark:#20354d}}
+body{font-size:1.02rem;line-height:1.65}
+.hero h1 em{font-style:normal;font-weight:600;text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.12em}
+.eyebrow,.label,.s-time,.legend,.tn .yr,.count,.q-top,.sindex .n,.chain li,.prov,.fmt,.tag,.cat{font-family:var(--mono)!important;letter-spacing:.02em}
+.eyebrow{font-size:.74rem}
+main{counter-reset:sec}
+.sec-head h2::before{counter-increment:sec;content:counter(sec,decimal-leading-zero);font-family:var(--mono);font-size:.5em;font-weight:500;color:var(--accent);vertical-align:.45em;margin-right:.7rem}
+.session{border-top-width:2px!important}
+.session h3{font-weight:600}
+.oneline{font-family:var(--display);font-style:normal;font-weight:500;color:var(--accent)}
+blockquote p{font-style:normal;font-weight:500}
+.lens{background:none!important;border:1px solid var(--rule)!important}
+.lens-h{font-family:var(--mono)!important;background:var(--ink);color:var(--bg);margin:-1px -1px .6rem;padding:.3rem .7rem}
+.lens-h b{color:inherit}
+.num b,.stat b,.statc b{font-family:var(--mono)!important;font-weight:500!important;letter-spacing:-.02em}
+.tk>div::before,.ent li::before{font-family:var(--mono)!important}
+
+/* motion: the eyebrow types itself out, the key word gets underlined, section numbers slide in */
+.hero h1 em{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 94%/100% .065em no-repeat}
+@keyframes ul{from{background-size:0% .065em}}
+@keyframes type{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 -1em 0 0)}}
+@keyframes caret{0%{opacity:1}50%,100%{opacity:0}}
+@media (prefers-reduced-motion:no-preference){
+  .hero h1 em{animation:ul .7s 1.1s cubic-bezier(.3,.6,.2,1) both}
+  .hero .eyebrow{animation:type 1.3s steps(46,end) .1s both}
+  .hero .eyebrow::after{content:"";display:inline-block;width:.5em;height:1.1em;background:var(--accent);margin-left:.15rem;animation:caret .9s steps(1) 1.4s 4 both}
+  .motion .sec-head h2::before{display:inline-block;transition:transform .6s cubic-bezier(.2,.7,.2,1) .25s,opacity .6s .25s}
+  .motion .sec-head:not(.seen) h2::before{opacity:0;transform:translateX(-.8em)}
+}

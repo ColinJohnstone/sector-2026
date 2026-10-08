@@ -23,14 +23,15 @@ assets/
   engine.js    renders a day page from window.SECTOR.days[N]
   search.js    home-page search across sessions, speakers, takeaways, enterprise items, glossary
   glossary.js  window.GLOSSARY: key -> [term, definition, icon]
-  base.css     shared components (Day 1's palette is the house style)
+  base.css     shared component layout
   site.css     home, brief, challenge and glossary pages
+  report.css   house style: printed-report look, scroll reveals and print-like motion
+  colin.jpg    author photo for the byline
 day-N/
   index.html   page shell (sections the engine fills in)
   data.js      all of that day's content
   photos.js    embedded speaker headshots (data URIs) keyed by speaker name
-  hero.js      that day's hero canvas
-  theme.css    optional: the day's own look (Day 2 has one)
+  theme.css    the day's own fonts, paper colour, accent and motion
 ```
 
 ### Session fields (`data.js`)
@@ -47,7 +48,7 @@ Only use links to primary or technical sources (research, advisories, papers, do
 
 ## Adding Day 3
 
-1. Copy `day-2/` to `day-3/`. Replace `data.js` (set `n: 3`, register as `SECTOR.days[3]`), `photos.js`, `hero.js`, and write a new `theme.css` so the day has its own look.
+1. Copy `day-2/` to `day-3/`. Replace `data.js` (set `n: 3`, register as `SECTOR.days[3]`) and `photos.js`, and write a new `theme.css` with its own fonts, paper, accent and motion (update the Google Fonts link to match).
 2. In `day-3/index.html`, set `<body data-day="3">` and add Day 3 to the day nav.
 3. Home (`index.html`): turn the pending Day 3 card into a link, fill in its facts and topics, and add `<script src="day-3/data.js">` before `assets/search.js`.
 4. Add Day 3 to the nav on every page, and update the brief.

@@ -50,6 +50,17 @@ function countUp(el){
 function readProgress(){const rb=$("#readbar");if(!rb)return;addEventListener("scroll",()=>{const h=document.documentElement;rb.style.setProperty("--p",(h.scrollTop/((h.scrollHeight-h.clientHeight)||1)).toFixed(3))},{passive:true})}
 
 /* split headline into words for the entrance animation */
+/* scroll reveal: marks blocks .seen as they enter the viewport (CSS does the motion) */
+const REVEAL=".rv,.session,.tk,.ent li,.daycard,.ev,.tl,.tl li,.findings>li,.idea,.num,.statc,.stat,.tn,.explore a,.box,.thesis-q,.sec-head";
+function reveal(){
+  const de=document.documentElement;
+  if(reduceMotion||!("IntersectionObserver" in window))return;
+  de.classList.add("motion");
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("seen");io.unobserve(en.target)}}),{rootMargin:"0px 0px -6% 0px",threshold:.05});
+  const scan=()=>document.querySelectorAll(REVEAL).forEach(e=>{if(e.dataset.rv)return;e.dataset.rv=1;const sib=[...e.parentNode.children].filter(c=>c.matches(REVEAL));e.style.setProperty("--i",Math.min(sib.indexOf(e),6));io.observe(e)});
+  scan();let t=0;new MutationObserver(()=>{cancelAnimationFrame(t);t=requestAnimationFrame(scan)}).observe(document.body,{childList:true,subtree:true});
+}
+document.addEventListener("DOMContentLoaded",reveal);
 function splitWords(h){if(!h)return;let k=0;const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(w=>{if(!w.trim()){f.append(w);return}const s=document.createElement("span");s.className="w";s.style.animationDelay=(k++*70)+"ms";s.textContent=w;f.append(s)});c.replaceWith(f)}else walk(c)})};walk(h)}
 
 /* ---------- quiz ---------- */
