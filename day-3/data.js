@@ -1060,3 +1060,18 @@ window.SECTOR.days[3]={
   }
  }
 };
+/* Audio recap: recap.mp3 in this folder, generated with the open-source Kokoro voice model. */
+window.SECTOR.days[3].audio={
+ "src": "recap.mp3",
+ "dur": 119,
+ "transcript": [
+  "This is the Day 3 recap from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through it: who gets to decide?",
+  "Helen Oakley's keynote described a helpful AI agent asked to grant one person temporary access, which ended up making a much broader change than anyone intended. No attacker was involved. Her point was that an agent's plan should be treated as a request, not a permission, and checked against what was actually asked for before anything changes.",
+  "She also stressed that temporary access has to undo whatever it opened, and that agent autonomy should grow only with evidence. Her closing line: it's not about what the AI agent can do, but what it is authorized to cause.",
+  "Brad Edwards of Palo Alto Networks showed how open-source labs let AI agents play both attacker and defender in purple team exercises. It makes regular practice affordable for teams that never had the budget, as long as people set the boundaries and every fix is re-tested.",
+  "Patrick Kiley of Mandiant looked at long-lived robotics platforms and showed how old software and shared passwords persist for decades. His lessons were about defence in depth, unique credentials per device, and planning an upgrade path from day one.",
+  "Two more briefings looked ahead. One explained harvest now, decrypt later: encrypted data collected today could be read once quantum computers mature, so organizations should start a cryptographic inventory now. The other covered ransomware groups hosting infrastructure in places that are hard to take down, which means response plans can't rely on takedowns.",
+  "Colin's takeaway from Day 3: authority is the new perimeter. Decide who and what is allowed to act, check it at the moment of action, and keep the evidence.",
+  "The full notes, sources and a quiz are on the Day 3 page."
+ ]
+};

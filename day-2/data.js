@@ -1231,3 +1231,17 @@ window.SECTOR.days[2].people={
   "site": "https://www.beyondtrust.com"
  }
 };
+/* Audio recap: recap.mp3 in this folder, generated with the open-source Kokoro voice model. */
+window.SECTOR.days[2].audio={
+ "src": "recap.mp3",
+ "dur": 93,
+ "transcript": [
+  "This is the Day 2 recap from Colin Johnstone's SecTor 2026 notes. If Day 1 was about speed, Day 2 was about where risk lands. The headline: the threat is already on the device.",
+  "Ron Deibert of the Citizen Lab opened with the human side. Commercial spyware is aimed at journalists, lawyers and activists, and public-interest research is often what leads to the patch, the sanction or the shutdown that protects everyone else.",
+  "Several talks looked at technology we already trust. Researchers showed that the small AI models now built into browsers and operating systems deserve the same scrutiny as any other software with access to our files. A University of Toronto team showed that hardware isolation on shared GPUs isn't something we can take for granted.",
+  "BrowserStack's talk flipped the AI story around. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow, expensive part. Their motto: buy the hunter, own the verifier.",
+  "Two more briefings rounded out the day: one on why an archived web page isn't proof on its own, and one on why AI gateways need carefully scoped identities.",
+  "Colin's takeaway from Day 2: know where AI runs in your environment, limit what it can touch, keep patching and isolation in place for shared hardware, and verify before you act.",
+  "The full notes, sources and a quiz are on the Day 2 page."
+ ]
+};

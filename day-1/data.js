@@ -1449,3 +1449,17 @@ window.SECTOR.days[1].people={
   "site": "https://www.opg.com"
  }
 };
+/* Audio recap: recap.mp3 in this folder, generated with the open-source Kokoro voice model. */
+window.SECTOR.days[1].audio={
+ "src": "recap.mp3",
+ "dur": 103,
+ "transcript": [
+  "This is the Day 1 recap from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit, and the theme was simple: AI changed the speed of the attack.",
+  "The opening keynote, from Matt Johansen of Vulnerable U, framed it with a contrast. Capabilities that once needed a government budget are now available to almost anyone. His line summed up the day: you are not defending against China, you are defending against 250 dollars a month.",
+  "The cloud sessions made the same point. Speakers showed that the techniques themselves weren't new. What changed is how quickly automated tools can string them together, often faster than a team can read the first alert. That's why the advice kept returning to prevention and reducing blast radius, not just detection.",
+  "There was good news too. Tracebit showed that deception works unusually well against automated attackers. Because they explore everything, decoy credentials and canaries get touched early, giving defenders a reliable warning.",
+  "The other big thread was identity for AI agents. Organizations may soon run thousands of them, often without a reliable inventory. The panels kept asking the same questions: what is each agent, what can it reach, who owns it, and how do you switch it off?",
+  "Colin's takeaway from Day 1: AI isn't inventing a new class of problems. It's making the old ones faster and cheaper. That puts the weight back on fundamentals: segmentation, least privilege, strong identity and a smaller blast radius.",
+  "The full notes, sources and a quiz are on the Day 1 page."
+ ]
+};

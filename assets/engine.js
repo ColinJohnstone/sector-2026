@@ -9,6 +9,36 @@ const pos=id=>S.findIndex(s=>s.id===id);
 const linkTo=id=>`<a href="#${id}">${esc(byId[id].short)}</a>`;
 const rel=ids=>ids&&ids.length?`<div class="rel">${ids.map(linkTo).join("")}</div>`:"";
 
+
+/* ---------- audio recap ---------- */
+function audioBlock(A){
+  const mm=t=>Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
+  return `<div class="recap" id="recap">
+    <button class="rc-play" type="button" aria-label="Play the audio recap"><span class="rc-ico" aria-hidden="true"></span></button>
+    <div class="rc-main">
+      <p class="rc-t"><b>Listen to the recap</b><span>${mm(A.dur)} · read by a synthetic voice</span></p>
+      <div class="rc-bar" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="${A.dur}" aria-valuenow="0"><i></i></div>
+      <p class="rc-meta"><span class="rc-time">0:00 / ${mm(A.dur)}</span><button type="button" class="rc-rate" aria-label="Playback speed">1×</button><a href="${A.src}" download>MP3</a></p>
+    </div>
+    <details class="rc-tx"><summary>Transcript</summary>${A.transcript.map(p=>`<p>${esc(p)}</p>`).join("")}</details>
+    <audio preload="none" src="${A.src}"></audio>
+  </div>`;
+}
+function wireAudio(){
+  const r=$("#recap");if(!r)return;
+  const a=r.querySelector("audio"),btn=r.querySelector(".rc-play"),bar=r.querySelector(".rc-bar"),fill=bar.querySelector("i"),time=r.querySelector(".rc-time"),rate=r.querySelector(".rc-rate");
+  const mm=t=>Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
+  const total=()=>isFinite(a.duration)?a.duration:+bar.getAttribute("aria-valuemax");
+  btn.onclick=()=>a.paused?a.play():a.pause();
+  a.onplay=()=>{r.classList.add("playing");btn.setAttribute("aria-label","Pause the audio recap")};
+  a.onpause=a.onended=()=>{r.classList.remove("playing");btn.setAttribute("aria-label","Play the audio recap")};
+  a.ontimeupdate=()=>{const p=a.currentTime/total();fill.style.width=(p*100)+"%";time.textContent=mm(a.currentTime)+" / "+mm(total());bar.setAttribute("aria-valuenow",Math.round(a.currentTime))};
+  const seek=x=>{const b=bar.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(x-b.left)/b.width))*total();if(a.paused)a.play()};
+  bar.addEventListener("click",e=>seek(e.clientX));
+  bar.addEventListener("keydown",e=>{if(e.key==="ArrowRight")a.currentTime+=10;if(e.key==="ArrowLeft")a.currentTime-=10});
+  const rates=[1,1.25,1.5,0.85];let ri=0;rate.onclick=()=>{ri=(ri+1)%rates.length;a.playbackRate=rates[ri];rate.textContent=rates[ri]+"×"};
+}
+
 /* ---------- hero ---------- */
 $("#hero-in").innerHTML=`
   <p class="eyebrow">${ic("pin")}${esc(D.eyebrow)}</p>
@@ -16,9 +46,10 @@ $("#hero-in").innerHTML=`
   <p class="lead">${esc(D.lead)}</p>
   ${D.heroExtra||""}
   <div class="howto" aria-label="Ways to use this page">${D.howto.map(([m,l,h,i])=>`<a href="${h}">${ic(i)}<b>${esc(m)}</b>${esc(l)}</a>`).join("")}</div>
+  ${D.audio?audioBlock(D.audio):""}
   <div class="byline"><img class="me" src="../assets/colin.jpg" alt="Colin Johnstone" width="46" height="46"><div class="who"><a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a><span>Senior Consultant, Authentication Services @ CIBC</span></div><a class="li" href="https://www.linkedin.com/in/colin-johnstone-7a982a187/">LinkedIn</a></div>
   <p class="disclaimer">${ic("note")}Personal conference notes, analysis and observations by <a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a>. Not an official CIBC publication or position.</p>`;
-splitWords($("#h1"));
+splitWords($("#h1"));wireAudio();
 
 /* ---------- brief ---------- */
 const B=D.brief;
