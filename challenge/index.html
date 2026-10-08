@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SecTor 2026 Challenge</title>
+<meta name="description" content="37 questions across AI, cloud, identity, endpoint, hardware, offensive security and governance, drawn from Colin Johnstone's SecTor 2026 notes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="../assets/base.css?v=20261007c">
+<link rel="stylesheet" href="../assets/site.css?v=20261007c">
+</head>
+<body class="site">
+<header class="bar"><div class="bar-in">
+  <a class="brand" href="../"><i class="dot"></i>SecTor <span>2026</span></a>
+  <nav aria-label="Site">
+    <a href="../" class="home-link"><svg class="i"><use href="#i-home"/></svg>Home</a>
+    <a href="../day-1/">Day 1</a>
+    <a href="../day-2/">Day 2</a>
+    <a href="../brief/">Exec brief</a>
+    <a href="../glossary/">Glossary</a>
+  </nav>
+</div></header>
+<main>
+<section class="doc-hero"><div class="wrap">
+  <p class="eyebrow"><svg class="i"><use href="#i-trophy"/></svg><span>The SecTor 2026 Challenge · <span id="count">37</span> questions · About 10 minutes</span></p>
+  <h1 id="h1">How much of SecTor did <em>you</em> take away?</h1>
+  <p class="lead">Every question comes from a session in my notes, across all seven topics. You get immediate feedback, a link back to the session behind each answer, a score by category and a rank at the end. Answer order is shuffled every time.</p>
+  <div class="cat-count" id="catcount"></div>
+  <p class="disclaimer"><svg class="i"><use href="#i-note"/></svg>Personal conference notes, analysis and observations by Colin Johnstone. Not an official CIBC publication or position.</p>
+</div></section>
+
+<section id="quiz"><div class="wrap">
+  <div class="quiz" id="challengebox" aria-live="polite"></div>
+  <p class="hint" style="margin-top:1rem">Ranks: 34+ Security Architect · 28+ Threat Hunter · 20+ Conference Regular · below 20 Conference Survivor. Day 3 questions will be added after the conference.</p>
+</div></section>
+
+<footer class="wrap page-foot">
+  <strong style="color:var(--ink)">SecTor 2026 · Challenge</strong>
+  <span>Personal conference notes, analysis and observations by Colin Johnstone. Not an official CIBC publication or position.</span>
+  <span>Want to study first? Read the <a href="../brief/">executive brief</a> or the <a href="../glossary/">glossary</a>.</span>
+</footer>
+</main>
+<script src="../assets/core.js?v=20261007c"></script>
+<script src="../assets/glossary.js?v=20261007c"></script>
+<script src="../day-1/data.js?v=20261007c"></script>
+<script src="../day-2/data.js?v=20261007c"></script>
+<script>
+(function(){
+/* Extra questions written for the challenge. "s" is day:session. */
+const EXTRA=[
+ {s:"1:s2",cat:"identity",q:"In the Zealot attack chain shown on Day 1, what did the SSRF step hand the agent?",
+  o:["Cloud credentials from the instance metadata service","A reverse shell on a developer's own workstation","Direct read access to the production database","An MFA push it could approve on the user's behalf"],a:0,
+  e:"SSRF against the metadata service produced credentials. Enumeration, privilege escalation and exfiltration followed from there, which is why IMDSv2 and tightly scoped instance roles matter."},
+ {s:"1:s3",cat:"identity",q:"Alongside unique, traceable identities for each agent, what did the autonomous agents session say had to exist?",
+  o:["A well-defined agent registry with clear ownership","A separate cloud tenant for every deployed agent","Human approval for every agent-to-agent call","Short-lived API keys that each agent rotates itself"],a:0,
+  e:"You can't scope, monitor or revoke what you haven't inventoried. The registry and an accountable owner come first."},
+ {s:"2:mcp",cat:"identity",q:"Once indirect prompt injection is in play, what did the Azure API gateway MCP attack require of an attacker?",
+  o:["Getting a string of text in front of an AI agent","A stolen subscription key for the API gateway","Network access from inside the Azure tenant","Contributor rights on the gateway's resource group"],a:0,
+  e:"The requirement changed from “the attacker needs a key” to “the attacker needs to put a string in front of an AI agent.” The gateway's own managed identity supplied the credentials."},
+ {s:"1:s5",cat:"identity",q:"In Tracebit's testing, where did AI agents start on their roughly 13-minute path to cloud admin?",
+  o:["A low-privileged cloud access key","A phished console password and MFA code","An exposed Kubernetes dashboard","A leaked CI/CD pipeline token"],a:0,
+  e:"From a low-privileged key to admin in about 13 minutes on average, as presented. Canaries still caught 99.4% of runs before the first critical action."},
+ {s:"1:s4",cat:"cloud",q:"What does “dark by default” mean in practice?",
+  o:["Apps stay unreachable until user and device are verified","Logging is switched off so attackers get no telemetry","Outbound traffic is blocked unless a person approves it","Production systems run only in approved change windows"],a:0,
+  e:"An application isn't reachable at all until the user and device are verified, so there's far less to find and exploit while patches catch up."},
+ {s:"1:s7",cat:"cloud",q:"Which Canada-specific question came up in the live audience forum?",
+  o:["Whether to send data and inference to US-based AI providers","Whether provincial privacy law covers model training data","Whether Canadian banks may run AI agents in production","Whether federal agencies will certify cloud AI services"],a:0,
+  e:"Data residency and sovereignty for AI inference, especially as regulation develops, was raised as a live concern for Canadian organizations."},
+ {s:"2:llm",cat:"endpoint",q:"Which specific EDR rule did the Large Local Malware talk recommend?",
+  o:["Block command-line use of Chrome's DevTools Protocol","Alert whenever Chrome downloads a browser update","Quarantine any file larger than the model weights","Block GPU access for every unsigned application"],a:0,
+  e:"Attackers can reach the browser's built-in model through the DevTools Protocol from the command line. Blocking that, removing unneeded local models and scoping them to current files were the defences discussed."},
+ {s:"2:gpu",cat:"hardware",q:"Which GPU did the GPUBreach team use to demonstrate the attack?",
+  o:["NVIDIA RTX A6000","NVIDIA H100 SXM","AMD Instinct MI300X","NVIDIA GeForce RTX 4090"],a:0,
+  e:"The RTX A6000, across driver releases from 2023 to 2026. GPUs like it are what most local and hosted AI models run on."},
+ {s:"1:s9",cat:"offensive",q:"Which nation-state techniques did “Graph the Threat” map into analysis a security team can act on?",
+  o:["Identity chaining, living off the cloud and covert egress","Phishing kits, ransomware affiliates and access brokers","Supply chain implants, firmware rootkits and bootkits","Deepfake voice calls, SIM swaps and MFA fatigue"],a:0,
+  e:"The point was showing how those techniques chain together in a specific environment, then prioritizing the fixes that break the most chains."},
+ {s:"1:s8",cat:"ai",q:"How was the panel on the AI security playbook for 2027 designed?",
+  o:["For disagreement, exposing assumptions rather than one answer","As a vendor shoot-out ranking AI security platforms","As a working group drafting a shared control framework","As a tabletop exercise walking through one agent incident"],a:0,
+  e:"It was built for candid debate. The lack of consensus was itself the finding: there's no settled AI security playbook to copy yet."},
+ {s:"1:s10",cat:"governance",q:"According to the resilient AI systems session, how do AI systems usually fail in production?",
+  o:["They degrade and drift rather than crash outright","They crash loudly as soon as an input is malformed","They fail only when the model vendor ships an update","They stop responding once the context window fills"],a:0,
+  e:"Degradation and drift show up only under real-world pressure, so monitoring has to watch behaviour over time, not just uptime."}
+];
+const days=window.SECTOR.days,byKey={};
+const items=[];
+for(const n of Object.keys(days)){const D=days[n];
+  for(const s of D.sessions)byKey[n+":"+s.id]={title:`Day ${n} · ${s.short||s.title}`,href:`../day-${n}/#${s.id}`};
+  for(const it of D.quiz.items)items.push({...it,s:n+":"+it.s});
+}
+items.push(...EXTRA);
+const all=shuffle(items);
+$("#count").textContent=all.length;
+const counts={};for(const it of all)counts[it.cat]=(counts[it.cat]||0)+1;
+$("#catcount").innerHTML=Object.keys(CATS).filter(k=>counts[k]).map(k=>`<span class="cat-pill">${catChip(k)}<b>${counts[k]}</b></span>`).join("");
+const N=all.length,at=f=>Math.round(N*f);
+Quiz($("#challengebox"),all,{
+  resultLabel:"Your SecTor rank",
+  resolve:k=>byKey[k]||null,
+  ranks:[
+    [at(34/37),"Security Architect","You could have given half these talks. Send the brief to someone who wasn't there."],
+    [at(28/37),"Threat Hunter","Sharp. Check the categories below for the one area to brush up on."],
+    [at(20/37),"Conference Regular","You took a lot away. The sessions in “Review these” are worth a second read."],
+    [0,"Conference Survivor","You made it through the lanyards. Start with the executive brief, then try again."]
+  ]
+});
+splitWords(document.getElementById("h1"));
+})();
+</script>
+</body>
+</html>

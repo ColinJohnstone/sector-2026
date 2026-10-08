@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SecTor 2026 Glossary</title>
+<meta name="description" content="Plain-language definitions of the security and AI terms used across Colin Johnstone's SecTor 2026 notes, with links to the sessions where each one came up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="../assets/base.css?v=20261007c">
+<link rel="stylesheet" href="../assets/site.css?v=20261007c">
+</head>
+<body class="site">
+<header class="bar"><div class="bar-in">
+  <a class="brand" href="../"><i class="dot"></i>SecTor <span>2026</span></a>
+  <nav aria-label="Site">
+    <a href="../" class="home-link"><svg class="i"><use href="#i-home"/></svg>Home</a>
+    <a href="../day-1/">Day 1</a>
+    <a href="../day-2/">Day 2</a>
+    <a href="../brief/">Exec brief</a>
+    <a href="../challenge/" class="quiz-link"><svg class="i"><use href="#i-trophy"/></svg>Challenge</a>
+  </nav>
+</div></header>
+<main>
+<section class="doc-hero"><div class="wrap">
+  <p class="eyebrow"><svg class="i"><use href="#i-book"/></svg><span>Glossary · <span id="total"></span> terms · Days 1–2</span></p>
+  <h1 id="h1">The <em>vocabulary</em> of SecTor 2026.</h1>
+  <p class="lead">Short, plain-language definitions for the terms that came up across the sessions. Each entry links to the sessions where it was used. On the day pages, hover or tap a concept chip to see the same definition.</p>
+  <p class="disclaimer"><svg class="i"><use href="#i-note"/></svg>Definitions are my own summaries for a general audience, not formal standards definitions. Not an official CIBC publication or position.</p>
+</div></section>
+
+<section><div class="doc">
+  <div class="gl-tools">
+    <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="gf" type="search" placeholder="Filter terms, e.g. passkey, GPU, agent" aria-label="Filter glossary terms" autocomplete="off"></label>
+    <nav class="gl-az" id="az" aria-label="Jump to letter"></nav>
+    <p class="gl-count" id="gcount" aria-live="polite"></p>
+  </div>
+  <div class="gl-list" id="gl"></div>
+</div></section>
+
+<footer class="wrap page-foot">
+  <strong style="color:var(--ink)">SecTor 2026 · Glossary</strong>
+  <span>Personal conference notes, analysis and observations by Colin Johnstone. Not an official CIBC publication or position.</span>
+  <span>Test yourself with the <a href="../challenge/">SecTor 2026 Challenge</a>.</span>
+</footer>
+</main>
+<script src="../assets/core.js?v=20261007c"></script>
+<script src="../assets/glossary.js?v=20261007c"></script>
+<script src="../day-1/data.js?v=20261007c"></script>
+<script src="../day-2/data.js?v=20261007c"></script>
+<script>
+(function(){
+const G=window.GLOSSARY,days=window.SECTOR.days;
+const used={};
+for(const n of Object.keys(days))for(const s of days[n].sessions)for(const k of s.concepts||[])(used[k]=used[k]||[]).push({n,id:s.id,t:s.short||s.title});
+const terms=Object.entries(G).sort((a,b)=>a[1][0].localeCompare(b[1][0],"en",{sensitivity:"base"}));
+const letter=t=>{const c=t[0].toUpperCase();return /[A-Z]/.test(c)?c:"#"};
+$("#total").textContent=terms.length;
+const box=$("#gl"),f=$("#gf"),cnt=$("#gcount");
+function draw(){
+  const q=f.value.trim().toLowerCase();
+  const list=terms.filter(([k,[t,d]])=>!q||(t+" "+d).toLowerCase().includes(q));
+  let last="",html="";
+  for(const [k,[t,d,i]] of list){
+    const L=letter(t);
+    if(L!==last){html+=`<h2 class="gl-letter" id="L-${L==="#"?"num":L}">${L}</h2>`;last=L}
+    const u=used[k]||[];
+    html+=`<dl class="gl-item" id="g-${k}"><dt>${ic(i||"book")}${esc(t)}</dt><dd>${esc(d)}</dd>${u.length?`<dd class="from">${u.map(x=>`<a href="../day-${x.n}/#${x.id}">Day ${x.n} · ${esc(x.t)}</a>`).join("")}</dd>`:""}</dl>`;
+  }
+  box.innerHTML=html||`<p class="hint">No terms match “${esc(q)}”.</p>`;
+  cnt.textContent=q?`${list.length} of ${terms.length} terms`:"";
+  const present=new Set(list.map(([,[t]])=>letter(t)));
+  $("#az").innerHTML=[...new Set(terms.map(([,[t]])=>letter(t)))].map(L=>present.has(L)?`<a href="#L-${L==="#"?"num":L}">${L}</a>`:`<span class="gl-off">${L}</span>`).join("");
+}
+f.addEventListener("input",draw);draw();
+splitWords(document.getElementById("h1"));
+if(location.hash){const el=document.getElementById(location.hash.slice(1));if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),50)}
+})();
+</script>
+</body>
+</html>

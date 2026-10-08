@@ -3,75 +3,129 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SecTor 2026 Notes</title>
-<meta name="description" content="Colin Johnstone's notes and takeaways from SecTor 2026 in Toronto, one page per day.">
+<title>SecTor 2026 Intelligence Report</title>
+<meta name="description" content="Colin Johnstone's analysis of SecTor 2026 in Toronto: how AI is compressing the time, cost and expertise needed to exploit existing security weaknesses. Personal conference notes, not an official CIBC publication.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-<style>
-/* Hub: same console palette as the day pages; one column of day cards. */
-:root{
-  --bg:#09111a; --surface:#111c28; --surface2:#16232f; --ink:#e6eef5; --muted:#8fa2b3; --line:#1f2e3c;
-  --accent:#4cb3ff; --accent-soft:rgba(76,179,255,.13); --signal:#ffb547; --glow:rgba(76,179,255,.18);
-  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
-  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace; color-scheme:dark;
-}
-@media (prefers-color-scheme: light){:root{
-  --bg:#eef3f7; --surface:#ffffff; --surface2:#f4f7fa; --ink:#122130; --muted:#526474; --line:#d4dee7;
-  --accent:#0a62a3; --accent-soft:rgba(10,98,163,.09); --signal:#b25e00; --glow:rgba(10,98,163,.10); color-scheme:light}}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(50rem 26rem at 85% -10%,var(--glow),transparent 70%),var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px)}
-.wrap{max-width:46rem;margin-inline:auto;padding-block:4rem 3rem;display:grid;gap:2rem}
-.eyebrow{font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
-h1{font-family:var(--display);font-size:clamp(2.4rem,8vw,4rem);font-weight:820;font-stretch:122%;line-height:1;letter-spacing:-.02em;margin:.6rem 0 1rem;text-wrap:balance}
-h1 span{color:var(--accent)}
-.lead{color:var(--muted);font-size:1.1rem;margin:0;max-width:38rem}
-.days{display:grid;gap:.9rem;list-style:none;margin:0;padding:0}
-.day{display:grid;grid-template-columns:4.2rem 1fr auto;gap:1rem;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
-a.day:hover{border-color:var(--accent);transform:translateY(-2px)}
-a.day:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.num{font-family:var(--display);font-size:2.4rem;font-weight:820;font-stretch:115%;line-height:1;color:var(--accent);text-align:center}
-.day h2{font-family:var(--display);font-size:1.2rem;font-weight:720;margin:0 0 .2rem}
-.day p{margin:0;color:var(--muted);font-size:.92rem}
-.when{font-family:var(--mono);font-size:.76rem;color:var(--muted);display:block;margin-bottom:.25rem}
-.status{font-family:var(--mono);font-size:.72rem;font-weight:600;border-radius:999px;padding:.2rem .6rem;white-space:nowrap}
-.live{background:var(--accent-soft);color:var(--accent)}
-.soon{border:1px dashed var(--line);color:var(--muted)}
-.day.pending{opacity:.6}
-.day.pending .num{color:var(--muted)}
-footer{color:var(--muted);font-size:.86rem;border-top:1px solid var(--line);padding-top:1.2rem}
-footer strong{color:var(--ink);font-weight:600}
-@media (max-width:520px){.day{grid-template-columns:3rem 1fr}.status{grid-column:2;justify-self:start}.num{font-size:2rem}}
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="assets/base.css?v=20261007c">
+<link rel="stylesheet" href="assets/site.css?v=20261007c">
 </head>
-<body>
-<main class="wrap">
-  <header>
-    <p class="eyebrow">Oct 6–8, 2026 · Metro Toronto Convention Centre</p>
-    <h1>SecTor <span>2026</span> notes</h1>
-    <p class="lead">My notes and takeaways from SecTor in Toronto, one page per day. Each page has session summaries, speakers, a glossary and a short quiz.</p>
-  </header>
+<body class="site">
+<header class="bar"><div class="bar-in">
+  <a class="brand" href="./"><i class="dot"></i>SecTor <span>2026</span></a>
+  <nav aria-label="Site">
+    <a href="day-1/">Day 1</a>
+    <a href="day-2/">Day 2</a>
+    <a href="brief/">Exec brief</a>
+    <a href="glossary/">Glossary</a>
+    <a href="#search"><svg class="i"><use href="#i-search"/></svg>Search</a>
+    <a href="challenge/" class="quiz-link"><svg class="i"><use href="#i-trophy"/></svg>Challenge</a>
+  </nav>
+</div></header>
 
-  <ol class="days">
-    <li><a class="day" href="day-1/">
-      <span class="num">1</span>
-      <div><span class="when">Tue Oct 6</span><h2>AI x Cloud Security Summit</h2><p>Machine-speed attacks, agent identity, deception and who owns the AI.</p></div>
-      <span class="status live">Read now</span>
-    </a></li>
-    <li><a class="day" href="day-2/">
-      <span class="num">2</span>
-      <div><span class="when">Wed Oct 7</span><h2>Keynote &amp; Briefings</h2><p>Mercenary spyware, malware from your local LLM, GPU Rowhammer and AI pentest verification.</p></div>
-      <span class="status live">Read now</span>
-    </a></li>
-    <li><div class="day pending">
-      <span class="num">3</span>
-      <div><span class="when">Thu Oct 8</span><h2>Day 3</h2><p>Notes coming soon.</p></div>
-      <span class="status soon">Coming soon</span>
-    </div></li>
+<main>
+<section class="home-hero"><div class="wrap-wide">
+  <p class="eyebrow"><svg class="i"><use href="#i-pin"/></svg>SecTor 2026 · Metro Toronto Convention Centre · Oct 6–8 · Security intelligence report</p>
+  <h1 id="h1">Three days. Dozens of sessions. One evolving <em>security</em> narrative.</h1>
+  <p class="lead">AI is changing the speed, economics and attack surface of cybersecurity. This is my analysis of what SecTor 2026 showed, session by session, with the sources behind each claim.</p>
+  <div class="cta">
+    <a class="btn" href="brief/"><svg class="i"><use href="#i-note"/></svg>Read the executive brief <small>8 min</small></a>
+    <a class="btn ghost" href="day-1/"><svg class="i"><use href="#i-arrow"/></svg>Start with Day 1</a>
+    <a class="btn ghost" href="challenge/"><svg class="i"><use href="#i-trophy"/></svg>Take the challenge</a>
+  </div>
+  <div class="byline"><strong>Colin Johnstone</strong><span>Senior Consultant, Authentication Services @ CIBC</span></div>
+  <p class="disclaimer"><svg class="i"><use href="#i-note"/></svg>Personal conference notes, analysis and observations by Colin Johnstone. Not an official CIBC publication or position.</p>
+</div></section>
+
+<section id="days"><div class="wrap-wide">
+  <div class="sec-head"><p class="eyebrow"><svg class="i"><use href="#i-clock"/></svg>The conference, day by day</p><h2>Each day had its own argument</h2></div>
+  <div class="daygrid">
+    <a class="daycard d1" href="day-1/">
+      <div class="dc-top"><span class="dc-n">1</span><span class="dc-when">Tue Oct 6 · AI x Cloud Security Summit</span></div>
+      <h3>AI changed the speed of the attack.</h3>
+      <p>Old techniques, chained by agents in minutes. Cloud hardening, agent identity, deception and the economics of near-free attacks.</p>
+      <dl class="dc-facts"><div><dt>Sessions</dt><dd>10</dd></div><div><dt>Takeaways</dt><dd>7</dd></div><div><dt>Quiz</dt><dd>12 Qs</dd></div></dl>
+      <ul class="topics"><li>Machine-speed attacks</li><li>Cloud security</li><li>Identity</li><li>Autonomous agents</li><li>Attack-chain compression</li><li>Security economics</li><li>Fundamental controls</li></ul>
+      <span class="go">Read Day 1<svg class="i"><use href="#i-arrow"/></svg></span>
+    </a>
+    <a class="daycard d2" href="day-2/">
+      <div class="dc-top"><span class="dc-n">2</span><span class="dc-when">Wed Oct 7 · Keynote & Briefings</span></div>
+      <h3>The threat is already on the device.</h3>
+      <p>Spyware on phones, malware written by the model in your browser, bit flips in GPU memory, and why proof is now the bottleneck.</p>
+      <dl class="dc-facts"><div><dt>Sessions</dt><dd>6</dd></div><div><dt>Takeaways</dt><dd>8</dd></div><div><dt>Quiz</dt><dd>14 Qs</dd></div></dl>
+      <ul class="topics"><li>Local AI</li><li>Endpoint security</li><li>Browsers</li><li>Hardware & GPUs</li><li>Vulnerability discovery</li><li>Verification</li><li>Spyware & human targeting</li></ul>
+      <span class="go">Read Day 2<svg class="i"><use href="#i-arrow"/></svg></span>
+    </a>
+    <div class="daycard d3 pending">
+      <div class="dc-top"><span class="dc-n">3</span><span class="dc-when">Thu Oct 8 · Keynote & Briefings</span></div>
+      <h3>Notes coming after Day 3.</h3>
+      <p>The day opens with the keynote “Who Gets to Decide? Security in the Agentic Enterprise.”</p>
+      <span class="go muted">Coming soon</span>
+    </div>
+  </div>
+</div></section>
+
+<section id="thesis" class="thesis"><div class="wrap-wide">
+  <p class="eyebrow"><svg class="i"><use href="#i-key"/></svg>The SecTor 2026 thesis</p>
+  <blockquote class="thesis-q"><p>AI isn't creating an entirely new class of cybersecurity problems. It's compressing the <em>time</em>, <em>cost</em> and <em>expertise</em> required to exploit the ones we already have.</p><footer>My reading of the conference so far, Days 1–2</footer></blockquote>
+  <div class="tri">
+    <div class="tri-col">
+      <p class="tri-h"><svg class="i"><use href="#i-clock"/></svg>Time</p>
+      <div class="ev"><b>~3 min</b><span>for an autonomous chain's critical steps in a cloud environment</span><a href="day-1/#s2">Cloud hardening · Native</a><span class="src"><svg class="i"><use href="#i-mic"/></svg>Presented during the session</span></div>
+      <div class="ev"><b>~13 min</b><span>average from a low-privileged cloud key to admin, across AI attacker runs</span><a href="day-1/#s5">Deception · Tracebit</a><span class="src"><svg class="i"><use href="#i-mic"/></svg>Presented during the session</span></div>
+    </div>
+    <div class="tri-col">
+      <p class="tri-h"><svg class="i"><use href="#i-coins"/></svg>Cost</p>
+      <div class="ev"><b>~$500</b><span>for an agent-driven intrusion demo, first prompt to exfiltration</span><a href="day-1/#s4">Dark by default · Zscaler</a><span class="src"><svg class="i"><use href="#i-mic"/></svg>Presented during the session</span></div>
+      <div class="ev"><b>$250/mo</b><span>“You are not defending against China: you are defending against $250 a month.”</span><a href="day-1/#s1">Nation-state keynote · Vulnerable U</a><span class="src"><svg class="i"><use href="#i-mic"/></svg>Presented during the session</span></div>
+    </div>
+    <div class="tri-col">
+      <p class="tri-h"><svg class="i"><use href="#i-users"/></svg>Expertise</p>
+      <div class="ev"><b>AI-written</b><span>scripts used against the same Siemens S7 family Stuxnet targeted</span><a href="day-1/#s1">Nation-state keynote</a><span class="src"><svg class="i"><use href="#i-ext"/></svg><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-231a" target="_blank" rel="noopener">CISA AA26-231A</a></span></div>
+      <div class="ev"><b>Small model</b><span>a browser's built-in model profiled a user and hid attack code in a trusted file</span><a href="day-2/#llm">Large Local Malware · Technion</a><span class="src"><svg class="i"><use href="#i-mic"/></svg>Presented during the session</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="timeline"><div class="wrap-wide">
+  <div class="sec-head"><p class="eyebrow"><svg class="i"><use href="#i-chart"/></svg>How we got here</p><h2>Same targets, faster attacks</h2><p class="lead">The techniques didn't change much. Each step made them faster, cheaper and more automated.</p></div>
+  <ol class="tl">
+    <li><span class="tl-y">2010</span><b>Stuxnet</b><p>Two governments, an estimated $300M and four zero-days to reach a Siemens S7 controller.</p><span class="src"><svg class="i"><use href="#i-note"/></svg>Day 1 keynote abstract</span></li>
+    <li><span class="tl-y">2010s</span><b>Cloud automation</b><p>Infrastructure becomes an API. Environments become scriptable, and so do attacks against them.</p></li>
+    <li><span class="tl-y">2022</span><b>LLMs go mainstream</b><p>Writing code and text becomes a commodity anyone can access.</p></li>
+    <li><span class="tl-y">2025</span><b>AI-assisted attacks</b><p>Threat intelligence teams document state-backed actors using LLMs in their operations.</p><span class="src"><svg class="i"><use href="#i-ext"/></svg><a href="https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai" target="_blank" rel="noopener">Google Threat Intelligence</a></span></li>
+    <li class="now"><span class="tl-y">2026</span><b>Autonomous agents</b><p>AI-written scripts hit the same S7 PLCs, and agent-driven cloud chains run in minutes in SecTor demos.</p><span class="src"><svg class="i"><use href="#i-ext"/></svg><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-231a" target="_blank" rel="noopener">CISA AA26-231A</a></span></li>
   </ol>
+</div></section>
 
-  <footer><strong>Written &amp; created by Colin Johnstone</strong> · Senior Consultant, Authentication Services @ CIBC. Personal conference notes; program details from the official SecTor schedule.</footer>
+<section id="search"><div class="wrap-wide">
+  <div class="sec-head"><p class="eyebrow"><svg class="i"><use href="#i-search"/></svg>Search the report</p><h2>Find a session, speaker or concept</h2></div>
+  <label class="search" for="gq"><span class="sr">Search sessions, speakers, topics, glossary and takeaways</span><svg class="i"><use href="#i-search"/></svg><input id="gq" type="search" placeholder="Try: passkeys, Rowhammer, canary, agent identity, Deibert…" autocomplete="off"></label>
+  <div class="filter-row" id="gcats" role="group" aria-label="Filter by topic"></div>
+  <div id="gresults" class="gresults" aria-live="polite"></div>
+</div></section>
+
+<section id="explore"><div class="wrap-wide">
+  <div class="sec-head"><p class="eyebrow"><svg class="i"><use href="#i-spark"/></svg>Go deeper</p><h2>Three ways in</h2></div>
+  <div class="explore">
+    <a href="brief/"><svg class="i"><use href="#i-note"/></svg><b>Executive security brief</b><span>The whole conference in an eight-minute read: findings, implications for identity and AI, and recommended actions.</span></a>
+    <a href="challenge/"><svg class="i"><use href="#i-trophy"/></svg><b>SecTor 2026 Challenge</b><span>37 questions across AI, cloud, identity, endpoint, hardware, offensive security and governance.</span></a>
+    <a href="glossary/"><svg class="i"><use href="#i-book"/></svg><b>Glossary</b><span>Plain-language definitions for every concept in the report, linked to the sessions that used them.</span></a>
+  </div>
+</div></section>
+
+<footer class="wrap-wide page-foot">
+  <strong style="color:var(--ink)">SecTor 2026 · Intelligence report by Colin Johnstone</strong>
+  <span>Personal conference notes, analysis and observations by Colin Johnstone. Not an official CIBC publication or position.</span>
+  <span>SecTor is produced by Black Hat / Informa. Program details come from the official <a href="https://blackhat.com/sector/" target="_blank" rel="noopener">SecTor 2026 schedule</a>; speaker headshots are SecTor's official images. Statistics marked “Presented during the session” are as stated by speakers and haven't been independently verified.</span>
+</footer>
 </main>
+<script src="assets/core.js?v=20261007c"></script>
+<script src="assets/glossary.js?v=20261007c"></script>
+<script src="day-1/data.js?v=20261007c"></script>
+<script src="day-2/data.js?v=20261007c"></script>
+<script src="assets/search.js?v=20261007c"></script>
+<script>splitWords(document.getElementById("h1"));</script>
 </body>
 </html>

@@ -1,24 +1,60 @@
-# SecTor 2026 notes
+# SecTor 2026: Colin Johnstone's Security Intelligence Report
 
-Colin Johnstone's notes and takeaways from SecTor 2026 (Toronto, Oct 6–8), one page per day.
+Personal conference notes, analysis and observations from SecTor 2026 (Toronto, Oct 6–8) by Colin Johnstone, Senior Consultant, Authentication Services @ CIBC. Not an official CIBC publication or position.
+
+Live: https://colinjohnstone.github.io/sector-2026/
 
 | Path | Content |
 |---|---|
-| `/` | Hub page linking each day |
-| `/day-1/` | Day 1: AI x Cloud Security Summit |
-| `/day-2/` | Day 2: Keynote & Briefings |
-| `/day-3/` | Day 3 (coming) |
+| `/` | Home: thesis, day cards, timeline, site-wide search |
+| `/brief/` | Executive security brief (about 8 minutes) |
+| `/day-1/` | Day 1: AI x Cloud Security Summit, "AI changed the speed of the attack" |
+| `/day-2/` | Day 2: Keynote & Briefings, "The threat is already on the device" |
+| `/challenge/` | The SecTor 2026 Challenge: 37 questions with category scores and a rank |
+| `/glossary/` | Full glossary with "used in" links to sessions |
 
-Static HTML, no build step. Each day is a self-contained `index.html` (fonts from Google Fonts; speaker headshots are embedded).
+Static site, no build step and no dependencies beyond Google Fonts. Keep every link relative: the site is served from the `/sector-2026/` sub-path.
 
-## Adding a day
+## How it fits together
 
-1. Create `day-N/index.html`.
-2. In `index.html`, turn that day's placeholder `<div class="day pending">` into `<a class="day" href="day-N/">` and change the status chip to `Read now`.
-3. Push to `main`. GitHub Pages republishes automatically within a minute or two.
+```
+assets/
+  core.js      shared helpers: icon sprite, categories, concept tooltips, provenance badges, Quiz
+  engine.js    renders a day page from window.SECTOR.days[N]
+  search.js    home-page search across sessions, speakers, takeaways, enterprise items, glossary
+  glossary.js  window.GLOSSARY: key -> [term, definition, icon]
+  base.css     shared components (Day 1's palette is the house style)
+  site.css     home, brief, challenge and glossary pages
+day-N/
+  index.html   page shell (sections the engine fills in)
+  data.js      all of that day's content
+  photos.js    embedded speaker headshots (data URIs) keyed by speaker name
+  hero.js      that day's hero canvas
+  theme.css    optional: the day's own look (Day 2 has one)
+```
 
-Keep links relative (`day-N/`, `../`): the site is served from a sub-path, `https://<user>.github.io/sector-2026/`.
+### Session fields (`data.js`)
+
+`id, time, end, room, url, icon, short, title, org, speakers [[name, role]], cats, summary, covered[], learned[], why, concepts[], program[], ask, links[]`, plus optional `takeaway, chain {steps, note}, stats [{v, l, src}], identity {points}, fromProgram`.
+
+Provenance rules for `stats[].src`:
+
+- `"presented"` shows "Presented during the session"
+- `"program"` shows "Official session abstract"
+- `{t, u}` links to a public source
+
+Only use links to primary or technical sources (research, advisories, papers, docs). No company homepages, generic vendor pages, search pages or guessed LinkedIn URLs. `linkedin` on the day object takes direct profile URLs only.
+
+## Adding Day 3
+
+1. Copy `day-2/` to `day-3/`. Replace `data.js` (set `n: 3`, register as `SECTOR.days[3]`), `photos.js`, `hero.js`, and write a new `theme.css` so the day has its own look.
+2. In `day-3/index.html`, set `<body data-day="3">` and add Day 3 to the day nav.
+3. Home (`index.html`): turn the pending Day 3 card into a link, fill in its facts and topics, and add `<script src="day-3/data.js">` before `assets/search.js`.
+4. Add Day 3 to the nav on every page, and update the brief.
+5. Challenge (`challenge/index.html`) and glossary (`glossary/index.html`): add `<script src="../day-3/data.js">`. Day 3 quiz items join the challenge automatically; adjust the rank thresholds text if the count changes.
+6. Add any new terms to `assets/glossary.js`.
+7. Bump the `?v=` query string on assets in every HTML file so browsers fetch the new files.
 
 ## Deploy
 
-GitHub Pages: Settings → Pages → Deploy from a branch → `main`, folder `/ (root)`. `.nojekyll` tells Pages to serve the files as-is.
+GitHub Pages: Settings → Pages → Deploy from a branch → `main`, folder `/ (root)`. `.nojekyll` tells Pages to serve files as-is. Pushing to `main` republishes within a minute or two.

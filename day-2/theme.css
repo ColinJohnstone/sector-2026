@@ -1,0 +1,54 @@
+/* ===== Day 2 identity: "memory chip". Graphite + amber, teal for flipped bits; condensed grotesque display, mono figures, square corners, dot-grid ground. ===== */
+:root{
+  --bg:#0d0e11; --bg2:#121419; --surface:#15181e; --surface2:#1b1f26; --ink:#ecebe6; --muted:#a19e96; --line:#272b33;
+  --accent:#f0a63a; --accent-ink:#1b1204; --accent-soft:rgba(240,166,58,.13); --signal:#4fd0c1; --signal-soft:rgba(79,208,193,.12);
+  --mark:#6a4a00; --mark-ink:#fff3d6; --net:rgba(240,166,58,.30); --glow:rgba(240,166,58,.10); --avL:72%; --dot:rgba(236,235,230,.055);
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#eef0f2; --bg2:#e5e8ec; --surface:#ffffff; --surface2:#f5f6f8; --ink:#16181c; --muted:#585c64; --line:#d6d9df;
+  --accent:#9a5500; --accent-ink:#ffffff; --accent-soft:rgba(154,85,0,.09); --signal:#0b766b; --signal-soft:rgba(11,118,107,.09);
+  --mark:#ffe08a; --mark-ink:#16181c; --net:rgba(154,85,0,.2); --glow:rgba(154,85,0,.07); --avL:32%; --dot:rgba(22,24,28,.07); color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#eef0f2; --bg2:#e5e8ec; --surface:#ffffff; --surface2:#f5f6f8; --ink:#16181c; --muted:#585c64; --line:#d6d9df;
+  --accent:#9a5500; --accent-ink:#ffffff; --accent-soft:rgba(154,85,0,.09); --signal:#0b766b; --signal-soft:rgba(11,118,107,.09);
+  --mark:#ffe08a; --mark-ink:#16181c; --net:rgba(154,85,0,.2); --glow:rgba(154,85,0,.07); --avL:32%; --dot:rgba(22,24,28,.07); color-scheme:light}
+
+body{background-color:var(--bg);background-image:radial-gradient(var(--dot) 1px,transparent 1.2px);background-size:22px 22px}
+.hero{background:radial-gradient(50rem 26rem at 90% 0%,var(--glow),transparent 70%)}
+.hero h1{font-weight:800;font-stretch:82%;letter-spacing:-.015em;line-height:.95;font-size:clamp(2.6rem,9vw,5.4rem)}
+.hero h1 em::after{background:var(--signal)}
+h2{font-stretch:88%;font-weight:780}
+h3{font-stretch:92%}
+.brand{font-family:var(--mono);font-weight:600;letter-spacing:-.02em}
+.brand .dot{background:var(--signal);border-radius:1px;animation:blink 1.6s steps(1) infinite;box-shadow:none}
+@keyframes blink{50%{opacity:.25}}
+
+/* square, engineered corners */
+.idea,.session,.quiz,.tn,.six>div,.numbers,.stat,.spk,.gloss div,.takeaway,.ask,.opt,.opt .k,.feedback,.btn,.search input,.howto a,.missed li,.empty,blockquote,.s-icon,.ico,.pin-i,.bar nav a,.agenda a,.agenda .row{border-radius:3px}
+.chipbtn,.concept,.fmt,.tag,.s-icon .n,.progress,.progress i,.pip{border-radius:2px}
+.agenda .pin{border-radius:1px;transform:rotate(45deg)}
+
+/* figures read like instrument output */
+.num b,.stat b,.ring b,.score b{font-family:var(--mono);font-weight:600;font-stretch:100%;letter-spacing:-.03em}
+.num b{font-size:clamp(1.4rem,3.6vw,1.85rem)}
+.stat b{font-size:1.45rem}
+
+blockquote{background:var(--surface);border-left:3px solid var(--accent)}
+blockquote::before{content:"//";font-family:var(--mono);font-size:1.6rem;top:.55rem;left:auto;right:1rem;opacity:.35}
+blockquote p{font-stretch:90%}
+
+.session{border-top:1px solid var(--line)}
+.s-top{background:linear-gradient(180deg,var(--bg2),transparent)}
+.s-icon{background:transparent;border:1px dashed color-mix(in srgb,var(--accent) 55%,transparent)}
+.oneline{border-left-color:var(--signal)}
+.tab::after{height:3px}
+.chain li{font-family:var(--mono);font-size:.76rem}
+@keyframes lit{0%,12%{background:var(--surface2);color:var(--ink)}5%{background:var(--signal);color:var(--bg)}}
+.bul li::before{border-radius:0;transform:none;width:.45rem;height:.45rem;top:.6em}
+.prog .bul li::before{background:transparent;border:1.5px solid var(--signal)}
+.trio .yr svg.i{color:var(--accent)}
+.bar nav a.quiz-link{border-radius:3px}
