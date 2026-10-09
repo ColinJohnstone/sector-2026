@@ -37,10 +37,29 @@ function picker(){
     <p class="sp-note">Saved in this browser only.</p>`};
   draw();document.body.appendChild(p);
   const close=()=>{p.hidden=true;b.setAttribute("aria-expanded","false")};
-  b.onclick=e=>{e.stopPropagation();const open=p.hidden;p.hidden=!open;b.setAttribute("aria-expanded",open);if(open){const r=b.getBoundingClientRect();p.style.top=(r.bottom+8)+"px";p.style.right=Math.max(12,innerWidth-r.right)+"px"}};
+  b.onclick=e=>{e.stopPropagation();const mp=document.getElementById("menupanel");if(mp)mp.hidden=true;const open=p.hidden;p.hidden=!open;b.setAttribute("aria-expanded",open);if(open){const r=b.getBoundingClientRect();p.style.top=(r.bottom+8)+"px";p.style.right=Math.max(12,innerWidth-r.right)+"px"}};
   p.addEventListener("click",e=>{e.stopPropagation();const s=e.target.closest("[data-style]"),t=e.target.closest("[data-theme-pick]");
     if(s){store.set("style",s.dataset.style);applyStyle(s.dataset.style);Progress.badge("stylist");draw()}
     if(t){store.set("theme",t.dataset.themePick);applyTheme(t.dataset.themePick);draw()}});
+  document.addEventListener("click",close);document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
+}
+
+
+/* ---------- compact menu for narrow screens ---------- */
+function menu(){
+  const nav=document.querySelector(".bar nav");if(!nav||document.getElementById("menubtn"))return;
+  const b=document.createElement("button");b.id="menubtn";b.type="button";b.className="menubtn";b.setAttribute("aria-expanded","false");b.setAttribute("aria-controls","menupanel");b.innerHTML='<span aria-hidden="true"></span>Menu';
+  nav.insertBefore(b,document.getElementById("stylebtn"));
+  const links=[...nav.querySelectorAll(":scope > a, :scope > .daynav a")];
+  const isPage=a=>!a.getAttribute("href").startsWith("#");
+  const pages=links.filter(isPage),here=links.filter(a=>!isPage(a));
+  const item=a=>`<a href="${a.getAttribute("href")}"${a.getAttribute("aria-current")?' aria-current="page"':""}>${a.textContent.trim()}</a>`;
+  const p=document.createElement("div");p.id="menupanel";p.className="menupanel";p.hidden=true;p.setAttribute("role","dialog");p.setAttribute("aria-label","Site menu");
+  p.innerHTML=(pages.length?`<p>Pages</p>${pages.map(item).join("")}`:"")+(here.length?`<p>On this page</p>${here.map(item).join("")}`:"");
+  document.body.appendChild(p);
+  const close=()=>{p.hidden=true;b.setAttribute("aria-expanded","false")};
+  b.onclick=e=>{e.stopPropagation();const sp=document.getElementById("stylepanel");if(sp)sp.hidden=true;const open=p.hidden;p.hidden=!open;b.setAttribute("aria-expanded",open);if(open){const r=b.getBoundingClientRect();p.style.top=(r.bottom+8)+"px";p.style.right=Math.max(12,innerWidth-r.right)+"px"}};
+  p.addEventListener("click",e=>{if(e.target.closest("a"))close();e.stopPropagation()});
   document.addEventListener("click",close);document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
 }
 
@@ -100,7 +119,7 @@ function renderTopicMap(){
   box.innerHTML=`<table class="tmap"><thead><tr><th scope="col">Topic</th>${ns.map(n=>`<th scope="col"><a href="day-${n}/">Day ${n}</a></th>`).join("")}<th scope="col">Total</th></tr></thead><tbody>${Object.entries(CATS).map(([k,[l]])=>{const tot=ns.reduce((a,n)=>a+cnt[k][n].length,0);return `<tr><th scope="row">${l}</th>${ns.map(n=>{const c=cnt[k][n];return `<td style="--v:${c.length/max}"${c.length?` title="${c.map(s=>s.short).join(", ")}"`:""}>${c.length?`<a href="day-${n}/#${c[0].id}"><b>${c.length}</b><span>${c.map(s=>s.short).join(" · ")}</span></a>`:`<span class="z">·</span>`}</td>`}).join("")}<td class="tot">${tot}</td></tr>`}).join("")}</tbody></table>`;
 }
 
-function init(){picker();syncReadButtons();renderPassport();renderTopicMap();
+function init(){picker();menu();syncReadButtons();renderPassport();renderTopicMap();
   new MutationObserver(()=>{if(document.querySelector(".readmark:not([data-synced])")){document.querySelectorAll(".readmark").forEach(b=>b.dataset.synced=1);syncReadButtons()}}).observe(document.body,{childList:true,subtree:true})}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();

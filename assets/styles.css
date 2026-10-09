@@ -184,3 +184,47 @@ html[data-style="plain"][data-theme="dark"]:root:root{--d1:#8ab4ff;--d2:#ff8a80;
 html[data-style] body{background:var(--bg)!important;border-top:6px solid var(--accent)}
 html[data-style] .bar{border-bottom-color:var(--accent)!important}
 html[data-style] .brand span{color:var(--accent)!important}
+
+/* ---------- layout fixes: nothing cut off on phones, tablets or desktops ---------- */
+/* progression lines (home timeline, day agenda, quiz progress) visible in every style */
+.tl::before{background:color-mix(in srgb,var(--accent) 60%,var(--line))!important;height:2px!important}
+.tl li::before{border-color:var(--accent)!important}
+@media (max-width:860px){.tl::before{width:2px!important;height:auto!important;left:.25rem!important}}
+.agenda ol::before{background:color-mix(in srgb,var(--accent) 50%,var(--line))!important;width:2px!important}
+.agenda .pin{border-color:var(--accent)!important}
+.quiz .progress{background:var(--line)!important;height:4px!important}
+.quiz .progress i{background:var(--accent)!important}
+.pip{border:1px solid var(--muted)!important}
+.pip.cur{border-color:var(--accent)!important}
+.readbar{height:3px!important}
+.q-top{flex-wrap:wrap;gap:.4rem .8rem}
+.q-top .pips{order:3;flex-basis:100%}
+
+/* day-page search and filters: solid background so content never shows through */
+.tools{background:var(--bg)!important;backdrop-filter:none!important;border-bottom:1px solid var(--line)}
+@media (max-width:860px){.tools{position:static!important;border-bottom:0}}
+
+/* session tabs wrap instead of running off the screen */
+.tabs{flex-wrap:wrap;row-gap:.15rem}
+@media (max-width:560px){.tab{padding-inline:.45rem!important;font-size:.82rem!important}.panel{padding-inline:0!important}}
+
+/* topic map on phones: counts only so it fits */
+@media (max-width:700px){.tmap{min-width:0}.tmap td span{display:none}.tmap tbody th{width:auto;white-space:normal;font-size:.8rem}.tmap td,.tmap th{padding:.4rem .3rem}.tmap td{width:auto;text-align:center}.tmap td a{justify-items:center}}
+
+/* header: a Menu button replaces the long link row below 1100px */
+.bar-in{gap:.6rem}
+.menubtn{display:none;font-family:var(--ui);font-size:.86rem;font-weight:600;background:none;border:1px solid var(--line);color:var(--ink);padding:.25rem .6rem;cursor:pointer;border-radius:0;align-items:center;gap:.4rem}
+.menubtn span{display:inline-block;width:.9rem;height:2px;background:currentColor;box-shadow:0 -5px 0 currentColor,0 5px 0 currentColor!important}
+@media (max-width:1100px){
+  .bar nav>a,.bar nav>.daynav{display:none!important}
+  .bar nav{overflow:visible!important;mask:none!important;-webkit-mask:none!important;justify-content:flex-end;flex:1}
+  .menubtn{display:inline-flex}
+}
+.menupanel{position:fixed;z-index:60;width:min(18rem,calc(100vw - 24px));max-height:calc(100vh - 90px);overflow:auto;background:var(--bg);color:var(--ink);border:1px solid var(--rule);padding:.6rem 0;font-family:var(--ui);box-shadow:0 12px 30px -12px rgba(0,0,0,.35)!important}
+.menupanel p{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:.5rem 1rem .2rem}
+.menupanel a{display:block;padding:.5rem 1rem;color:var(--ink);text-decoration:none;font-size:.95rem}
+.menupanel a:hover,.menupanel a[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
+.menupanel a[aria-current="page"]{font-weight:700}
+@media (max-width:1100px){.brand{display:flex!important}}
+.sindex small,.sindex b{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.snav a span{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
