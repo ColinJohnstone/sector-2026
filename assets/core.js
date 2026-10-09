@@ -54,7 +54,7 @@ function readProgress(){const rb=$("#readbar");if(!rb)return;addEventListener("s
 const REVEAL=".rv,.session,.tk,.ent li,.daycard,.ev,.tl,.tl li,.findings>li,.idea,.num,.statc,.stat,.tn,.explore a,.box,.thesis-q,.sec-head";
 function reveal(){
   const de=document.documentElement;
-  if(reduceMotion||!("IntersectionObserver" in window))return;
+  if(reduceMotion||de.dataset.style==="plain"||!("IntersectionObserver" in window))return;
   de.classList.add("motion");
   const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("seen");io.unobserve(en.target)}}),{rootMargin:"0px 0px -6% 0px",threshold:.05});
   const scan=()=>document.querySelectorAll(REVEAL).forEach(e=>{if(e.dataset.rv)return;e.dataset.rv=1;const sib=[...e.parentNode.children].filter(c=>c.matches(REVEAL));e.style.setProperty("--i",Math.min(sib.indexOf(e),6));io.observe(e)});
@@ -97,6 +97,7 @@ function Quiz(box,items,opt={}){
     else [title,msg]=pct===1?["Perfect score","You've got the day covered."]:pct>=.75?["Strong result","Review the ones you missed below."]:pct>=.5?["Good start","The sessions below are worth a second look."]:["Worth another pass","Read the brief and the sessions you missed, then try again."];
     const cats={};answers.forEach(a=>{if(!a.cat)return;cats[a.cat]=cats[a.cat]||[0,0];cats[a.cat][1]++;if(a.ok)cats[a.cat][0]++});
     const missed=answers.map((a,i)=>({a,i})).filter(x=>!x.a.ok);
+    try{opt.onDone&&opt.onDone(score,N,title)}catch(e){}
     box.innerHTML=`<div class="result">${top("Complete")}
     <div class="score">
       <div class="ring"><svg viewBox="0 0 120 120"><defs><linearGradient id="${box.id}-rg" x1="0" x2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--signal)"/></linearGradient></defs><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52" stroke="url(#${box.id}-rg)" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><b>${score}/${N}</b></div>

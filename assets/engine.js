@@ -147,7 +147,7 @@ function card(s){
   <div class="panel-wrap">${panel(s,t)}</div>
   <nav class="snav" aria-label="Session navigation">
     ${prev?`<a class="prev" href="#${prev.id}">${ic("arrowl")}<span>${esc(prev.short)}</span></a>`:"<span></span>"}
-    <span class="pos">Session ${i+1} of ${S.length}<a href="#sessions">${ic("list")}All sessions</a></span>
+    <span class="pos">Session ${i+1} of ${S.length}<a href="#sessions">${ic("list")}All sessions</a><button type="button" class="readmark" data-sid="${D.n}:${s.id}" aria-pressed="false">Mark as read</button></span>
     ${next?`<a class="next" href="#${next.id}"><span>${esc(next.short)}</span>${ic("arrow")}</a>`:`<a class="next" href="#remember"><span>Takeaways</span>${ic("arrow")}</a>`}
   </nav>
   </article>`;
@@ -194,7 +194,7 @@ $("#glossary-in").innerHTML=`
 
 /* ---------- quiz ---------- */
 $("#quiz-head").innerHTML=`<p class="eyebrow">${ic("q")}Knowledge check</p><h2>Day ${D.n} quiz</h2><p class="lead">${esc(D.quiz.lead)}</p>`;
-Quiz($("#quizbox"),D.quiz.items,{resolve:id=>byId[id]?{title:byId[id].title,href:"#"+id}:null});
+Quiz($("#quizbox"),D.quiz.items,{resolve:id=>byId[id]?{title:byId[id].title,href:"#"+id}:null,onDone:(sc,n)=>window.Progress&&Progress.quiz("day"+D.n,sc,n)});
 
 /* ---------- footer ---------- */
 $("#foot").innerHTML=`<strong style="color:var(--ink)">${esc(D.footer.title)}</strong><span>${esc(D.footer.place)}</span>

@@ -8,9 +8,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Public+Sans:wght@400..700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/base.css?v=20261008c">
-<link rel="stylesheet" href="assets/site.css?v=20261008c">
-<link rel="stylesheet" href="assets/report.css?v=20261008c">
+<link rel="stylesheet" href="assets/base.css?v=20261008e">
+<link rel="stylesheet" href="assets/site.css?v=20261008e">
+<link rel="stylesheet" href="assets/report.css?v=20261008e">
+<link rel="stylesheet" href="assets/styles.css?v=20261008e">
+<script>try{var s=JSON.parse(localStorage.getItem("sector.style")),t=JSON.parse(localStorage.getItem("sector.theme"));if(s&&s!=="report")document.documentElement.dataset.style=s;if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body class="site">
 <header class="bar"><div class="bar-in">
@@ -21,6 +23,7 @@
     <a href="day-3/">Day 3</a>
     <a href="brief/">Exec brief</a>
     <a href="glossary/">Glossary</a>
+    <a href="#passport">Passport</a>
     <a href="#search"><svg class="i"><use href="#i-search"/></svg>Search</a>
     <a href="challenge/" class="quiz-link"><svg class="i"><use href="#i-trophy"/></svg>Challenge</a>
   </nav>
@@ -70,6 +73,16 @@
   </div>
 </div></section>
 
+<section id="passport"><div class="wrap-wide">
+  <div class="sec-head"><p class="eyebrow"><svg class="i"><use href="#i-trophy"/></svg>Your conference passport</p><h2>Collect all three stamps</h2><p class="lead">Mark sessions as read on each day page, take the quizzes and the challenge, and earn badges along the way.</p></div>
+  <div id="passport-in"></div>
+</div></section>
+
+<section id="topics"><div class="wrap-wide">
+  <div class="sec-head"><p class="eyebrow"><svg class="i"><use href="#i-chart"/></svg>Topic map</p><h2>Where the conference spent its time</h2><p class="lead">Sessions by topic and day. Darker cells had more sessions; click one to jump to the first of them.</p></div>
+  <div class="tmapwrap" id="topicmap-in"></div>
+</div></section>
+
 <section id="thesis" class="thesis"><div class="wrap-wide">
   <p class="eyebrow"><svg class="i"><use href="#i-key"/></svg>The SecTor 2026 thesis</p>
   <blockquote class="thesis-q"><p>AI isn't creating an entirely new class of cybersecurity problems. It's compressing the <em>time</em>, <em>cost</em> and <em>expertise</em> required to exploit the ones we already have.</p><footer>My reading of the conference, Days 1–3</footer></blockquote>
@@ -105,6 +118,18 @@
   </ol>
 </div></section>
 
+<section id="play"><div class="wrap-wide">
+  <div class="sec-head"><p class="eyebrow"><svg class="i"><use href="#i-target"/></svg>Play along</p><h2>Ready Set Cyber: can you spot the fake?</h2></div>
+  <div class="rsc">
+    <div>
+      <p class="rsc-quote">John Silva, Kunal Kapadia and I thoroughly enjoyed siberX's “AI or Not” challenge at SecTor. Telling real from AI-generated is harder than it sounds, and the same games are free to play online.</p>
+      <p>They're part of <a href="https://readysetcyber.ca/" target="_blank" rel="noopener">Ready Set Cyber</a>, Canada's National Cyber Drill, brought to you by siberX. A few minutes each, no sign-up needed to try them.</p>
+      <p class="rsc-more"><a href="https://readysetcyber.ca/drill/" target="_blank" rel="noopener">Run a drill at your workplace</a><a href="https://readysetcyber.ca/resource-library/" target="_blank" rel="noopener">Resource library</a><a href="https://siberx.org/escape" target="_blank" rel="noopener">siberX Escape Room</a></p>
+    </div>
+    <ul class="rsc-games"><li><a href="https://readysetcyber.ca/wp-content/themes/readysetcyber/mini-games/tinder-swap/index.html" target="_blank" rel="noopener"><b>AI Fake Finder</b><small>Swipe to sort real photos from AI-generated ones.</small><em>Play</em></a></li><li><a href="https://readysetcyber.ca/wp-content/themes/readysetcyber/mini-games/ai-voice-or-not/index.html" target="_blank" rel="noopener"><b>AI Voice or Not</b><small>Listen and decide: real human voice or AI clone?</small><em>Play</em></a></li><li><a href="https://readysetcyber.ca/wp-content/themes/readysetcyber/mini-games/first-instinct-test/index.html" target="_blank" rel="noopener"><b>First Instinct</b><small>Trust-or-threat calls against the clock.</small><em>Play</em></a></li><li><a href="https://readysetcyber.ca/wp-content/themes/readysetcyber/mini-games/too-good-to-be-true/index.html" target="_blank" rel="noopener"><b>Too Good To Be True</b><small>Spot the scam offers in realistic posts.</small><em>Play</em></a></li></ul>
+  </div>
+</div></section>
+
 <section id="search"><div class="wrap-wide">
   <div class="sec-head"><p class="eyebrow"><svg class="i"><use href="#i-search"/></svg>Search the report</p><h2>Find a session, speaker or concept</h2></div>
   <label class="search" for="gq"><span class="sr">Search sessions, speakers, topics, glossary and takeaways</span><svg class="i"><use href="#i-search"/></svg><input id="gq" type="search" placeholder="Try: passkeys, Rowhammer, canary, PackBot, post-quantum…" autocomplete="off"></label>
@@ -127,12 +152,13 @@
   <span>SecTor is produced by Black Hat / Informa. Program details come from the official <a href="https://blackhat.com/sector/" target="_blank" rel="noopener">SecTor 2026 schedule</a>; speaker headshots are SecTor's official images. Statistics marked “Presented during the session” are as stated by speakers and haven't been independently verified.</span>
 </footer>
 </main>
-<script src="assets/core.js?v=20261008c"></script>
-<script src="assets/glossary.js?v=20261008c"></script>
-<script src="day-1/data.js?v=20261008c"></script>
-<script src="day-2/data.js?v=20261008c"></script>
-<script src="day-3/data.js?v=20261008c"></script>
-<script src="assets/search.js?v=20261008c"></script>
+<script src="assets/core.js?v=20261008e"></script>
+<script src="assets/extras.js?v=20261008e"></script>
+<script src="assets/glossary.js?v=20261008e"></script>
+<script src="day-1/data.js?v=20261008e"></script>
+<script src="day-2/data.js?v=20261008e"></script>
+<script src="day-3/data.js?v=20261008e"></script>
+<script src="assets/search.js?v=20261008e"></script>
 <script>splitWords(document.getElementById("h1"));(function(){const d=Object.values(SECTOR.days);const q=d.reduce((n,D)=>n+D.quiz.items.length,0)+11;const e=document.getElementById("qcount");if(e)e.textContent=q})();</script>
 </body>
 </html>

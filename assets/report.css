@@ -14,6 +14,10 @@ html:root:root{
   --bg:#171614; --bg2:#201e1b; --surface:#171614; --surface2:#201e1b; --ink:#ebe7df; --muted:#a59f93; --line:#3a3731; --rule:#cfc9bd;
   --accent:#8fb3dc; --accent-ink:#111; --accent-soft:rgba(143,179,220,.08); --mark:#5a4a1a; --mark-ink:#ebe7df;
   --d1:#7fb0e0; --d2:#e08a7c; --d3:#8cc79a; color-scheme:dark}}
+html[data-theme="dark"]:root:root{
+  --bg:#171614; --bg2:#201e1b; --surface:#171614; --surface2:#201e1b; --ink:#ebe7df; --muted:#a59f93; --line:#3a3731; --rule:#cfc9bd;
+  --accent:#8fb3dc; --accent-ink:#111; --accent-soft:rgba(143,179,220,.08); --mark:#5a4a1a; --mark-ink:#ebe7df;
+  --d1:#7fb0e0; --d2:#e08a7c; --d3:#8cc79a; color-scheme:dark}
 body{background:var(--bg);background-image:none;color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.62}
 
 /* nothing decorative for its own sake */

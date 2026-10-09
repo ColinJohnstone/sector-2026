@@ -8,6 +8,9 @@ html:root:root{
 @media (prefers-color-scheme:dark){html:root:root:not([data-theme="light"]){
   --bg:#121518; --bg2:#1a1e23; --surface:#121518; --surface2:#1a1e23; --ink:#e6eaee; --muted:#9aa5b1; --line:#2f363e; --rule:#c9d1d9;
   --accent:#7fb0e0; --accent-soft:rgba(127,176,224,.08); --signal:#7fb0e0; --mark:#20354d}}
+html[data-theme="dark"]:root:root{
+  --bg:#121518; --bg2:#1a1e23; --surface:#121518; --surface2:#1a1e23; --ink:#e6eaee; --muted:#9aa5b1; --line:#2f363e; --rule:#c9d1d9;
+  --accent:#7fb0e0; --accent-soft:rgba(127,176,224,.08); --signal:#7fb0e0; --mark:#20354d}
 body{font-size:1.02rem;line-height:1.65}
 .hero h1 em{font-style:normal;font-weight:600;text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.12em}
 .eyebrow,.label,.s-time,.legend,.tn .yr,.count,.q-top,.sindex .n,.chain li,.prov,.fmt,.tag,.cat{font-family:var(--mono)!important;letter-spacing:.02em}

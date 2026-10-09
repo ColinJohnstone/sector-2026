@@ -6,7 +6,7 @@ Live: https://colinjohnstone.github.io/sector-2026/
 
 | Path | Content |
 |---|---|
-| `/` | Home: thesis, day cards, timeline, site-wide search |
+| `/` | Home: thesis, day cards, passport, topic map, timeline, Ready Set Cyber games, site-wide search |
 | `/brief/` | Executive security brief (about 10 minutes) |
 | `/day-1/` | Day 1: AI x Cloud Security Summit, "AI changed the speed of the attack" |
 | `/day-2/` | Day 2: Keynote & Briefings, "The threat is already on the device" |
@@ -27,6 +27,8 @@ assets/
   base.css     shared component layout
   site.css     home, brief, challenge and glossary pages
   report.css   house style: printed-report look, scroll reveals and print-like motion
+  styles.css   alternative site styles (Broadsheet, Terminal, Plain), style menu, passport, topic map
+  extras.js    style and light/dark menu, reading progress passport and badges (saved in the browser)
   colin.jpg    author photo for the byline
 day-N/
   index.html   page shell (sections the engine fills in)

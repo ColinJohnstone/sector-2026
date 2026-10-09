@@ -9,6 +9,9 @@ html:root:root{
 @media (prefers-color-scheme:dark){html:root:root:not([data-theme="light"]){
   --bg:#131713; --bg2:#1b211b; --surface:#131713; --surface2:#1b211b; --ink:#e6ebe3; --muted:#9fa99f; --line:#2f3830; --rule:#c9d3c6;
   --accent:#8cc79a; --accent-soft:rgba(140,199,154,.08); --signal:#8cc79a; --mark:#29402c}}
+html[data-theme="dark"]:root:root{
+  --bg:#131713; --bg2:#1b211b; --surface:#131713; --surface2:#1b211b; --ink:#e6ebe3; --muted:#9fa99f; --line:#2f3830; --rule:#c9d3c6;
+  --accent:#8cc79a; --accent-soft:rgba(140,199,154,.08); --signal:#8cc79a; --mark:#29402c}
 body{font-size:1.02rem;line-height:1.66}
 .hero h1{font-weight:600;letter-spacing:-.02em;line-height:1.04}
 .hero h1 em{font-style:normal;font-weight:700;color:var(--accent);display:inline-block;border:.06em solid currentColor;padding:0 .14em .02em;line-height:1;transform:rotate(-2.5deg);border-radius:.06em}
