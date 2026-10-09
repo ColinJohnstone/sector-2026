@@ -28,19 +28,19 @@ window.SECTOR.days[2]={
  "official": "https://blackhat.com/sector/briefings/schedule/?day=wednesday",
  "searchHint": "Search notes, speakers or topics: Pegasus, Rowhammer, verifier…",
  "brief": {
-  "lead": "Day 1 was about attacks moving at machine speed. Day 2 was about where they land: the phones, browsers and GPUs we already trust, and how hard it has become to prove what's real.",
+  "lead": "Day 1 was about attacks moving at machine speed. Day 2 was about where they land: the phones, browsers and GPUs people already trust, and how hard it has become to prove what's real.",
   "ideas": [
    {
     "icon": "chip",
     "eyebrow": "Device",
     "title": "Your hardware is attack surface",
-    "text": "Local AI models, GPUs and phones run code we never chose to trust, and each can be turned against us."
+    "text": "Local AI models, GPUs and phones run code users never chose to trust, and the research showed how each can be turned against them."
    },
    {
     "icon": "check",
     "eyebrow": "Proof",
     "title": "Finding is cheap, proving isn't",
-    "text": "AI floods us with findings. Verification is the bottleneck, so build around the proof."
+    "text": "AI floods teams with findings. Verification is now the bottleneck, so the pipeline presented was built around the proof."
    },
    {
     "icon": "eye",
@@ -79,16 +79,16 @@ window.SECTOR.days[2]={
    "text": "These are the worst models that will ever run on your endpoint.",
    "by": "ATLAS-AI Lab @ Technion, Large Local Malware"
   },
-  "afterQuote": "Local models only get more capable from here. Whatever they can be made to do today, they'll do better next year, so limiting what they can touch is worth doing now.",
+  "afterQuote": "Local models only get more capable from here. Whatever they can be made to do today, they'll do better next year.",
   "agendaLabel": "The day at a glance · My path through five parallel tracks"
  },
  "sessionsHead": {
   "title": "The six sessions",
-  "lead": "The keynote and briefings I picked. Each card separates what was presented from my own analysis, with statistics and their sources, an Identity Lens where it's relevant, and primary resources. Hover a concept to see its definition."
+  "lead": "The keynote and briefings I picked. Each card separates what was presented from my own observations, with statistics and their sources and primary resources. Hover a concept to see its definition."
  },
  "takeaways": {
   "title": "Eight things to remember",
-  "lead": "What I'm taking away from Day 2, with the sessions each idea came from.",
+  "lead": "What stood out from Day 2, with the sessions each idea came from.",
   "items": [
    {
     "icon": "browser",
@@ -100,8 +100,8 @@ window.SECTOR.days[2]={
    },
    {
     "icon": "shield",
-    "title": "Scope what local AI can touch",
-    "text": "Zero trust for models: only the files they're working on right now, and remove them where they aren't needed.",
+    "title": "The researchers' answer: scope local AI",
+    "text": "Zero trust for models, as they put it: access to only the files they're working on right now, and removed where they aren't needed.",
     "sessions": [
      "llm"
     ]
@@ -117,7 +117,7 @@ window.SECTOR.days[2]={
    {
     "icon": "target",
     "title": "Buy the hunter, own the verifier",
-    "text": "Discovery tools are a commodity. The step that proves a finding is where our own context and judgment matter.",
+    "text": "Rahul Jaisinghani's motto: discovery tools are a commodity, and the step that proves a finding is where context and judgment matter.",
     "sessions": [
      "pen"
     ]
@@ -125,7 +125,7 @@ window.SECTOR.days[2]={
    {
     "icon": "chip",
     "title": "Hardware isn't a safe boundary",
-    "text": "Bit flips in GPU memory reached root on the host. Shared GPUs, ECC and driver patching deserve attention.",
+    "text": "Bit flips in GPU memory reached root on the host. The researchers pointed to ECC, driver hardening and isolating GPU page tables.",
     "sessions": [
      "gpu"
     ]
@@ -149,7 +149,7 @@ window.SECTOR.days[2]={
    {
     "icon": "book",
     "title": "Archived evidence can be rewritten",
-    "text": "Seven of eight popular web archives let snapshots be altered after capture. Keep your own copy of anything you may need to prove.",
+    "text": "Seven of eight popular web archives let snapshots be altered after capture, and the attacks still worked a year after disclosure.",
     "sessions": [
      "arc"
     ]
@@ -159,60 +159,6 @@ window.SECTOR.days[2]={
    "text": "AI is unpredictable. The proof isn't. We check the proof, not the AI.",
    "by": "Rahul Jaisinghani, BrowserStack"
   }
- },
- "enterprise": {
-  "lead": "How I'd translate Day 2 into work for a security program. My own analysis, grounded in the sessions linked under each item.",
-  "items": [
-   {
-    "title": "Inventory local AI on endpoints",
-    "text": "Find which managed devices carry built-in models (browsers, operating systems, apps) and which applications call them.",
-    "sessions": [
-     "llm"
-    ]
-   },
-   {
-    "title": "Treat local AI as software with permissions",
-    "text": "Scope what local models can read, watch for unusual local AI API calls and unexpected child processes from trusted apps, and add EDR rules against command-line use of browser debugging interfaces.",
-    "sessions": [
-     "llm"
-    ]
-   },
-   {
-    "title": "Automate discovery, verify findings",
-    "text": "Let AI generate findings, but replay every one independently before engineers spend time on it. Build or own the verification step.",
-    "sessions": [
-     "pen"
-    ]
-   },
-   {
-    "title": "Give AI gateways least-privilege identities",
-    "text": "Use separate identities per backend, audit what each can reach, and make sure authorization holds even when the caller is your own agent.",
-    "sessions": [
-     "mcp"
-    ]
-   },
-   {
-    "title": "Treat shared GPUs as a tenant boundary",
-    "text": "Turn on ECC where supported, keep drivers patched, and isolate sensitive training and inference workloads from untrusted GPU code.",
-    "sessions": [
-     "gpu"
-    ]
-   },
-   {
-    "title": "Plan for state-grade threats to high-risk staff",
-    "text": "Define what happens when someone receives a spyware threat notification: who they tell, which credentials and sessions get revoked, and how the device is handled.",
-    "sessions": [
-     "k1"
-    ]
-   },
-   {
-    "title": "Preserve your own evidence",
-    "text": "Don't rely only on third-party web archives for anything you may need to prove later. Capture and hash your own copies.",
-    "sessions": [
-     "arc"
-    ]
-   }
-  ]
  },
  "footer": {
   "title": "SecTor 2026 · Day 2 · Keynote & Briefings",
@@ -274,11 +220,11 @@ window.SECTOR.days[2]={
     "Governments use these tools for transnational repression, tracking dissidents who fled abroad, in some cases ahead of physical attacks. His close: democracies depend on openness that adversaries exploit, polite advocacy isn't enough, and civil society needs its own counterintelligence."
    ],
    "learned": [
-    "The exploit chains used against activists work on any unpatched phone. Civil-society targets are often where they're found first, and everyone benefits from the patch.",
-    "Threat notifications from Apple, Google and others are a real signal. They deserve a response path, not a shrug.",
-    "Public exposure works as a control: patches, sanctions, dismissals and company shutdowns followed the reports."
+    "The thread through every case was that civil-society targets are often where spyware is found first, and the emergency patches that follow protect everyone's phones.",
+    "Deibert's statistic stood out: only 82 of 629 commercial threat-intel reports covered targeted threats to civil society, because civil society isn't a paying client.",
+    "Public exposure carried consequences: patches, sanctions, a dismissal, a court ruling and company shutdowns followed the reports."
    ],
-   "why": "Spyware sold to governments ends up aimed at journalists, lawyers and activists, and the same zero-click exploits work on anyone's phone. Most commercial threat intel ignores these targets, so research like Citizen Lab's is often the first warning the rest of us get, along with the emergency patches.",
+   "why": "It was a very different opening from Day 1. Instead of cloud and AI, it was about people, and it set up the day's theme: the threat is already on the device, in this case the phone in someone's pocket.",
    "concepts": [
     "mercenary",
     "zeroclick",
@@ -294,7 +240,6 @@ window.SECTOR.days[2]={
     "How it protects high-risk groups: journalists, human rights defenders, lawyers, activists, refugees and immigrants.",
     "How advances in AI are changing the threat landscape, and why the work matters more than ever."
    ],
-   "ask": "If someone on our team got a state-sponsored threat notification on their phone, would they know who to tell?",
    "links": [
     {
      "u": "https://citizenlab.ca/2016/08/million-dollar-dissident-iphone-zero-day-nso-group-uae/",
@@ -352,14 +297,7 @@ window.SECTOR.days[2]={
       "u": "https://citizenlab.ca/2021/09/forcedentry-nso-group-imessage-zero-click-exploit-captured-in-the-wild/"
      }
     }
-   ],
-   "identity": {
-    "points": [
-     "A fully compromised phone undermines everything on it: authenticator apps, passkeys, SMS codes and session tokens. Strong authentication assumes a trustworthy device.",
-     "For high-risk staff, phishing-resistant methods are necessary but not sufficient. Fast OS updates and features such as Apple's Lockdown Mode matter too.",
-     "If an executive's phone receives a state-sponsored threat notification, which sessions and credentials would we revoke, and who decides?"
-    ]
-   }
+   ]
   },
   {
    "id": "gpu",
@@ -423,11 +361,11 @@ window.SECTOR.days[2]={
     "The work was disclosed to NVIDIA, earned a Google bug bounty, and is published at gpubreach.ca."
    ],
    "learned": [
-    "Hardware isolation between tenants is an assumption, not a guarantee. A bit flip turned a GPU into a path to the host.",
-    "Because the attack starts from an unprivileged CUDA program, anyone who can run GPU code (a tenant, a notebook, a model-serving job) is in scope.",
-    "The researchers' mitigations need hardware (ECC) and software (driver hardening) together. Neither alone is enough."
+    "Rowhammer has been known for a decade, but each memory generation needs fewer accesses to flip a bit, so it's getting worse rather than going away.",
+    "The clever part was the memory shaping: standard CUDA allocations arranged so page tables land where bits can be flipped, with no special privileges.",
+    "The mitigations the researchers described need hardware and software together (ECC, driver hardening, isolating GPU page tables), and they noted there's no known fix yet for desktop and laptop GPUs."
    ],
-   "why": "GPUs now hold some of our most valuable data: model weights, and keys used by AI and other workloads. Shared GPU servers and cloud GPU instances assume one tenant's code can't read another's memory, and this research breaks that assumption.",
+   "why": "GPUs are what most local and hosted AI models run on, so this connected directly to the Large Local Malware talk that followed: both were about hardware and software already on the device and already trusted.",
    "concepts": [
     "rowhammer",
     "pagetable",
@@ -441,7 +379,6 @@ window.SECTOR.days[2]={
     "Demonstrated extracting cryptographic keys and model weights, then chaining a previously unknown NVIDIA driver memory-safety bug and malicious DMA to get root on the host.",
     "Mitigations: enable ECC on GPUs and harden drivers against malicious devices."
    ],
-   "ask": "Where do we share GPUs between users or workloads, and is ECC turned on there?",
    "links": [
     {
      "u": "https://gpubreach.ca",
@@ -474,7 +411,7 @@ window.SECTOR.days[2]={
      "k": "Research"
     }
    ],
-   "takeaway": "Hardware isn't a boundary we can take for granted. Wherever we run or share GPUs, ECC should be on, drivers patched, and multi-tenant use given a second look.",
+   "takeaway": "Hardware isolation turned out to be an assumption, not a guarantee: flipped bits took an unprivileged program all the way to root on the host.",
    "chain": {
     "steps": [
      "Unprivileged CUDA program",
@@ -503,13 +440,7 @@ window.SECTOR.days[2]={
      "l": "Privileges needed to start: an unprivileged CUDA kernel",
      "src": "program"
     }
-   ],
-   "identity": {
-    "points": [
-     "Key material in GPU memory is exposed: keys could be dumped even when they were resident for milliseconds. Keep long-lived secrets off shared accelerators where possible.",
-     "Root on the host puts every credential and token on that host in play, including the workload identities AI jobs use."
-    ]
-   }
+   ]
   },
   {
    "id": "llm",
@@ -542,7 +473,7 @@ window.SECTOR.days[2]={
      "AI Security Researcher, ATLAS-AI Lab @ Technion"
     ]
    ],
-   "summary": "The AI models vendors quietly install on our endpoints can be turned into a malware engine that lives off the land.",
+   "summary": "The AI models vendors quietly install on endpoints can be turned into a malware engine that lives off the land.",
    "covered": [
     "Chrome downloads a local model, Gemini Nano, onto many machines without the user switching anything on. Vendors are putting local models into operating systems, phones and apps, mostly without asking.",
     "Why vendors do it: it's cheap (it runs on your hardware, not theirs), fast, private and works offline, and it lets companies add AI features without building their own models. Example given: a site like Netflix could use the local model to answer questions about its catalogue right on your machine. Chrome's on-device internals page lets you query the model directly and tune its responses.",
@@ -555,11 +486,11 @@ window.SECTOR.days[2]={
     "Defences discussed: remove the local model where it isn't needed; add EDR rules for this behaviour, including blocking command-line use of Chrome's DevTools Protocol; and apply zero trust, scoping local models to only the files they're working on right now."
    ],
    "learned": [
-    "Vendors are adding AI runtimes to endpoints faster than security teams are inventorying them.",
-    "The model doesn't need to be good at coding to be dangerous. Understanding context (which files matter, when to act) is the valuable part for an attacker.",
-    "Runtime-generated payloads move detection from “what is this file?” to “what is this process doing?”."
+    "I hadn't realized how many machines already carry a local model nobody opted into. Chrome's Gemini Nano was the example.",
+    "The model doesn't need to be good at coding to be dangerous. Its strength is understanding context: which files matter and when to act.",
+    "Runtime-generated payloads shift detection from “what is this file?” to “what is this process doing?”."
    ],
-   "why": "Many endpoints may already carry a local model nobody approved, and it can read files and write code. Security tools are built to catch malicious files and known signatures; malware written on the device by a trusted app's model has neither, so detection has to watch behaviour instead.",
+   "why": "It paired naturally with GPUBreach, since both talks were about technology already installed and trusted. It also echoed Day 1's living-off-the-land theme, with the model itself as the tool.",
    "concepts": [
     "localmodel",
     "gemininano",
@@ -577,7 +508,6 @@ window.SECTOR.days[2]={
     "A demonstration of the full attack chain on a fully patched machine.",
     "Proposed detection: monitor suspicious local AI API calls, prompt-driven code generation and unexpected child processes from trusted applications."
    ],
-   "ask": "Do we know which of our managed devices have a local AI model installed, and what it's allowed to read?",
    "links": [
     {
      "u": "https://developer.chrome.com/docs/ai/built-in",
@@ -610,7 +540,7 @@ window.SECTOR.days[2]={
      "k": "Talk"
     }
    ],
-   "takeaway": "These are the worst models that will ever run on our endpoints. They'll only get more capable, so now is the time to find where local models exist and limit what they can touch.",
+   "takeaway": "“These are the worst models that will ever run on your endpoint.” Whatever local models can be made to do today, they'll do better next year.",
    "chain": {
     "steps": [
      "Local model already installed",
@@ -620,13 +550,6 @@ window.SECTOR.days[2]={
      "Code merged into a trusted file"
     ],
     "note": "The attack flow as described in the talk"
-   },
-   "identity": {
-    "points": [
-     "A local model runs with the signed-in user's access: their files, their browser data and anything their session can reach.",
-     "Browser identity lives on the endpoint too. Session cookies and tokens are exactly what a profiling harness can find.",
-     "Passkeys resist phishing, but a stolen session token can still be replayed. Device-bound sessions and short token lifetimes reduce what local malware can take."
-    ]
    }
   },
   {
@@ -667,10 +590,10 @@ window.SECTOR.days[2]={
    ],
    "learned": [
     "The bottleneck moved; it didn't disappear. Human triage now limits how fast AI findings become fixes.",
-    "Owning the verifier keeps judgment in-house. Scope, production context and the bar for proof are things a vendor can't set for you.",
-    "Hallucinated vulnerabilities have a real cost. A pipeline without independent proof just moves noise from the scanner to the engineers."
+    "The harness mattered as much as the model: with the same model and different tools, detection went from 5% to 30% to 45%.",
+    "Hallucinated vulnerabilities have a real cost, which is why the independent verifier sat at the core of the pipeline."
    ],
-   "why": "Whether we run AI testing ourselves or receive AI-generated findings from vendors and bug bounty programs, the volume will outrun our ability to triage. Unverified findings waste engineering time; a verification step is what turns AI output into work worth acting on.",
+   "why": "It reframed Day 1's economics. If finding vulnerabilities is cheap, the scarce thing is proof. The same lesson came back on Day 3, when the purple teaming talk described agents falsely claiming success.",
    "concepts": [
     "verifier",
     "harness",
@@ -683,7 +606,6 @@ window.SECTOR.days[2]={
     "An early phase with a false-positive rate around 70%, and the fixes that brought it down.",
     "The goal: have the AI prove that a specific suspected vulnerability is actually exploitable."
    ],
-   "ask": "When an AI tool or a bug bounty report hands us a finding, how do we prove it's real before engineers spend time on it?",
    "links": [
     {
      "u": "https://www.anthropic.com/glasswing",
@@ -710,7 +632,7 @@ window.SECTOR.days[2]={
      "k": "Evaluation"
     }
    ],
-   "takeaway": "“Buy the hunter, own the verifier.” Discovery tools will keep improving and are easy to buy. The proof step is where our own context and judgment matter.",
+   "takeaway": "“Buy the hunter, own the verifier.” Discovery tools keep improving; the proof step is where context and judgment matter.",
    "chain": {
     "steps": [
      "Context & scope",
@@ -744,13 +666,7 @@ window.SECTOR.days[2]={
      "l": "Runs where the full attack chain succeeded in the UK AISI's testing",
      "src": "presented"
     }
-   ],
-   "identity": {
-    "points": [
-     "Identities are one of the pipeline's building blocks in my notes: hunters need test accounts at different privilege levels to find authorization bugs.",
-     "Those test identities are real credentials. Scope them to the test environment, rotate them, and make sure an agent can't reuse them in production."
-    ]
-   }
+   ]
   },
   {
    "id": "arc",
@@ -789,10 +705,11 @@ window.SECTOR.days[2]={
     "The research is published as “The Power to Never Be Wrong: Evasions and Anachronistic Attacks Against Web Archives” (ACM CCS 2025)."
    ],
    "learned": [
-    "Most people who cite archived pages, legal teams included, assume snapshot integrity. That assumption now needs a caveat.",
-    "Because the manipulation is client-side and detectable, a practical defence exists: capture and preserve your own evidence with integrity checks."
+    "I had always treated archived pages as a reliable record. Finding that seven of eight popular archives allowed snapshots to be altered after capture changed that.",
+    "The attacks were still working a year after disclosure, despite several patches.",
+    "Because the manipulation happens client-side, it can be detected, which the talk also covered."
    ],
-   "why": "Archived pages get used as evidence in disputes, investigations, legal filings and research, and in our own work when we need to show what a site or vendor said at a point in time. If a site can change its own past, a snapshot on its own isn't proof.",
+   "why": "It fit the day's theme of proving what's real. The pentest talk was about proving a vulnerability exists; this one was about proving what a website said at a point in time.",
    "concepts": [
     "snapshot",
     "evasive",
@@ -804,7 +721,6 @@ window.SECTOR.days[2]={
     "Evidence that current archives fall short: sites can selectively hide and reliably alter snapshots after capture.",
     "How to detect the client-side manipulations."
    ],
-   "ask": "When we rely on an archived web page as evidence, do we also keep our own copy from the time?",
    "links": [
     {
      "u": "https://www.securitee.org/files/kirchner_power_ccs2025.pdf",
@@ -881,10 +797,11 @@ window.SECTOR.days[2]={
     "Indirect prompt injection makes it worse: the requirement changes from “the attacker needs a key” to “the attacker needs to put a string in front of an AI agent.”"
    ],
    "learned": [
-    "Putting an AI front door on an API gateway changes who can reach internal APIs: now it's anything that can influence an agent's arguments.",
-    "Reference architectures concentrate risk. One gateway identity with access to Key Vault, OpenAI, Storage and Resource Manager is a single point of compromise."
+    "Putting an AI front door on an API gateway changed who could reach internal APIs: now it's anything that can influence an agent's arguments.",
+    "The reference architecture concentrated the risk. One gateway identity with access to Key Vault, OpenAI, Storage and Resource Manager made a single tool call very powerful.",
+    "The line that stayed with me: the requirement changes from “the attacker needs a key” to “the attacker needs to put a string in front of an AI agent.”"
    ],
-   "why": "Organizations are putting AI gateways in front of internal APIs so agents can call them. When the gateway's own identity can reach secrets, anything that can steer one tool call, including text an agent happens to read, can turn the gateway into a confused deputy.",
+   "why": "It was the clearest example of the conference's agent identity theme on Day 2. Day 1 asked what identity an agent acts through; this talk showed a gateway's own identity becoming the confused deputy.",
    "concepts": [
     "mcp",
     "confuseddeputy",
@@ -899,7 +816,6 @@ window.SECTOR.days[2]={
     "A demonstration from a user's point of view, through an AI agent.",
     "How AI red teamers can extend prompt injection techniques to older APIM infrastructure."
    ],
-   "ask": "If we expose internal APIs to AI agents through a gateway, what can the gateway's own identity reach?",
    "links": [
     {
      "u": "https://learn.microsoft.com/en-us/azure/api-management/secure-mcp-servers",
@@ -944,15 +860,7 @@ window.SECTOR.days[2]={
      "l": "MCP tool call with a crafted argument needed to read Key Vault secrets",
      "src": "program"
     }
-   ],
-   "identity": {
-    "points": [
-     "The gateway's managed identity was the confused deputy: it authenticated the attacker's redirected request with its own credentials.",
-     "Use separate identities per backend instead of one gateway identity for everything, and scope each to the minimum role.",
-     "Prompt injection turns “who can call this API?” into “who can put text in front of an agent?”. Authorization has to hold even when the caller is your own agent.",
-     "Audit what the gateway's identity can reach in Key Vault and Resource Manager. That's the blast radius of one bad tool call."
-    ]
-   }
+   ]
   }
  ],
  "agenda": [
@@ -1167,160 +1075,158 @@ window.SECTOR.days[2]={
     "cat": "identity"
    }
   ]
- }
-};
-/* Speaker organisations: name -> {co, site, loc}. LinkedIn profiles live in "linkedin" above. */
-window.SECTOR.days[2].people={
- "Ron Deibert": {
-  "co": "The Citizen Lab",
-  "site": "https://citizenlab.ca"
  },
- "Chaggai Heching": {
-  "co": "ATLAS-AI Lab, Technion",
-  "site": "https://www.technion.ac.il"
+ "people": {
+  "Ron Deibert": {
+   "co": "The Citizen Lab",
+   "site": "https://citizenlab.ca"
+  },
+  "Chaggai Heching": {
+   "co": "ATLAS-AI Lab, Technion",
+   "site": "https://www.technion.ac.il"
+  },
+  "Ori Levy": {
+   "co": "ATLAS-AI Lab, Technion",
+   "site": "https://www.technion.ac.il"
+  },
+  "Adar Peleg": {
+   "co": "ATLAS-AI Lab, Technion",
+   "site": "https://www.technion.ac.il"
+  },
+  "Rahul Jaisinghani": {
+   "co": "BrowserStack",
+   "site": "https://www.browserstack.com"
+  },
+  "Gururaj Saileshwar": {
+   "co": "University of Toronto",
+   "site": "https://www.utoronto.ca"
+  },
+  "Chris S. Lin": {
+   "co": "University of Toronto",
+   "site": "https://www.utoronto.ca"
+  },
+  "Yuqin Yan": {
+   "co": "University of Toronto",
+   "site": "https://www.utoronto.ca"
+  },
+  "Guozhen Ding": {
+   "co": "University of Toronto",
+   "site": "https://www.utoronto.ca"
+  },
+  "Joyce Qu": {
+   "co": "University of Toronto",
+   "site": "https://www.utoronto.ca"
+  },
+  "David Lie": {
+   "co": "University of Toronto",
+   "site": "https://www.utoronto.ca"
+  },
+  "Joseph Zhu": {
+   "co": "Google"
+  },
+  "Robin Kirchner": {
+   "co": "TU Braunschweig",
+   "site": "https://www.tu-braunschweig.de"
+  },
+  "Martin Johns": {
+   "co": "TU Braunschweig",
+   "site": "https://www.tu-braunschweig.de"
+  },
+  "Simon Maxwell-Stewart": {
+   "co": "BeyondTrust",
+   "site": "https://www.beyondtrust.com"
+  }
  },
- "Ori Levy": {
-  "co": "ATLAS-AI Lab, Technion",
-  "site": "https://www.technion.ac.il"
- },
- "Adar Peleg": {
-  "co": "ATLAS-AI Lab, Technion",
-  "site": "https://www.technion.ac.il"
- },
- "Rahul Jaisinghani": {
-  "co": "BrowserStack",
-  "site": "https://www.browserstack.com"
- },
- "Gururaj Saileshwar": {
-  "co": "University of Toronto",
-  "site": "https://www.utoronto.ca"
- },
- "Chris S. Lin": {
-  "co": "University of Toronto",
-  "site": "https://www.utoronto.ca"
- },
- "Yuqin Yan": {
-  "co": "University of Toronto",
-  "site": "https://www.utoronto.ca"
- },
- "Guozhen Ding": {
-  "co": "University of Toronto",
-  "site": "https://www.utoronto.ca"
- },
- "Joyce Qu": {
-  "co": "University of Toronto",
-  "site": "https://www.utoronto.ca"
- },
- "David Lie": {
-  "co": "University of Toronto",
-  "site": "https://www.utoronto.ca"
- },
- "Joseph Zhu": {
-  "co": "Google"
- },
- "Robin Kirchner": {
-  "co": "TU Braunschweig",
-  "site": "https://www.tu-braunschweig.de"
- },
- "Martin Johns": {
-  "co": "TU Braunschweig",
-  "site": "https://www.tu-braunschweig.de"
- },
- "Simon Maxwell-Stewart": {
-  "co": "BeyondTrust",
-  "site": "https://www.beyondtrust.com"
- }
-};
-/* Audio recaps (MP3s in this folder), generated with the open-source Kokoro voice model. */
-window.SECTOR.days[2].audio=[
- {
-  "key": "recap",
-  "label": "Quick recap",
-  "note": "About 2 min · one narrator",
-  "src": "recap.mp3",
-  "dur": 93,
-  "transcript": [
-   "This is the Day 2 recap from Colin Johnstone's SecTor 2026 notes. If Day 1 was about speed, Day 2 was about where risk lands. The headline: the threat is already on the device.",
-   "Ron Deibert of the Citizen Lab opened with the human side. Commercial spyware is aimed at journalists, lawyers and activists, and public-interest research is often what leads to the patch, the sanction or the shutdown that protects everyone else.",
-   "Several talks looked at technology we already trust. Researchers showed that the small AI models now built into browsers and operating systems deserve the same scrutiny as any other software with access to our files. A University of Toronto team showed that hardware isolation on shared GPUs isn't something we can take for granted.",
-   "BrowserStack's talk flipped the AI story around. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow, expensive part. Their motto: buy the hunter, own the verifier.",
-   "Two more briefings rounded out the day: one on why an archived web page isn't proof on its own, and one on why AI gateways need carefully scoped identities.",
-   "Colin's takeaway from Day 2: know where AI runs in your environment, limit what it can touch, keep patching and isolation in place for shared hardware, and verify before you act.",
-   "The full notes, sources and a quiz are on the Day 2 page."
-  ]
- },
- {
-  "key": "deep",
-  "label": "Deep dive",
-  "note": "About 3 min · session by session",
-  "src": "deep-dive.mp3",
-  "dur": 166,
-  "transcript": [
-   "This is the Day 2 deep dive from Colin Johnstone's SecTor 2026 notes. Day 2 was keynote and briefings, and the theme was that the threat is already on the device.",
-   "Ron Deibert, director of the Citizen Lab at the University of Toronto, opened with counterintelligence for civil society. Commercial spyware has been used against journalists, lawyers, activists and their families, often without the target clicking anything. Citizen Lab's public research has repeatedly led to emergency patches from phone makers, sanctions and company shutdowns. Colin's note: threat notifications from Apple and Google deserve a real response plan, not a shrug.",
-   "Researchers from the ATLAS-AI Lab at the Technion looked at the small AI models now built into browsers and operating systems, often installed without users opting in. Their research showed these models deserve the same scrutiny as any other software with access to our files. Their advice: remove local models where they aren't needed, watch for unusual use of them, and scope what they can reach. Their memorable line: these are the worst models that will ever run on your endpoint.",
-   "A University of Toronto team led by Gururaj Saileshwar presented GPU Breach. Their research showed that the memory isolation we assume on GPUs can't be taken for granted, especially on shared hardware. Their recommended mitigations were error-correcting memory, patched drivers, and careful thought about sharing GPUs between workloads. The work was responsibly disclosed to NVIDIA.",
-   "Rahul Jaisinghani of BrowserStack talked about AI-assisted penetration testing. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow and expensive part. Adding an independent verifier that re-proves every finding cut analyst time significantly in his team's pipeline. His motto: buy the hunter, own the verifier.",
-   "Two more briefings rounded out the day. Researchers from TU Braunschweig showed that web archive snapshots can't always be treated as proof of what a site said, so keep your own evidence. And Simon Maxwell-Stewart of BeyondTrust showed why gateways that let AI agents call internal services need narrowly scoped identities for each backend.",
-   "Colin's takeaway from Day 2: the newest attack surface is the technology we already trust, from browsers and GPUs to the phones in our pockets, and proving what's real is becoming as important as finding it.",
-   "That's the Day 2 deep dive. The full notes, sources and quiz are on the Day 2 page."
-  ]
- },
- {
-  "key": "chat",
-  "label": "Conversation",
-  "note": "About 2 min · two voices",
-  "src": "conversation.mp3",
-  "dur": 106,
-  "transcript": [
-   [
-    1,
-    "Welcome back to the SecTor 2026 recap from Colin Johnstone's notes. This is Day 2."
-   ],
-   [
-    2,
-    "If Day 1 was about speed, Day 2 was about where risk lands. The headline: the threat is already on the device."
-   ],
-   [
-    1,
-    "The keynote was a bit different from a typical security talk."
-   ],
-   [
-    2,
-    "It was. Ron Deibert of the Citizen Lab talked about commercial spyware aimed at journalists, lawyers and activists. Their public research has led to emergency patches, sanctions and even company shutdowns, which protects everyone else too."
-   ],
-   [
-    1,
-    "Then a lot of the day was about technology we already trust."
-   ],
-   [
-    2,
-    "Right. One team from the Technion looked at the small AI models now built into browsers and operating systems. Their warning stuck with Colin: these are the worst models that will ever run on your endpoint. They'll only get more capable."
-   ],
-   [
-    1,
-    "So the advice is?"
-   ],
-   [
-    2,
-    "Know where they run, remove them where they aren't needed, and limit what they can touch. And a University of Toronto team showed that we can't take memory isolation on shared GPUs for granted either."
-   ],
-   [
-    1,
-    "There was also a twist on AI for defenders."
-   ],
-   [
-    2,
-    "BrowserStack's talk. AI makes finding potential vulnerabilities cheap, but proving which ones are real is now the bottleneck. Their motto was: buy the hunter, own the verifier."
-   ],
-   [
-    1,
-    "Colin's bottom line for Day 2?"
-   ],
-   [
-    2,
-    "The newest attack surface is the stuff we already trust: browsers, GPUs, AI gateways and the phones that hold our authenticators. Find it, scope it, and verify before you act. The full notes are on the Day 2 page."
+ "audio": [
+  {
+   "key": "recap",
+   "label": "Quick recap",
+   "note": "About 2 min · one narrator",
+   "src": "recap.mp3?v=20261008j",
+   "dur": 92,
+   "transcript": [
+    "This is the Day 2 recap from Colin Johnstone's SecTor 2026 notes. If Day 1 was about speed, Day 2 was about where risk lands. The headline: the threat is already on the device.",
+    "Ron Deibert of the Citizen Lab opened with the human side. Commercial spyware is aimed at journalists, lawyers and activists, and public-interest research is often what leads to the patch, the sanction or the shutdown that protects everyone else.",
+    "Several talks looked at technology people already trust. Researchers from the Technion showed how the small AI models now built into browsers can be misused, and a University of Toronto team showed that hardware isolation on shared GPUs can't be taken for granted.",
+    "BrowserStack's talk flipped the AI story around. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow, expensive part. Their motto: buy the hunter, own the verifier.",
+    "Two more briefings rounded out the day: one showing that archived web pages can be altered after capture, and one showing how an AI gateway's own identity could be turned against it.",
+    "Colin's takeaway from Day 2: the newest attack surface is the technology already in everyday use, from browsers and GPUs to the phones in people's pockets, and proving what's real is becoming as important as finding it.",
+    "The full notes, sources and a quiz are on the Day 2 page."
    ]
-  ]
- }
-];
+  },
+  {
+   "key": "deep",
+   "label": "Deep dive",
+   "note": "About 3 min · session by session",
+   "src": "deep-dive.mp3?v=20261008j",
+   "dur": 169,
+   "transcript": [
+    "This is the Day 2 deep dive from Colin Johnstone's SecTor 2026 notes. Day 2 was keynote and briefings, and the theme was that the threat is already on the device.",
+    "Ron Deibert, director of the Citizen Lab at the University of Toronto, opened with counterintelligence for civil society. Commercial spyware has been used against journalists, lawyers, activists and their families, often without the target clicking anything. Citizen Lab's public research has repeatedly led to emergency patches from phone makers, sanctions and company shutdowns. One statistic stood out: only 82 of 629 commercial threat intelligence reports covered threats to civil society.",
+    "Researchers from the ATLAS-AI Lab at the Technion looked at the small AI models now built into browsers and operating systems, often installed without users opting in. Their research showed these models can be misused like any other software with access to a user's files. Their advice: remove local models where they aren't needed, watch for unusual use of them, and scope what they can reach. Their memorable line: these are the worst models that will ever run on your endpoint.",
+    "A University of Toronto team led by Gururaj Saileshwar presented GPU Breach. Their research showed that the memory isolation usually assumed on GPUs can't be taken for granted, especially on shared hardware. Their recommended mitigations were error-correcting memory, patched drivers, and careful thought about sharing GPUs between workloads. The work was responsibly disclosed to NVIDIA.",
+    "Rahul Jaisinghani of BrowserStack talked about AI-assisted penetration testing. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow and expensive part. Adding an independent verifier that re-proves every finding cut analyst time significantly in his team's pipeline. His motto: buy the hunter, own the verifier.",
+    "Two more briefings rounded out the day. Researchers from TU Braunschweig showed that web archive snapshots can't always be treated as proof of what a site said, so keep your own evidence. And Simon Maxwell-Stewart of BeyondTrust showed why gateways that let AI agents call internal services need narrowly scoped identities for each backend.",
+    "Colin's takeaway from Day 2: the newest attack surface is the technology people already trust, from browsers and GPUs to the phones in their pockets, and proving what's real is becoming as important as finding it.",
+    "That's the Day 2 deep dive. The full notes, sources and quiz are on the Day 2 page."
+   ]
+  },
+  {
+   "key": "chat",
+   "label": "Conversation",
+   "note": "About 2 min · two voices",
+   "src": "conversation.mp3?v=20261008j",
+   "dur": 106,
+   "transcript": [
+    [
+     1,
+     "Welcome back to the SecTor 2026 recap from Colin Johnstone's notes. This is Day 2."
+    ],
+    [
+     2,
+     "If Day 1 was about speed, Day 2 was about where risk lands. The headline: the threat is already on the device."
+    ],
+    [
+     1,
+     "The keynote was a bit different from a typical security talk."
+    ],
+    [
+     2,
+     "It was. Ron Deibert of the Citizen Lab talked about commercial spyware aimed at journalists, lawyers and activists. Their public research has led to emergency patches, sanctions and even company shutdowns, which protects everyone else too."
+    ],
+    [
+     1,
+     "Then a lot of the day was about technology people already trust."
+    ],
+    [
+     2,
+     "Right. One team from the Technion looked at the small AI models now built into browsers and operating systems. Their warning stuck with Colin: these are the worst models that will ever run on your endpoint. They'll only get more capable."
+    ],
+    [
+     1,
+     "What did the researchers suggest?"
+    ],
+    [
+     2,
+     "Remove them where they aren't needed, watch for unusual use, and scope what they can reach. And a University of Toronto team showed that memory isolation on shared GPUs can't be taken for granted either."
+    ],
+    [
+     1,
+     "There was also a twist on AI for defenders."
+    ],
+    [
+     2,
+     "BrowserStack's talk. AI makes finding potential vulnerabilities cheap, but proving which ones are real is now the bottleneck. Their motto was: buy the hunter, own the verifier."
+    ],
+    [
+     1,
+     "Colin's bottom line for Day 2?"
+    ],
+    [
+     2,
+     "The newest attack surface is the stuff people already trust: browsers, GPUs, AI gateways and phones. And proving what's real is becoming as important as finding it. The full notes are on the Day 2 page."
+    ]
+   ]
+  }
+ ]
+};

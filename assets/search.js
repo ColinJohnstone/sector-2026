@@ -7,7 +7,7 @@ for(const D of days){
   const base=`day-${D.n}/`;
   for(const s of D.sessions){
     items.push({type:"Session",title:s.title,sub:`Day ${D.n} · ${s.time} · ${s.speakers.map(x=>x[0]).join(", ")}`,href:base+"#"+s.id,cats:s.cats,
-      text:[s.summary,...s.covered,...(s.learned||[]),s.why,s.takeaway||"",...(s.identity?s.identity.points:[]),...s.concepts.map(k=>G[k]?G[k][0]:""),...s.program].join(" ")});
+      text:[s.summary,...s.covered,...(s.learned||[]),s.why,s.takeaway||"",...s.concepts.map(k=>G[k]?G[k][0]:""),...s.program].join(" ")});
     for(const [n,r] of s.speakers)items.push({type:"Speaker",title:n,sub:`${r} · ${s.short}, Day ${D.n}`,href:base+"#"+s.id,cats:s.cats,text:r});
   }
   for(const t of D.takeaways.items)items.push({type:"Takeaway",title:t.title,sub:`Day ${D.n} takeaway`,href:base+"#remember",cats:[],text:t.text});

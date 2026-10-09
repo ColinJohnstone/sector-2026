@@ -7,7 +7,7 @@ Live: https://colinjohnstone.github.io/sector-2026/
 | Path | Content |
 |---|---|
 | `/` | Home: thesis, day cards, passport, topic map, timeline, Ready Set Cyber games, site-wide search |
-| `/brief/` | Executive security brief (about 10 minutes) |
+| `/brief/` | Executive brief (about 6 minutes): the major findings and what changed |
 | `/day-1/` | Day 1: AI x Cloud Security Summit, "AI changed the speed of the attack" |
 | `/day-2/` | Day 2: Keynote & Briefings, "The threat is already on the device" |
 | `/day-3/` | Day 3: Keynote & Briefings, "The real question is who gets to decide" |
@@ -39,7 +39,9 @@ day-N/
 
 ### Session fields (`data.js`)
 
-`id, time, end, room, url, icon, short, title, org, speakers [[name, role]], cats, summary, covered[], learned[], why, concepts[], program[], ask, links[]`, plus optional `takeaway, chain {steps, note}, stats [{v, l, src}], identity {points}, fromProgram`.
+`id, time, end, room, url, icon, short, title, org, speakers [[name, role]], cats, summary, covered[], learned[], why, concepts[], program[], links[]`, plus optional `takeaway, chain {steps, note}, stats [{v, l, src}], fromProgram`.
+
+`covered` is what the speaker presented. `learned` ("What stood out"), `why` ("How it connects") and `takeaway` ("In one line") are my own observations about the conference itself: what stood out and how sessions relate. Keep them about the event and the talks, not workplace recommendations.
 
 Provenance rules for `stats[].src`:
 

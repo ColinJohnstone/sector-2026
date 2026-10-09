@@ -40,13 +40,13 @@ window.SECTOR.days[1]={
     "icon": "badge",
     "eyebrow": "Identity",
     "title": "Agents nobody tracks",
-    "text": "We're deploying more agents without a mature way to inventory, identify and govern them."
+    "text": "Organizations may soon run thousands of agents, without a mature way to inventory, identify and govern them."
    },
    {
     "icon": "layers",
     "eyebrow": "Fundamentals",
-    "title": "Basics matter more",
-    "text": "Segmentation, least privilege, isolation, logging and blast-radius reduction are possibly more important than ever."
+    "title": "Back to basics",
+    "text": "Segmentation, least privilege, isolation, logging and blast-radius reduction came up in session after session."
    }
   ],
   "stats": [
@@ -84,7 +84,7 @@ window.SECTOR.days[1]={
  },
  "sessionsHead": {
   "title": "The ten sessions",
-  "lead": "Each card separates what the speakers presented from my own analysis, with key statistics and their sources, an Identity Lens where it's relevant, and primary resources. Hover a concept to see its definition."
+  "lead": "Each card separates what the speakers presented from my own observations, with key statistics and their sources and primary resources. Hover a concept to see its definition."
  },
  "takeaways": {
   "title": "Seven things to remember",
@@ -102,7 +102,7 @@ window.SECTOR.days[1]={
    },
    {
     "icon": "layers",
-    "title": "Fundamentals matter more",
+    "title": "Fundamentals kept coming up",
     "text": "Segmentation, identity, least privilege, isolation and smaller blast radius kept coming up because AI makes weak architecture easier to exploit.",
     "sessions": [
      "s2",
@@ -112,7 +112,7 @@ window.SECTOR.days[1]={
    {
     "icon": "badge",
     "title": "Agents need identity",
-    "text": "With thousands or millions of agents, we need to know what each one is, what it can access, who owns it and how to switch it off.",
+    "text": "With thousands or millions of agents coming, speakers kept asking what each one is, what it can access, who owns it and how to switch it off.",
     "sessions": [
      "s3",
      "s7",
@@ -138,8 +138,8 @@ window.SECTOR.days[1]={
    },
    {
     "icon": "shield",
-    "title": "Patching can't be the whole plan",
-    "text": "When discovery to exploitation is measured in hours, reduce what's reachable and what a breach can touch, and treat patch speed as one control among several.",
+    "title": "Patching isn't the whole plan",
+    "text": "When discovery to exploitation is measured in hours, speakers argued for reducing what's reachable and what a breach can touch, with patch speed as one control among several.",
     "sessions": [
      "s4",
      "s1"
@@ -147,8 +147,8 @@ window.SECTOR.days[1]={
    },
    {
     "icon": "scale",
-    "title": "Governance can't be an afterthought",
-    "text": "The technology is moving faster than ownership models. Who owns an autonomous system, and who can switch it off, is a security question.",
+    "title": "Governance came up late, and often",
+    "text": "The technology is moving faster than ownership models. Several panels treated who owns an autonomous system, and who can switch it off, as a security question.",
     "sessions": [
      "s8",
      "s10",
@@ -160,66 +160,6 @@ window.SECTOR.days[1]={
    "text": "The day wasn't about “AI security” as a separate thing. It was about cloud, identity and software security operating at AI speed.",
    "by": ""
   }
- },
- "enterprise": {
-  "lead": "How I'd translate Day 1 into work for a security program. My own analysis, grounded in the sessions linked under each item.",
-  "items": [
-   {
-    "title": "Inventory AI agents and models",
-    "text": "Build a registry of the agents, models and AI tools in use, including shadow AI, with an accountable owner for each. Everything else depends on it.",
-    "sessions": [
-     "s3",
-     "s7"
-    ]
-   },
-   {
-    "title": "Treat agents as identities",
-    "text": "Give each agent its own credential, permissions scoped to its task, an audit trail that separates agent from human actions, and a tested way to revoke it.",
-    "sessions": [
-     "s3",
-     "s10"
-    ]
-   },
-   {
-    "title": "Reduce blast radius",
-    "text": "Separate production from non-production, apply least privilege, and block destructive actions by default for any automation or agent.",
-    "sessions": [
-     "s2",
-     "s4"
-    ]
-   },
-   {
-    "title": "Harden workload credentials",
-    "text": "Require IMDSv2 or equivalent, remove long-lived keys, scope workload roles tightly, and alert when credentials are used from unexpected places.",
-    "sessions": [
-     "s2",
-     "s5"
-    ]
-   },
-   {
-    "title": "Plant canaries in the cloud",
-    "text": "Decoy keys and resources give an early, high-confidence signal against autonomous attackers. Pre-approve the response so it fires inside the ten-minute window.",
-    "sessions": [
-     "s5"
-    ]
-   },
-   {
-    "title": "Test continuously and map attack paths",
-    "text": "Use supervised AI red teaming against exposed paths instead of relying on an annual pentest, and prioritize the fixes that break the most chains.",
-    "sessions": [
-     "s6",
-     "s9"
-    ]
-   },
-   {
-    "title": "Assume attacks outrun human response",
-    "text": "Automate containment for high-confidence signals and keep people in the loop for irreversible actions.",
-    "sessions": [
-     "s2",
-     "s7"
-    ]
-   }
-  ]
  },
  "footer": {
   "title": "SecTor 2026 · Day 1 · AI x Cloud Security Summit",
@@ -278,11 +218,11 @@ window.SECTOR.days[1]={
     "Tools like Nmap were always broadly available. Getting defenders the best AI tools quickly may beat keeping them behind a velvet rope."
    ],
    "learned": [
-    "The things that used to separate nation-state operators from everyone else (budget, specialist teams, custom tooling) are eroding. Intent and persistence now matter more than money.",
-    "Speed hits patching first. If exploitation follows disclosure within hours, monthly or even weekly patch cycles leave a long exposure window.",
-    "Agent sandboxes and guardrail prompts are useful, but they aren't security boundaries. Segmentation, least privilege and egress limits are still what stop small weaknesses being chained."
+    "The shift Johansen described is from capability to intent. Budget, specialist teams and custom tooling used to separate nation-state operators from everyone else, and that gap is closing.",
+    "His point about fast fixing stuck with me: if anyone can use AI to write fixes, the fixes themselves can become the next wave of bugs.",
+    "The sandbox line was blunt: a guardrails.md file isn't a security architecture. Some version of that idea came back in almost every Day 1 session."
    ],
-   "why": "The question shifts from who has the capability to who has the intent. Any motivated attacker with a subscription can now run tradecraft that used to need a funded team, so assumptions about an unsophisticated attacker need revisiting.",
+   "why": "This keynote set the frame for the whole summit. Native's three-minute chain, the roughly $500 RedWraith intrusion and Tracebit's 13-minute path to admin were all versions of the same idea: familiar techniques, much cheaper and faster.",
    "concepts": [
     "openweight",
     "machinespeed",
@@ -294,7 +234,6 @@ window.SECTOR.days[1]={
     "Which security controls held up against these attacks and which failed.",
     "Practical recommendations teams can act on the following Monday."
    ],
-   "ask": "If an attacker could chain three of our minor findings together in minutes, which three would they pick?",
    "links": [
     {
      "u": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-231a",
@@ -372,11 +311,11 @@ window.SECTOR.days[1]={
     "The answer was architecture rather than another AI-specific control: separate prod and non-prod, reduce internet exposure, enforce strong identity and permission boundaries, and block destructive agent actions by default."
    ],
    "learned": [
-    "Almost every step in the Zealot chain is an old technique. What's new is that an agent connects them without pausing, so the gaps between alerts disappear.",
-    "Detection-led programs assume dwell time. When a chain finishes before the first alert is triaged, the architecture has to deny the path instead.",
-    "Agent permissions are standing permissions. Whatever an agent can do in production, anyone who can steer it can do too."
+    "Almost every step in the Zealot chain is an old technique. What made it notable was that an agent connected them without pausing, so the gaps between alerts disappeared.",
+    "Ordo's argument was that detection-led approaches assume dwell time, and a chain that finishes its key steps in about three minutes doesn't leave much.",
+    "His answer wasn't another AI product. It was architecture: separation, less internet exposure, strong identity boundaries and blocking destructive agent actions by default."
    ],
-   "why": "When response time is longer than attack time, detection becomes a forensic tool rather than a defence. The controls that still work are the ones already in place before the attack starts.",
+   "why": "It made the keynote concrete. Johansen described cheap capability in general terms; Ordo showed what it looks like inside a cloud environment, step by step. The Hugging Face incident came up in both talks.",
    "concepts": [
     "ssrf",
     "imds",
@@ -393,7 +332,6 @@ window.SECTOR.days[1]={
     "AI workloads are non-deterministic: agents decide at runtime, inherit standing permissions and find unintended paths through the architecture.",
     "Argued for security by design at the infrastructure level so exploit paths don't exist, with a model for when to prevent versus contain and how to sequence a 2027 hardening program."
    ],
-   "ask": "Which of our agents or service identities could make a destructive change in production today?",
    "links": [
     {
      "u": "https://unit42.paloaltonetworks.com/autonomous-ai-cloud-attacks/",
@@ -420,7 +358,7 @@ window.SECTOR.days[1]={
      "k": "Standard"
     }
    ],
-   "takeaway": "If the attack moves faster than your detection and response, prevention and blast-radius reduction have to do more of the work.",
+   "takeaway": "The talk's core point: when an attack moves faster than detection and response, prevention and blast-radius reduction end up carrying more of the weight.",
    "chain": {
     "steps": [
      "Reconnaissance",
@@ -438,15 +376,7 @@ window.SECTOR.days[1]={
      "l": "For an autonomous chain to complete its critical steps",
      "src": "presented"
     }
-   ],
-   "identity": {
-    "points": [
-     "SSRF against the metadata service is a credential-theft attack: the prize is the workload's temporary cloud credentials. On AWS, enforcing IMDSv2 closes the classic path.",
-     "Workload identities often carry broader standing permissions than any person. Scope each workload role to what that service needs, and alert when its credentials are used from somewhere unexpected.",
-     "Cloud privilege escalation is usually an IAM problem. Review who can attach policies, pass roles or create access keys.",
-     "For every AI agent in production: which identity does it act through, and can that identity make destructive changes?"
-    ]
-   }
+   ]
   },
   {
    "id": "s3",
@@ -475,7 +405,7 @@ window.SECTOR.days[1]={
      "CEO & Founder, SKADI Cyber Defense"
     ]
    ],
-   "summary": "Agents are multiplying faster than our ability to inventory and govern them.",
+   "summary": "Agents are multiplying faster than anyone's ability to inventory and govern them.",
    "covered": [
     "Organizations may soon run thousands or millions of agents, with no reliable way to inventory which ones are operating.",
     "Agent-to-agent interactions could be a source of better detection.",
@@ -483,11 +413,11 @@ window.SECTOR.days[1]={
     "The toaster analogy: standards are why you can trust a toaster not to burn your house down. Agents need a consistent way to define what they may do and under what conditions."
    ],
    "learned": [
-    "Agents are a new kind of non-human identity, but they're less predictable than service accounts: they choose actions at runtime and call other agents.",
-    "An agent registry comes first. You can't scope, monitor or revoke what you haven't inventoried.",
-    "Agent-to-agent traffic is both a new trust boundary and a new place to observe behaviour."
+    "Broda and Clark framed agents as a new kind of non-human identity, less predictable than service accounts because they choose actions at runtime and call other agents.",
+    "The toaster analogy landed well: standards are why people trust appliances, and agents don't have an equivalent yet.",
+    "An interesting twist: agent-to-agent traffic was presented as a possible source of better detection, not only a new risk."
    ],
-   "why": "An agent holding credentials is an identity. If it isn't inventoried, it can't be reviewed, revoked or traced when something goes wrong. It's the orphaned service account problem at a much larger scale.",
+   "why": "Inventory and ownership of agents became one of the day's running threads. The audience forum raised agent visibility, and the closing panel came back to who owns an agent when something goes wrong.",
    "concepts": [
     "agentidentity",
     "leastpriv",
@@ -501,7 +431,6 @@ window.SECTOR.days[1]={
     "Grounded in real deployments and the risks seen in them.",
     "Aimed to give a blueprint for balancing innovation and control as agents become active participants in enterprise operations."
    ],
-   "ask": "Could we list every agent or automation that holds credentials in our environment, and who owns each one?",
    "links": [
     {
      "u": "https://cloudsecurityalliance.org/artifacts/securing-autonomous-ai-agents",
@@ -528,19 +457,7 @@ window.SECTOR.days[1]={
      "k": "Standard"
     }
    ],
-   "takeaway": "We need an actual identity and governance layer for agents, not another AI policy document.",
-   "identity": {
-    "intro": "Questions I'd want answered before any agent reaches production:",
-    "points": [
-     "What authenticates the agent? It should have its own credential, not a shared API key or a borrowed human login.",
-     "Whose authority does it act under: its own, a user's delegated authority, or both? Can the logs tell them apart?",
-     "What permissions does it get, and are they scoped to the task and time-bound?",
-     "Who owns it, and who approves changes to what it can reach?",
-     "How is it revoked, and how quickly does revocation take effect everywhere it has access?",
-     "Can every action be traced to the agent, the person who triggered it and the policy that allowed it?",
-     "How do downstream systems tell a person from an autonomous agent?"
-    ]
-   }
+   "takeaway": "The session's ask was for a real identity and governance layer for agents, not another AI policy document."
   },
   {
    "id": "s4",
@@ -573,11 +490,11 @@ window.SECTOR.days[1]={
     "The point wasn't that every attacker will follow that exact process. It was how little cost and human involvement it took."
    ],
    "learned": [
-    "The economics flip the patching race. If a full intrusion costs about as much as a laptop, attackers can afford to try everything, everywhere.",
+    "Deitch flipped the patching race: with this many critical vulnerabilities and minutes from discovery to exploitation, “find and patch everything immediately” stops being a workable plan.",
     "“Dark by default” is attack-surface reduction expressed through identity: an app isn't reachable at all until the user and device are verified.",
-    "Developer tooling and secrets were the RedWraith prize. Developer endpoints and CI credentials deserve production-grade protection."
+    "The most striking part of the RedWraith demo wasn't the technique. It was how little cost and human involvement it took to reach credentials and developer tooling."
    ],
-   "why": "When a full intrusion costs less than a laptop and starts with one prompt, attacker volume goes up and patch-first strategies fall further behind. Reducing what is reachable scales; patching faster doesn't.",
+   "why": "This was the second talk of the morning where the answer to faster attacks was “be harder to reach and smaller when hit” rather than “detect faster”, echoing Native's architecture-first argument.",
    "concepts": [
     "zerotrust",
     "attacksurface",
@@ -590,7 +507,6 @@ window.SECTOR.days[1]={
     "Where cloud visibility is strong, where blind spots remain, and how incident responsibility is shared with cloud and SaaS providers.",
     "Patterns for trustworthy automation in AI-era systems."
    ],
-   "ask": "What do we expose to the internet that doesn't need to be there?",
    "links": [
     {
      "u": "https://www.cisa.gov/zero-trust-maturity-model",
@@ -611,7 +527,7 @@ window.SECTOR.days[1]={
      "k": "Data"
     }
    ],
-   "takeaway": "“Dark by default” makes sense because assuming you can patch everything fast enough is becoming less realistic.",
+   "takeaway": "The case for “dark by default” rests on an assumption the speaker challenged directly: that anyone can patch fast enough.",
    "chain": {
     "steps": [
      "Reconnaissance",
@@ -637,14 +553,7 @@ window.SECTOR.days[1]={
      "l": "Human prompt needed to start it",
      "src": "presented"
     }
-   ],
-   "identity": {
-    "points": [
-     "Per-application access tied to verified user and device identity removes the network path an agent would otherwise scan.",
-     "Secrets in developer tooling were the end of the chain. Short-lived credentials and secret scanning shrink what's worth stealing.",
-     "Continuous verification matters more when one stolen session can be reused by automation at machine speed."
-    ]
-   }
+   ]
   },
   {
    "id": "s5",
@@ -676,11 +585,11 @@ window.SECTOR.days[1]={
     "Context bombs: injected content that made specific models stop rather than continue the attack. Models reacted differently, so it isn't universal."
    ],
    "learned": [
-    "An agent's thoroughness is exploitable. People skip things that look odd; agents enumerate everything, so a well-placed decoy gets touched early.",
-    "The ten-minute window only helps if the response is automated or pre-approved. A canary alert waiting in a queue arrives after the critical action.",
-    "Context bombs are promising but depend on the model. I'd treat them as a bonus layer, not a defence to rely on."
+    "An agent's thoroughness can be turned against it. People skip things that look odd; agents enumerate everything, so decoys get touched early.",
+    "The timing was the striking part: first canary hit within the first couple of minutes, and the first critical action about ten minutes later.",
+    "Context bombs were one of the more surprising ideas of the day, though they worked differently on different models, so they aren't universal."
    ],
-   "why": "Breadth is the AI attacker's strength and its weakness. A cautious human might skip an odd-looking resource; an agent enumerating everything trips the wire early, which turns cheap decoys into high-signal alerts.",
+   "why": "It was the most optimistic talk on Day 1. The other sessions described AI speed as an attacker advantage; Tracebit showed a case where the same behaviour gives defenders an early signal.",
    "concepts": [
     "canary",
     "deception",
@@ -692,7 +601,6 @@ window.SECTOR.days[1]={
     "How fast AI attackers move, and the response window that leaves defenders.",
     "Concrete ways to detect and disrupt AI attacks in the cloud."
    ],
-   "ask": "Where would a canary credential or decoy resource give us the earliest warning?",
    "links": [
     {
      "u": "https://agentic.tracebit.com/context-bombs/",
@@ -713,7 +621,7 @@ window.SECTOR.days[1]={
      "k": "Framework"
     }
    ],
-   "takeaway": "Deception becomes more valuable against AI attackers because they explore far more of the environment than a human normally would.",
+   "takeaway": "Deception looks more valuable against AI attackers, because they explore far more of an environment than a human normally would.",
    "stats": [
     {
      "v": "~13 min",
@@ -735,13 +643,7 @@ window.SECTOR.days[1]={
      "l": "Frontier models tested across autonomous AWS attack runs",
      "src": "program"
     }
-   ],
-   "identity": {
-    "points": [
-     "Canary credentials are fake identities: access keys or accounts with no legitimate use, so any attempt to authenticate with them is a high-confidence signal.",
-     "The attacks started from a low-privileged key. Removing long-lived keys and tightening role scope shortens the path to admin."
-    ]
-   }
+   ]
   },
   {
    "id": "s6",
@@ -774,12 +676,11 @@ window.SECTOR.days[1]={
     "The same economics help defenders: AI can triage alerts, investigate and cut noise, and fill part of the cloud and AI knowledge gap on short-staffed teams."
    ],
    "learned": [
-    "I disagreed with one point: the speaker suggested attackers have only improved slightly with AI. I think the numbers game still favours them. Defenders have to be right every time; an attacker needs one path.",
-    "Cheaper discovery changes the attacker's math more than the defender's: one success pays for thousands of failed attempts.",
-    "Vulnerability counts and alert volume become vanity metrics. Exploitability of exposed paths and time to fix are what matter.",
-    "If AI red teaming is cheap, an annual pentest is a snapshot of an environment that changes daily."
+    "I disagreed with one point: the speaker suggested attackers have only improved slightly with AI. My view is that the numbers game still favours them, since an attacker needs only one path.",
+    "Cheaper discovery changes the attacker's math the most: one success pays for thousands of failed attempts.",
+    "The economics cut both ways in the talk. AI that finds bugs cheaply can also triage alerts and fill knowledge gaps on short-staffed teams."
    ],
-   "why": "Many security decisions quietly assume attacks are expensive. If cost per attempt approaches zero, low-probability paths get found, and testing on an annual cycle leaves long gaps attackers can fill.",
+   "why": "It added the economic layer to the day. The RedWraith demo's roughly $500 price tag and Johansen's “$250 a month” line point to the same thing Berger described: the cost per attempt heading toward zero.",
    "concepts": [
     "continuousred",
     "attacksurface",
@@ -791,7 +692,6 @@ window.SECTOR.days[1]={
     "Which traditional metrics change in the AI era and which become more important.",
     "Continuous validation, prioritized remediation and enforcement based on runtime context as the way defenders regain the advantage."
    ],
-   "ask": "If we could run an AI red team against our environment every week, what would we point it at first?",
    "links": [
     {
      "u": "https://cloud.google.com/blog/topics/threat-intelligence/vulnerability-discovery-and-exploitation-trends-in-the-ai-era",
@@ -864,11 +764,11 @@ window.SECTOR.days[1]={
     "Avoid locking into one model; the technology changes too quickly. Once basic controls are in place, experiment with more autonomous security operations, with traditional controls containing failures."
    ],
    "learned": [
-    "Inventory came up again and again: shadow AI, agent registries and unknown models are the same visibility problem.",
-    "For a Canadian organization, where data and inference are processed is part of the AI risk decision, not just a procurement detail.",
-    "Autonomy in the SOC should be earned: start with triage and enrichment, and keep containment behind controls that can absorb a bad decision."
+    "Detection and response came out as the room's top priority, with governance the thing most likely to be overlooked.",
+    "Inventory came up again and again: shadow AI, agent registries and unknown models were all described as the same visibility problem.",
+    "The Canada-specific question about sending data and inference to US-based AI providers showed data residency was clearly on people's minds."
    ],
-   "why": "The forum's concerns line up with the morning talks: visibility into what AI is in use, and controls strong enough to contain an agent's mistakes. Data residency adds a regulatory angle that Canadian organizations can't ignore.",
+   "why": "The forum was a useful check on the morning talks. The concerns raised from the floor (data exposure, autonomous agents, shadow AI) matched the themes speakers had been presenting all day.",
    "concepts": [
     "shadowai",
     "agentidentity",
@@ -879,7 +779,6 @@ window.SECTOR.days[1]={
     "Questions many organizations still face: governance, identity, visibility, runtime protection, AI agents and operational risk.",
     "The biggest challenges and opportunities where AI and cloud security meet, from leaders dealing with them day to day."
    ],
-   "ask": "Do we know which AI tools and models people in our area are already using?",
    "links": [
     {
      "u": "https://orca.security/wp-content/uploads/2026/07/2026-State-of-AI-Security-Report.pdf",
@@ -900,13 +799,7 @@ window.SECTOR.days[1]={
      "k": "Framework"
     }
    ],
-   "takeaway": "Autonomous SOC capabilities are coming, but the controls underneath them need to mature first.",
-   "identity": {
-    "points": [
-     "Agent visibility is an identity problem. If agents use shared or human credentials, the logs can't show what an agent did versus a person.",
-     "Shadow AI often arrives through OAuth consent grants and personal API keys, so reviewing app consents is a practical place to start."
-    ]
-   }
+   "takeaway": "The room's view: more autonomous security operations are coming, once basic controls are in place to contain their failures."
   },
   {
    "id": "s8",
@@ -953,10 +846,10 @@ window.SECTOR.days[1]={
     "Organizations are making different decisions about autonomy, governance, runtime controls, model choice and how much human involvement stays in the loop."
    ],
    "learned": [
-    "The disagreement is the finding. With no consensus playbook, copying another organization's AI security program is risky.",
-    "The most important design decision is where people stay in the loop. That should be set by impact and reversibility, not by what's technically possible."
+    "The disagreement was the finding. The panel was built to show that there isn't a consensus AI security playbook yet.",
+    "Autonomy was a recurring point of difference: how much to allow, and how much human involvement stays in the loop."
    ],
-   "why": "Expect peers and vendors to give conflicting advice. Decisions about autonomy and human oversight need to fit our own risk appetite rather than be copied from someone else's program.",
+   "why": "After a morning of speakers who largely agreed on the problem, this panel showed how differently practitioners are answering it, across governance, runtime controls, model choice and human oversight.",
    "concepts": [
     "humanloop",
     "autonomoussoc",
@@ -968,7 +861,6 @@ window.SECTOR.days[1]={
     "Visibility gaps, pressure-testing failure modes, and an executive-approved strategy that defines shared incident responsibility in cloud terms.",
     "Promised outputs: a cloud control map for AI workloads, a multi-cloud resilience checklist, and a trust model that combines cloud IAM with behaviour, context and policy."
    ],
-   "ask": "Which AI-driven actions would we never allow without a human approving them?",
    "links": [
     {
      "u": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
@@ -988,13 +880,7 @@ window.SECTOR.days[1]={
      "d": "What CISOs need now as agent adoption outpaces governance.",
      "k": "Research"
     }
-   ],
-   "identity": {
-    "points": [
-     "The program's “modern trust model” combines cloud IAM with behaviour, context and policy, which amounts to continuous authorization for workloads and agents.",
-     "Shared incident responsibility in cloud terms starts with knowing which identities and keys are yours and which belong to the provider."
-    ]
-   }
+   ]
   },
   {
    "id": "s9",
@@ -1019,17 +905,17 @@ window.SECTOR.days[1]={
      "Staff Solutions Engineer, Wiz"
     ]
    ],
-   "summary": "Threat intelligence only helps leadership when it's tied to our own exposure.",
+   "summary": "Threat intelligence only helps leadership when it's tied to an organization's own exposure.",
    "covered": [
     "Taking nation-state techniques and translating them into something executives can use to make decisions.",
     "Threat intelligence easily becomes a list of techniques with no clear connection to business risk.",
     "The real challenge is what those techniques mean for an organization's own exposure, priorities and investment decisions."
    ],
    "learned": [
-    "Executives don't need a technique list. They need to see which chains reach the most important assets, and which single fix breaks the most chains.",
-    "Graphing identities, permissions and data flows turns threat intelligence into a prioritized fix list."
+    "Betchaku's starting point was that threat intelligence easily becomes a list of techniques with no clear connection to business risk.",
+    "The approach was to map techniques like identity chaining, living off the cloud and covert egress onto a specific environment, so it's clear which chains reach what."
    ],
-   "why": "This ties back to the opening keynote. If nation-state techniques are now available to anyone, leaders need to see which of them actually reach our critical assets, not a generic threat list.",
+   "why": "It closed a loop with the opening keynote. If nation-state techniques are now available to anyone, the next question is how to show which of them actually matter to the people making decisions.",
    "concepts": [
     "attackpath",
     "identitychain",
@@ -1041,7 +927,6 @@ window.SECTOR.days[1]={
     "A method for mapping techniques such as identity chaining, living off the cloud and covert egress into analysis a security team can act on.",
     "A way to prioritize the fixes that break real attack chains, with measurable certainty."
    ],
-   "ask": "Could we show leadership the attack path from an exposed system to our most important data?",
    "links": [
     {
      "u": "https://attack.mitre.org/matrices/enterprise/cloud/",
@@ -1067,13 +952,7 @@ window.SECTOR.days[1]={
      "d": "How runtime data changes which attack paths are real.",
      "k": "Vendor"
     }
-   ],
-   "identity": {
-    "points": [
-     "Identity chaining is the backbone of most cloud attack paths: each hop is a credential or role that grants the next.",
-     "Mapping who can assume what, and from where, is the identity team's contribution to attack-path analysis."
-    ]
-   }
+   ]
   },
   {
    "id": "s10",
@@ -1114,10 +993,10 @@ window.SECTOR.days[1]={
     "AI systems need clear ownership and governance before autonomy scales beyond what people can realistically supervise."
    ],
    "learned": [
-    "If nobody answers the ownership question beforehand, it gets answered during the incident, which is the worst time.",
-    "AI systems degrade and drift rather than crash, so monitoring has to watch behaviour over time, not just uptime."
+    "The ownership question had no easy answer: the model builder, the deploying team, the business owner, the security team and the vendor were all candidates.",
+    "AI systems tend to degrade and drift rather than crash, which makes failures harder to notice."
    ],
-   "why": "Without a named owner, nobody is accountable for reviewing an agent's permissions, responding when it misbehaves, or deciding to switch it off. That gap is where incidents grow.",
+   "why": "It was a fitting close. Agent ownership had come up in the agent identity talk and the audience forum, and this panel ended the day on it as an open question.",
    "concepts": [
     "accountability",
     "drift",
@@ -1129,7 +1008,6 @@ window.SECTOR.days[1]={
     "A governance blueprint covering model ownership, decision rights and accountability, treating trust as an operational outcome.",
     "Practical guidance: continuous monitoring for drift and misuse, red teaming, safety cases, and incident response that keeps autonomy in line with risk."
    ],
-   "ask": "For each AI system we run, is there one named person who can turn it off?",
    "links": [
     {
      "u": "https://www.nist.gov/itl/ai-risk-management-framework",
@@ -1150,13 +1028,7 @@ window.SECTOR.days[1]={
      "k": "Guidance"
     }
    ],
-   "takeaway": "“Who owns the AI?” isn't just a governance question. It becomes a security question as soon as the system can make decisions and take actions on its own.",
-   "identity": {
-    "points": [
-     "Every autonomous system needs an accountable owner recorded alongside its identity, the same way service accounts should.",
-     "Revocation is the real test of ownership: who can switch it off, and how quickly does that take effect everywhere?"
-    ]
-   }
+   "takeaway": "“Who owns the AI?” stops being only a governance question once a system can make decisions and take actions on its own."
   }
  ],
  "agenda": [
@@ -1373,182 +1245,180 @@ window.SECTOR.days[1]={
     "cat": "governance"
    }
   ]
- }
-};
-/* Speaker organisations: name -> {co, site, loc}. LinkedIn profiles live in "linkedin" above. */
-window.SECTOR.days[1].people={
- "Matt Johansen": {
-  "co": "Vulnerable U",
-  "loc": "Austin, TX"
  },
- "Gal Ordo": {
-  "co": "Native",
-  "site": "https://native.security"
+ "people": {
+  "Matt Johansen": {
+   "co": "Vulnerable U",
+   "loc": "Austin, TX"
+  },
+  "Gal Ordo": {
+   "co": "Native",
+   "site": "https://native.security"
+  },
+  "Eric Broda": {
+   "co": "Broda Group Software"
+  },
+  "Rachel Clark": {
+   "co": "SKADI Cyber Defense"
+  },
+  "Brian Deitch": {
+   "co": "Zscaler",
+   "site": "https://www.zscaler.com"
+  },
+  "Alessandro Brucato": {
+   "co": "Tracebit",
+   "site": "https://tracebit.com"
+  },
+  "Yigael Berger": {
+   "co": "Sweet Security",
+   "site": "https://www.sweet.security"
+  },
+  "Helen Oakley": {
+   "co": "AI security"
+  },
+  "Francis Odum": {
+   "co": "Software Analyst Cyber Research",
+   "site": "https://substack.com/@softwareanalyst"
+  },
+  "Ian Paterson": {
+   "co": "Plurilock",
+   "site": "https://plurilock.com"
+  },
+  "Guillaume Ross": {
+   "co": "Caffeine Security",
+   "loc": "Montreal, QC"
+  },
+  "Kunal Modasiya": {
+   "co": "Qualys",
+   "site": "https://www.qualys.com"
+  },
+  "Jay Thurston": {
+   "co": "Thales",
+   "site": "https://www.thalesgroup.com"
+  },
+  "Fernando Tucci": {
+   "co": "Trend Micro",
+   "site": "https://www.trendmicro.com"
+  },
+  "Ryoji Betchaku": {
+   "co": "Wiz",
+   "site": "https://www.wiz.io",
+   "loc": "Canada"
+  },
+  "Ali Dehghantanha": {
+   "co": "University of Guelph",
+   "site": "https://www.uoguelph.ca",
+   "loc": "Guelph, ON"
+  },
+  "Iain Paterson": {
+   "co": "WELL Health Technologies",
+   "site": "https://well.company"
+  },
+  "Olivera Zatezalo": {
+   "co": "Ontario Power Generation",
+   "site": "https://www.opg.com"
+  }
  },
- "Eric Broda": {
-  "co": "Broda Group Software"
- },
- "Rachel Clark": {
-  "co": "SKADI Cyber Defense"
- },
- "Brian Deitch": {
-  "co": "Zscaler",
-  "site": "https://www.zscaler.com"
- },
- "Alessandro Brucato": {
-  "co": "Tracebit",
-  "site": "https://tracebit.com"
- },
- "Yigael Berger": {
-  "co": "Sweet Security",
-  "site": "https://www.sweet.security"
- },
- "Helen Oakley": {
-  "co": "AI security"
- },
- "Francis Odum": {
-  "co": "Software Analyst Cyber Research",
-  "site": "https://substack.com/@softwareanalyst"
- },
- "Ian Paterson": {
-  "co": "Plurilock",
-  "site": "https://plurilock.com"
- },
- "Guillaume Ross": {
-  "co": "Caffeine Security",
-  "loc": "Montreal, QC"
- },
- "Kunal Modasiya": {
-  "co": "Qualys",
-  "site": "https://www.qualys.com"
- },
- "Jay Thurston": {
-  "co": "Thales",
-  "site": "https://www.thalesgroup.com"
- },
- "Fernando Tucci": {
-  "co": "Trend Micro",
-  "site": "https://www.trendmicro.com"
- },
- "Ryoji Betchaku": {
-  "co": "Wiz",
-  "site": "https://www.wiz.io",
-  "loc": "Canada"
- },
- "Ali Dehghantanha": {
-  "co": "University of Guelph",
-  "site": "https://www.uoguelph.ca",
-  "loc": "Guelph, ON"
- },
- "Iain Paterson": {
-  "co": "WELL Health Technologies",
-  "site": "https://well.company"
- },
- "Olivera Zatezalo": {
-  "co": "Ontario Power Generation",
-  "site": "https://www.opg.com"
- }
-};
-/* Audio recaps (MP3s in this folder), generated with the open-source Kokoro voice model. */
-window.SECTOR.days[1].audio=[
- {
-  "key": "recap",
-  "label": "Quick recap",
-  "note": "About 2 min · one narrator",
-  "src": "recap.mp3",
-  "dur": 103,
-  "transcript": [
-   "This is the Day 1 recap from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit, and the theme was simple: AI changed the speed of the attack.",
-   "The opening keynote, from Matt Johansen of Vulnerable U, framed it with a contrast. Capabilities that once needed a government budget are now available to almost anyone. His line summed up the day: you are not defending against China, you are defending against 250 dollars a month.",
-   "The cloud sessions made the same point. Speakers showed that the techniques themselves weren't new. What changed is how quickly automated tools can string them together, often faster than a team can read the first alert. That's why the advice kept returning to prevention and reducing blast radius, not just detection.",
-   "There was good news too. Tracebit showed that deception works unusually well against automated attackers. Because they explore everything, decoy credentials and canaries get touched early, giving defenders a reliable warning.",
-   "The other big thread was identity for AI agents. Organizations may soon run thousands of them, often without a reliable inventory. The panels kept asking the same questions: what is each agent, what can it reach, who owns it, and how do you switch it off?",
-   "Colin's takeaway from Day 1: AI isn't inventing a new class of problems. It's making the old ones faster and cheaper. That puts the weight back on fundamentals: segmentation, least privilege, strong identity and a smaller blast radius.",
-   "The full notes, sources and a quiz are on the Day 1 page."
-  ]
- },
- {
-  "key": "deep",
-  "label": "Deep dive",
-  "note": "About 3 min · session by session",
-  "src": "deep-dive.mp3",
-  "dur": 195,
-  "transcript": [
-   "This is the Day 1 deep dive from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit. We'll go through it session by session, then finish with the main takeaway.",
-   "Matt Johansen of Vulnerable U opened the day. His argument was that the capabilities we associate with nation-state attackers are getting cheap and easy to access. Budget, specialist teams and custom tooling used to separate governments from everyone else. That gap is closing, so intent and persistence matter more than money. Colin's note: patch cycles measured in weeks look very different when exploitation can follow disclosure within hours.",
-   "Gal Ordo of Native argued that AI security is really cloud security. Automated attacks now connect familiar weaknesses faster than many detection processes can respond. His answer wasn't another AI-specific product. It was architecture: separate production from everything else, reduce internet exposure, enforce strong identity boundaries, and block destructive automated actions by default.",
-   "Eric Broda and Rachel Clark focused on agents as identities. Organizations may soon run thousands or even millions of agents, with no reliable way to inventory them. Their analogy was a toaster: you trust it because of standards. Agents need the same thing, a consistent way to define what each one may do, who owns it, and how it's switched off.",
-   "Brian Deitch of Zscaler made the case for being dark by default. You will never patch fast enough, so make applications unreachable until the user and device are verified, segment what matters, and keep the blast radius small.",
-   "Alessandro Brucato of Tracebit brought the most encouraging result of the day. Automated attackers explore everything, so decoy credentials and canary resources get touched early. In their testing, attacks were detected before the first critical action in nearly every run.",
-   "Yigael Berger of Sweet Security looked at economics. When finding a weakness costs almost nothing, testing becomes continuous for both attackers and defenders, and the same economics can help defenders triage alerts and fill skills gaps.",
-   "The afternoon panels were about priorities and ownership. The audience forum ranked detection and response as the top priority for the year, with governance the most likely to be overlooked. The 2027 playbook panel was built for disagreement, and showed there's no settled AI security playbook to copy yet. Ryoji Betchaku of Wiz showed how to turn threat intelligence into something executives can act on, by tying it to an organization's own exposure. And the closing panel asked who actually owns an AI system when it acts on its own.",
-   "Colin's takeaway from Day 1: AI isn't inventing a new class of attacks. It's making familiar ones faster, cheaper and easier to chain together, and the conversations kept coming back to fundamentals, agent identity and ownership.",
-   "That's the Day 1 deep dive. The full notes, sources and quiz are on the Day 1 page."
-  ]
- },
- {
-  "key": "chat",
-  "label": "Conversation",
-  "note": "About 2 min · two voices",
-  "src": "conversation.mp3",
-  "dur": 121,
-  "transcript": [
-   [
-    1,
-    "Welcome to the SecTor 2026 recap, built from Colin Johnstone's conference notes. This is Day 1, the AI x Cloud Security Summit."
-   ],
-   [
-    2,
-    "And the theme fits in one sentence: AI changed the speed of the attack."
-   ],
-   [
-    1,
-    "What does that actually mean, though? Is AI inventing new kinds of attacks?"
-   ],
-   [
-    2,
-    "Mostly not. Speaker after speaker made the same point. The weaknesses are familiar. What's new is how quickly automated tools can string them together, often faster than a team can read the first alert."
-   ],
-   [
-    1,
-    "The opening keynote had a great line about that."
-   ],
-   [
-    2,
-    "Matt Johansen of Vulnerable U said: you are not defending against China, you are defending against 250 dollars a month. Capabilities that used to need a government budget are now within almost anyone's reach."
-   ],
-   [
-    1,
-    "So if attackers are faster, what did people say actually works?"
-   ],
-   [
-    2,
-    "The fundamentals, honestly. Segmentation, least privilege, strong identity and a smaller blast radius. Zscaler's talk called it being dark by default: apps aren't reachable until the user and device are verified."
-   ],
-   [
-    1,
-    "There was some good news too, right?"
-   ],
-   [
-    2,
-    "Deception. Tracebit showed that automated attackers explore everything, so decoy credentials and canaries get touched early. It's one of the few areas where AI attackers make defenders' lives easier."
-   ],
-   [
-    1,
-    "And the big open question was agents themselves."
-   ],
-   [
-    2,
-    "Exactly. Organizations may soon run thousands of AI agents. Every one needs an identity, an owner, scoped access and an off switch. And someone has to own the outcome when one acts on its own."
-   ],
-   [
-    1,
-    "Colin's bottom line for Day 1?"
-   ],
-   [
-    2,
-    "AI isn't creating a new class of problems. It's compressing the time, cost and expertise needed to exploit the ones we already have. The full notes and a quiz are on the Day 1 page."
+ "audio": [
+  {
+   "key": "recap",
+   "label": "Quick recap",
+   "note": "About 2 min · one narrator",
+   "src": "recap.mp3?v=20261008j",
+   "dur": 99,
+   "transcript": [
+    "This is the Day 1 recap from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit, and the theme was simple: AI changed the speed of the attack.",
+    "The opening keynote, from Matt Johansen of Vulnerable U, framed it with a contrast. Capabilities that once needed a government budget are now available to almost anyone. His line summed up the day: you are not defending against China, you are defending against 250 dollars a month.",
+    "The cloud sessions made the same point. Speakers showed that the techniques themselves weren't new. What changed is how quickly automated tools can string them together, often faster than a team can read the first alert. Several speakers answered with architecture rather than faster detection: less exposure and a smaller blast radius.",
+    "There was good news too. Tracebit showed that deception works unusually well against automated attackers. Because they explore everything, decoy credentials and canaries get touched early.",
+    "The other big thread was identity for AI agents. Organizations may soon run thousands of them, often without a reliable inventory. The panels kept asking the same questions: what is each agent, what can it reach, who owns it, and how do you switch it off?",
+    "Colin's takeaway from Day 1: AI isn't inventing a new class of problems. It's making the old ones faster and cheaper, and the conversations kept coming back to fundamentals, agent identity and ownership.",
+    "The full notes, sources and a quiz are on the Day 1 page."
    ]
-  ]
- }
-];
+  },
+  {
+   "key": "deep",
+   "label": "Deep dive",
+   "note": "About 3 min · session by session",
+   "src": "deep-dive.mp3?v=20261008j",
+   "dur": 195,
+   "transcript": [
+    "This is the Day 1 deep dive from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit. We'll go through it session by session, then finish with the main takeaway.",
+    "Matt Johansen of Vulnerable U opened the day. His argument was that the capabilities we associate with nation-state attackers are getting cheap and easy to access. Budget, specialist teams and custom tooling used to separate governments from everyone else. That gap is closing, so intent and persistence matter more than money. He also described the vulnerability lifecycle compressing, with bugs found, exploited and chained much faster than before.",
+    "Gal Ordo of Native argued that AI security is really cloud security. Automated attacks now connect familiar weaknesses faster than many detection processes can respond. His answer wasn't another AI-specific product. It was architecture: separate production from everything else, reduce internet exposure, enforce strong identity boundaries, and block destructive automated actions by default.",
+    "Eric Broda and Rachel Clark focused on agents as identities. Organizations may soon run thousands or even millions of agents, with no reliable way to inventory them. Their analogy was a toaster: you trust it because of standards. Agents need the same thing, a consistent way to define what each one may do, who owns it, and how it's switched off.",
+    "Brian Deitch of Zscaler made the case for being dark by default. You will never patch fast enough, so make applications unreachable until the user and device are verified, segment what matters, and keep the blast radius small.",
+    "Alessandro Brucato of Tracebit brought the most encouraging result of the day. Automated attackers explore everything, so decoy credentials and canary resources get touched early. In their testing, attacks were detected before the first critical action in nearly every run.",
+    "Yigael Berger of Sweet Security looked at economics. When finding a weakness costs almost nothing, testing becomes continuous for both attackers and defenders, and the same economics can help defenders triage alerts and fill skills gaps.",
+    "The afternoon panels were about priorities and ownership. The audience forum ranked detection and response as the top priority for the year, with governance the most likely to be overlooked. The 2027 playbook panel was built for disagreement, and showed there's no settled AI security playbook to copy yet. Ryoji Betchaku of Wiz showed how to turn threat intelligence into something executives can act on, by tying it to an organization's own exposure. And the closing panel asked who actually owns an AI system when it acts on its own.",
+    "Colin's takeaway from Day 1: AI isn't inventing a new class of attacks. It's making familiar ones faster, cheaper and easier to chain together, and the conversations kept coming back to fundamentals, agent identity and ownership.",
+    "That's the Day 1 deep dive. The full notes, sources and quiz are on the Day 1 page."
+   ]
+  },
+  {
+   "key": "chat",
+   "label": "Conversation",
+   "note": "About 2 min · two voices",
+   "src": "conversation.mp3?v=20261008j",
+   "dur": 118,
+   "transcript": [
+    [
+     1,
+     "Welcome to the SecTor 2026 recap, built from Colin Johnstone's conference notes. This is Day 1, the AI x Cloud Security Summit."
+    ],
+    [
+     2,
+     "And the theme fits in one sentence: AI changed the speed of the attack."
+    ],
+    [
+     1,
+     "What does that actually mean, though? Is AI inventing new kinds of attacks?"
+    ],
+    [
+     2,
+     "Mostly not. Speaker after speaker made the same point. The weaknesses are familiar. What's new is how quickly automated tools can string them together, often faster than a team can read the first alert."
+    ],
+    [
+     1,
+     "The opening keynote had a great line about that."
+    ],
+    [
+     2,
+     "Matt Johansen of Vulnerable U said: you are not defending against China, you are defending against 250 dollars a month. Capabilities that used to need a government budget are now within almost anyone's reach."
+    ],
+    [
+     1,
+     "So if attackers are faster, what did people say actually works?"
+    ],
+    [
+     2,
+     "The fundamentals, honestly. Segmentation, least privilege, strong identity and a smaller blast radius. Zscaler's talk called it being dark by default: apps aren't reachable until the user and device are verified."
+    ],
+    [
+     1,
+     "There was some good news too, right?"
+    ],
+    [
+     2,
+     "Deception. Tracebit showed that automated attackers explore everything, so decoy credentials and canaries get touched early. It's one of the few areas where AI attackers make defenders' lives easier."
+    ],
+    [
+     1,
+     "And the big open question was agents themselves."
+    ],
+    [
+     2,
+     "Exactly. Organizations may soon run thousands of AI agents, and the panels kept asking what each one is, what it can reach, who owns it and how it gets switched off."
+    ],
+    [
+     1,
+     "Colin's bottom line for Day 1?"
+    ],
+    [
+     2,
+     "AI isn't creating a new class of problems. It's compressing the time, cost and expertise needed to exploit the ones we already have. The full notes and a quiz are on the Day 1 page."
+    ]
+   ]
+  }
+ ]
+};

@@ -8,10 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Public+Sans:wght@400..700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="../assets/base.css?v=20261008i">
-<link rel="stylesheet" href="../assets/site.css?v=20261008i">
-<link rel="stylesheet" href="../assets/report.css?v=20261008i">
-<link rel="stylesheet" href="../assets/styles.css?v=20261008i">
+<link rel="stylesheet" href="../assets/base.css?v=20261008j">
+<link rel="stylesheet" href="../assets/site.css?v=20261008j">
+<link rel="stylesheet" href="../assets/report.css?v=20261008j">
+<link rel="stylesheet" href="../assets/styles.css?v=20261008j">
 <script>try{var s=JSON.parse(localStorage.getItem("sector.style")),t=JSON.parse(localStorage.getItem("sector.theme"));if(s!=="report")document.documentElement.dataset.style=s||"terminal";if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400..800;1,400&display=swap">
 </head>
@@ -47,19 +47,19 @@
   <span>Want to study first? Read the <a href="../brief/">executive brief</a> or the <a href="../glossary/">glossary</a>.</span>
 </footer>
 </main>
-<script src="../assets/core.js?v=20261008i"></script>
-<script src="../assets/extras.js?v=20261008i"></script>
-<script src="../assets/glossary.js?v=20261008i"></script>
-<script src="../day-1/data.js?v=20261008i"></script>
-<script src="../day-2/data.js?v=20261008i"></script>
-<script src="../day-3/data.js?v=20261008i"></script>
+<script src="../assets/core.js?v=20261008j"></script>
+<script src="../assets/extras.js?v=20261008j"></script>
+<script src="../assets/glossary.js?v=20261008j"></script>
+<script src="../day-1/data.js?v=20261008j"></script>
+<script src="../day-2/data.js?v=20261008j"></script>
+<script src="../day-3/data.js?v=20261008j"></script>
 <script>
 (function(){
 /* Extra questions written for the challenge. "s" is day:session. */
 const EXTRA=[
  {s:"1:s2",cat:"identity",q:"In the Zealot attack chain shown on Day 1, what did the SSRF step hand the agent?",
   o:["Cloud credentials from the instance metadata service","A reverse shell on a developer's own workstation","Direct read access to the production database","An MFA push it could approve on the user's behalf"],a:0,
-  e:"SSRF against the metadata service produced credentials. Enumeration, privilege escalation and exfiltration followed from there, which is why IMDSv2 and tightly scoped instance roles matter."},
+  e:"SSRF against the metadata service produced credentials. Enumeration, privilege escalation and exfiltration followed from there, as walked through in the session."},
  {s:"1:s3",cat:"identity",q:"Alongside unique, traceable identities for each agent, what did the autonomous agents session say had to exist?",
   o:["A well-defined agent registry with clear ownership","A separate cloud tenant for every deployed agent","Human approval for every agent-to-agent call","Short-lived API keys that each agent rotates itself"],a:0,
   e:"You can't scope, monitor or revoke what you haven't inventoried. The registry and an accountable owner come first."},

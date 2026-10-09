@@ -34,7 +34,7 @@ window.SECTOR.days[3]={
     "icon": "scale",
     "eyebrow": "Authority",
     "title": "Scope must survive every handoff",
-    "text": "Agents turn requests into plans and plans into changes. Check each change against what was actually asked for."
+    "text": "Agents turn requests into plans and plans into changes. The keynote's answer: check each change against what was actually asked for."
    },
    {
     "icon": "layers",
@@ -87,16 +87,16 @@ window.SECTOR.days[3]={
  },
  "sessionsHead": {
   "title": "The five sessions",
-  "lead": "The keynote and briefings I'm highlighting from Day 3. Each card separates what was presented from my own analysis, with statistics and their sources, an Identity Lens where it's relevant, and primary resources. Hover a concept to see its definition."
+  "lead": "The keynote and briefings I'm highlighting from Day 3. Each card separates what was presented from my own observations, with statistics and their sources and primary resources. Hover a concept to see its definition."
  },
  "takeaways": {
   "title": "Eight things to remember",
-  "lead": "What I'm taking away from Day 3, with the sessions each idea came from.",
+  "lead": "What stood out from Day 3, with the sessions each idea came from.",
   "items": [
    {
     "icon": "scale",
-    "title": "Treat agent plans as requests, not permissions",
-    "text": "The model can suggest an action; something else has to decide whether it's allowed, at the point where it becomes a change.",
+    "title": "Agent plans are requests, not permissions",
+    "text": "In the keynote, the model can suggest an action, but something else has to decide whether it's allowed, at the point where it becomes a change.",
     "sessions": [
      "k3"
     ]
@@ -104,7 +104,7 @@ window.SECTOR.days[3]={
    {
     "icon": "key",
     "title": "Scope has to survive every handoff",
-    "text": "Narrow tasks pick up broad reach when a service identity does the work. Carry the requester's limits all the way to the action.",
+    "text": "A narrow task picked up broad reach when a service identity did the work. Oakley's point: the requester's limits have to carry all the way to the action.",
     "sessions": [
      "k3"
     ]
@@ -112,7 +112,7 @@ window.SECTOR.days[3]={
    {
     "icon": "clock",
     "title": "Revoke the effect, not just the access",
-    "text": "An expiring credential means nothing if the door it opened stays open. Time-boxed access needs a check that the change is undone.",
+    "text": "An expiring credential means little if the door it opened stays open. It was the keynote's most memorable line.",
     "sessions": [
      "k3"
     ]
@@ -120,7 +120,7 @@ window.SECTOR.days[3]={
    {
     "icon": "users",
     "title": "Agents make purple teaming affordable",
-    "text": "Red and blue agents in an open-source lab make the attack, detect and fix loop cheap enough to run regularly. Close the loop by re-running the attack.",
+    "text": "Red and blue agents in an open-source lab make the attack, detect and fix loop cheap enough to run regularly, closed by re-running the attack.",
     "sessions": [
      "purple"
     ]
@@ -128,7 +128,7 @@ window.SECTOR.days[3]={
    {
     "icon": "check",
     "title": "Verify what agents claim",
-    "text": "False claims of success and unsupported conclusions showed up on both red and blue agents. Check the outcome, not the summary.",
+    "text": "False claims of success and unsupported conclusions showed up on both red and blue agents, and the keynote warned against taking an agent's summary at face value.",
     "sessions": [
      "purple",
      "k3"
@@ -137,7 +137,7 @@ window.SECTOR.days[3]={
    {
     "icon": "target",
     "title": "Shared passwords turn one bug into a fleet",
-    "text": "One SSH password across every PackBot made device identity meaningless. Long-lived devices need per-device credentials and authenticated control traffic.",
+    "text": "One SSH password across every PackBot made device identity meaningless, and the radio link was doing most of the security work.",
     "sessions": [
      "bot"
     ]
@@ -145,7 +145,7 @@ window.SECTOR.days[3]={
    {
     "icon": "layers",
     "title": "Tech debt is a security debt",
-    "text": "Software frozen at purchase and cryptography chosen years ago both come due. Plan upgrade paths and crypto agility from day one.",
+    "text": "Software frozen at purchase and cryptography chosen years ago both come due. Both talks pointed to upgrade paths and crypto agility.",
     "sessions": [
      "bot",
      "pq"
@@ -153,8 +153,8 @@ window.SECTOR.days[3]={
    },
    {
     "icon": "coins",
-    "title": "Don't count on takedowns",
-    "text": "Ransomware portals on a blockchain can't be seized like a server. Response plans should assume the extortion infrastructure stays online.",
+    "title": "Takedowns aren't guaranteed",
+    "text": "Ransomware portals on a blockchain can't be seized like a server, so the session focused on recognizing and tracking that infrastructure instead.",
     "sessions": [
      "cry0"
     ]
@@ -164,67 +164,6 @@ window.SECTOR.days[3]={
    "text": "If you have a key that expires and opens the door, but when the key expires the door is still open, then the problem is never really solved.",
    "by": "Helen Oakley, keynote"
   }
- },
- "enterprise": {
-  "lead": "How I'd translate Day 3 into work for a security program. My own analysis, grounded in the sessions linked under each item.",
-  "items": [
-   {
-    "title": "Put a policy check between agent plans and production changes",
-    "text": "Compare each proposed change with the original request and block anything out of scope before it runs, not after.",
-    "sessions": [
-     "k3"
-    ]
-   },
-   {
-    "title": "Give agent workflows task-scoped, expiring authority",
-    "text": "Replace broad service accounts with credentials scoped to the task and its time window, and confirm the resulting changes are reversed when it ends.",
-    "sessions": [
-     "k3"
-    ]
-   },
-   {
-    "title": "Roll out agents on a 30/60/90-day plan",
-    "text": "Contain dangerous paths first, review approved and denied actions against what really changed, then expand only with evidence.",
-    "sessions": [
-     "k3"
-    ]
-   },
-   {
-    "title": "Ask vendors how their agents are bounded",
-    "text": "Add questions to third-party reviews: what can the vendor's agent change, who approves out-of-scope actions, and where does our data go?",
-    "sessions": [
-     "k3"
-    ]
-   },
-   {
-    "title": "Stand up an agentic purple team lab",
-    "text": "Use an open-source range to watch AI attackers against our detection stack, and re-run each attack to prove fixes work.",
-    "sessions": [
-     "purple"
-    ]
-   },
-   {
-    "title": "Build a cryptographic inventory and tier data by shelf life",
-    "text": "Find where RSA and elliptic-curve cryptography run, including vendor products and identity systems, and prioritize data that must stay secret longest.",
-    "sessions": [
-     "pq"
-    ]
-   },
-   {
-    "title": "Audit long-lived devices for shared credentials",
-    "text": "OT, IoT and specialized equipment: look for fleet-wide passwords, unauthenticated control protocols and software with no upgrade path.",
-    "sessions": [
-     "bot"
-    ]
-   },
-   {
-    "title": "Update ransomware playbooks for unseizable infrastructure",
-    "text": "Assume the attacker's portal stays online, preserve canister and gateway identifiers as evidence, and lean on backups and response readiness.",
-    "sessions": [
-     "cry0"
-    ]
-   }
-  ]
  },
  "footer": {
   "title": "SecTor 2026 · Day 3 · Keynote & Briefings",
@@ -313,19 +252,12 @@ window.SECTOR.days[3]={
     }
    ],
    "learned": [
-    "The failure in the Alice story isn't the model, it's the executor. The place to enforce scope is the point where a plan becomes a production change.",
-    "Service identities quietly become the agent's authority. If an agent runs as a broadly scoped service account, every request it handles inherits that reach.",
-    "“Temporary” has to apply to the effect, not just the credential. Expiring Alice's token does nothing if the firewall rule it created stays open.",
-    "The 60-day step is the one most likely to be skipped: checking what actually changed rather than trusting the agent's summary of what it did."
+    "The failure in the Alice story wasn't the model, it was the executor: nothing checked the plan against the request at the point where it became a change.",
+    "The purchase-order analogy made it click. A manager approves one laptop, and an order for 50 goes back for approval; Oakley's point was that agents need the same kind of check.",
+    "Her line that “temporary” has to apply to the effect, not just the credential, was the line of the day for me.",
+    "Her 60-day step, not taking the agent's final summary at face value, connected to the purple teaming talk later that morning."
    ],
-   "why": "Every organization rolling out agents will hit the Alice problem: a helpful agent with a broad service identity making a change nobody asked for. It doesn't need an attacker, so it won't show up as an incident until something is exposed.",
-   "identity": {
-    "points": [
-     "The requester's authority and the agent's authority are different things. Carry the requester's scope (who, what, how long) through to the action instead of letting the service account decide.",
-     "Just-in-time access should be revoked together with its effects. Pair every time-boxed grant with a check that the resources it opened are closed again.",
-     "Agent service identities need the same least-privilege review as admin accounts: an identity that can edit network rules can make anything public."
-    ]
-   },
+   "why": "It gave the conference its closing question. Day 1 asked who owns an agent; Oakley showed what happens when nothing checks what an agent is authorized to cause, with no attacker involved at all.",
    "concepts": [
     "scopedauth",
     "delegation",
@@ -342,8 +274,7 @@ window.SECTOR.days[3]={
     "The question is no longer simply who or what has access, but who is allowed to decide, delegate and act, and how far that authority should extend.",
     "A framework for finding where authority is created, transferred and amplified, and for designing controls that constrain delegation, separate reasoning from execution, preserve provenance and enforce policy at the point of action."
    ],
-   "takeaway": "Treat what an agent proposes as a request, not a permission. Check it against what was actually asked for, at the point of action.",
-   "ask": "If one of our agents ran as its service account today, what's the biggest change it could make without anyone approving it?",
+   "takeaway": "Oakley's core idea: what an agent proposes is a request, not a permission, and it has to be checked against what was actually asked for at the point of action.",
    "links": [
     {
      "u": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026",
@@ -433,17 +364,12 @@ window.SECTOR.days[3]={
     }
    ],
    "learned": [
-    "The value isn't that agents are great attackers; it's that they make the full attack-detect-fix loop cheap enough to run regularly.",
-    "Blue agents are the weaker side today. Most of the hard problems listed (missing context, delayed telemetry, unsupported conclusions) are about our environments, not the models.",
-    "False claims of success show up on both sides, which is the same lesson as Day 2's pentest pipeline: verify the outcome independently."
+    "Edwards was refreshingly candid: AI purple teaming is cheaper and not as good as the real thing, but far more accessible.",
+    "Blue agents came across as the weaker side today, and he asked out loud where all the blue-agent research is.",
+    "False claims of success on both sides echoed Day 2's pentest pipeline: verify the outcome, not the summary.",
+    "His encouragement stood out: the distance between a PhD researcher and everyone else is very small right now, so it's easy to contribute."
    ],
-   "why": "Most organizations run red team engagements rarely and purple team exercises almost never. An open-source lab with agents on both sides gives security teams a way to practise detection and response continuously, and to see how AI attackers actually behave before meeting one.",
-   "identity": {
-    "points": [
-     "The MCP boundary decides what each agent can reach. Give red and blue agents separate, scoped credentials so a misbehaving agent can't touch the other side's tooling.",
-     "Scope drift is an authority problem: write the engagement scope into what the agent is permitted to do, not only into its prompt."
-    ]
-   },
+   "why": "It was the hands-on counterpart to the keynote. Oakley talked about bounding what agents can do; Edwards showed a lab where people set the boundaries and agents work inside them, with scope drift as one of the main problems.",
    "concepts": [
     "purpleteam",
     "adversaryemu",
@@ -458,8 +384,7 @@ window.SECTOR.days[3]={
     "APTL (Advanced Purple Team Lab) brings up a fictional company (Active Directory, web, database, file share, DNS, mail), a Kali red-team box, a malware-analysis container and a full SOC stack (Wazuh, Suricata, MISP, TheHive and Cortex, Shuffle), with MCP servers giving agents access to every layer.",
     "A live agent-on-agent engagement from initial access through detection, containment and case closure; how the MCP boundary shapes credentials and blast radius; the telemetry archive for comparing runs; and the honest limits of the lab."
    ],
-   "takeaway": "Agents finally make purple teaming affordable. Start small in a lab, keep a human setting the boundaries, and always re-run the attack to prove the fix works.",
-   "ask": "When did we last re-run an attack to prove a detection or fix actually worked?",
+   "takeaway": "AI makes purple teaming accessible, with people setting the boundaries and every fix proven by running the attack again.",
    "links": [
     {
      "u": "https://github.com/Brad-Edwards/aptl",
@@ -578,17 +503,11 @@ window.SECTOR.days[3]={
     }
    ],
    "learned": [
-    "A password shared across a fleet is one credential, not many. Compromise one device, or one controller, and you have them all.",
-    "The radio was treated as the security boundary. When the control protocol itself has no authentication, whoever reaches the link controls the robot.",
-    "Long-lived devices freeze their software at purchase. The same pattern applies to building systems, medical devices and branch hardware in our own environments."
+    "The detail that stuck: a robot built in 2021 was still running Python 2.5 scripts on a Linux 2.6 kernel.",
+    "The same SSH password on every PackBot meant one discovery applied to the whole fleet.",
+    "The radio was doing most of the security work. Older versions sent control traffic in plain text."
    ],
-   "why": "Organizations run equipment for decades: OT, IoT, physical security and specialized devices. This talk shows what happens when a platform's hardware evolves but its software, credentials and protocols don't, and why obscurity and physical isolation are not controls.",
-   "identity": {
-    "points": [
-     "One SSH password and one web root password across every robot means device identity doesn't exist. Each device needs its own credential, ideally hardware-backed.",
-     "Control traffic without authentication trusts anyone on the radio link. Commands should be authenticated per operator and per device, not just carried over an encrypted pipe."
-    ]
-   },
+   "why": "It was a hardware version of the day's control theme: who can command the device. It also paired with the post-quantum talk, since both were about decisions made years ago that are still in service.",
    "concepts": [
     "eod",
     "techdebt",
@@ -606,8 +525,7 @@ window.SECTOR.days[3]={
     "A hardware teardown and software deep dive of the Intel-based PackBot and its throwable ARM-based counterpart, the FirstLook, mapping the attack surface across operator control units, radio links and the shared software ecosystem.",
     "Takeaways: security by obscurity is a failed strategy; methods for auditing robotics and IoT command and control; and the cascading risk of legacy technical debt in long-lifecycle devices."
    ],
-   "takeaway": "Obscurity and an expensive radio aren't security. Long-lived devices need per-device credentials, authenticated control traffic and an upgrade path from day one.",
-   "ask": "Which of our long-lived devices share a password across the whole fleet?",
+   "takeaway": "As Kiley put it, security through obscurity can delay analysis, but not prevent it.",
    "links": [
     {
      "u": "https://i.blackhat.com/BH-USA-26/Presentations/BHUS26-Kiley-Render_Safe-Slides.pdf",
@@ -709,17 +627,11 @@ window.SECTOR.days[3]={
     }
    ],
    "learned": [
-    "For a bank, the data with the longest shelf life (mortgages, customer identity, account history) is exactly what HNDL targets, so it belongs in the first migration tier.",
-    "The inventory is the hard part because so much cryptography sits inside vendor products and libraries. Vendor questionnaires need a post-quantum section now.",
-    "Crypto agility matters more than picking the right algorithm: the standards and parameters will keep changing."
+    "The framing that struck me: if it matters in ten years, it matters now. Financial records, health data, government communications and intellectual property all have that shelf life.",
+    "The session treated the cryptographic inventory as the hardest part, because so much cryptography sits inside vendor products and embedded dependencies.",
+    "Crypto agility, not one algorithm choice, was presented as the real goal: treating this as a one-time migration means doing it twice."
    ],
-   "why": "Data stolen today can't be un-stolen. Anything sent over RSA or elliptic-curve key exchange in recent years should be assumed collected, and regulators and governments have already set migration timelines measured in a few years, not decades.",
-   "identity": {
-    "points": [
-     "HNDL is about confidentiality: a recorded login can't be replayed later. Authentication has a different deadline: signature algorithms (FIDO2 passkeys commonly use ECDSA) must move to post-quantum options before a quantum computer can forge them.",
-     "Add certificate authorities, token-signing keys, SAML and OIDC signing, and authenticator algorithms to the crypto inventory, with the vendor responsible for each."
-    ]
-   },
+   "why": "It took the day's question of control into cryptography: data collected today can't be un-collected. NIST's 2024 standards and Canada's 2035 federal roadmap put real dates on it.",
    "concepts": [
     "hndl",
     "pqc",
@@ -734,8 +646,7 @@ window.SECTOR.days[3]={
     "The crypto-agility imperative, and a practical four-step PQC readiness assessment any practitioner can run.",
     "Where organizations consistently fail, and how to bring leadership to the table on a problem that has no visible breach."
    ],
-   "takeaway": "Assume anything sent over RSA or ECC in recent years has already been collected. Start the cryptographic inventory now, tier data by how long it must stay secret, and build for crypto agility.",
-   "ask": "Could we list today every system and vendor product that uses RSA or elliptic-curve cryptography?",
+   "takeaway": "Harvest now, decrypt later turns long-lived data into a present-day target, and the session put the cryptographic inventory first.",
    "links": [
     {
      "u": "https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards",
@@ -796,11 +707,11 @@ window.SECTOR.days[3]={
     "It closes with a defender-focused framework: how to recognize and preserve blockchain-hosted ransomware infrastructure, a hunting workflow that tracks canisters instead of servers, and what “unseizable” really means and where disruption is still possible."
    ],
    "learned": [
-    "Incident response plans often assume law enforcement or a provider can take infrastructure down. For blockchain-hosted portals, plan as if the portal stays up.",
-    "Evidence preservation changes too: record canister identifiers and gateway domains, not just IP addresses.",
-    "If the business has no need to reach ICP gateway domains, alerting on that traffic from corporate endpoints is cheap and may catch related abuse."
+    "Takedowns have been one of the few levers against ransomware groups. Hosting portals on ICP canisters removes the usual hosting-provider route.",
+    "The idea that seizure becomes a protocol and governance challenge rather than a hosting problem was new to me.",
+    "The session's hunting workflow tracks canisters instead of servers, which changes what counts as evidence."
    ],
-   "why": "Takedowns have been one of the few levers that disrupt ransomware groups. Infrastructure that can't be seized shifts more of the burden onto victims' own preparation: backups, response plans and threat intelligence.",
+   "why": "It closed the conference on control from the other direction: not who is allowed to act, but what happens when nobody can switch an attacker's infrastructure off.",
    "concepts": [
     "raas",
     "icp",
@@ -813,8 +724,7 @@ window.SECTOR.days[3]={
     "How the shift alters the disruption model for ransomware infrastructure.",
     "A defender framework for identifying, tracking and responding to blockchain-hosted ransomware infrastructure."
    ],
-   "takeaway": "Don't build a ransomware plan around the portal disappearing. Prepare to respond while the extortion infrastructure stays online, and track it by canister, not by server.",
-   "ask": "Does our ransomware playbook assume someone can take the attacker's infrastructure offline?",
+   "takeaway": "“Unseizable” infrastructure shifts the ransomware story from takedowns to tracking, with canisters in place of servers.",
    "links": [
     {
      "u": "https://flare.io/learn/resources/blog/cry0-raas-ransomware-blockchain-extortion",
@@ -1058,108 +968,107 @@ window.SECTOR.days[3]={
    "co": "Flare",
    "site": "https://flare.io"
   }
- }
-};
-/* Audio recaps (MP3s in this folder), generated with the open-source Kokoro voice model. */
-window.SECTOR.days[3].audio=[
- {
-  "key": "recap",
-  "label": "Quick recap",
-  "note": "About 2 min · one narrator",
-  "src": "recap.mp3",
-  "dur": 119,
-  "transcript": [
-   "This is the Day 3 recap from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through it: who gets to decide?",
-   "Helen Oakley's keynote described a helpful AI agent asked to grant one person temporary access, which ended up making a much broader change than anyone intended. No attacker was involved. Her point was that an agent's plan should be treated as a request, not a permission, and checked against what was actually asked for before anything changes.",
-   "She also stressed that temporary access has to undo whatever it opened, and that agent autonomy should grow only with evidence. Her closing line: it's not about what the AI agent can do, but what it is authorized to cause.",
-   "Brad Edwards of Palo Alto Networks showed how open-source labs let AI agents play both attacker and defender in purple team exercises. It makes regular practice affordable for teams that never had the budget, as long as people set the boundaries and every fix is re-tested.",
-   "Patrick Kiley of Mandiant looked at long-lived robotics platforms and showed how old software and shared passwords persist for decades. His lessons were about defence in depth, unique credentials per device, and planning an upgrade path from day one.",
-   "Two more briefings looked ahead. One explained harvest now, decrypt later: encrypted data collected today could be read once quantum computers mature, so organizations should start a cryptographic inventory now. The other covered ransomware groups hosting infrastructure in places that are hard to take down, which means response plans can't rely on takedowns.",
-   "Colin's takeaway from Day 3: authority is the new perimeter. Decide who and what is allowed to act, check it at the moment of action, and keep the evidence.",
-   "The full notes, sources and a quiz are on the Day 3 page."
-  ]
  },
- {
-  "key": "deep",
-  "label": "Deep dive",
-  "note": "About 3 min · session by session",
-  "src": "deep-dive.mp3",
-  "dur": 202,
-  "transcript": [
-   "This is the Day 3 deep dive from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through every session: who gets to decide?",
-   "Helen Oakley's keynote looked at authority in the agentic enterprise. Her example: a person asks an AI agent for temporary access to an application. The agent plans the work, uses a service identity with broad permissions, and makes a much bigger change than anyone requested. No attacker was involved. The lesson is that the person asking, the agent planning, and the identity carrying out the work are different actors, and each handoff can quietly widen what's allowed.",
-   "Her recommendations were practical. Treat an agent's plan as a request, not a permission, and check each change against the original request at the point of action. Make temporary access expire together with whatever it opened. Roll out agents over thirty, sixty and ninety days, expanding only with evidence. And ask vendors how their own agents are bounded. Her closing line: it's not about what the AI agent can do, but what it is authorized to cause.",
-   "Brad Edwards of Palo Alto Networks showed agentic purple teaming. Open-source labs now let AI agents play both attacker and defender against a realistic test company with a real security monitoring stack, so teams can practise detection and response without a big budget. He was candid about the limits: agents lose context, drift out of scope and sometimes claim success they didn't achieve, so people set the boundaries and every fix is re-tested.",
-   "Patrick Kiley of Mandiant presented research on long-lived robotics platforms used for bomb disposal. Over two decades the hardware evolved, but much of the software, passwords and protocols stayed the same, and he worked with the vendor through coordinated disclosure. His lessons apply far beyond robots: defence in depth, unique credentials per device, authenticated and encrypted control traffic, and an upgrade path planned from day one. Security through obscurity only delays analysis.",
-   "Christine Dewhurst and Trecia Knight explained harvest now, decrypt later. Encrypted data collected today could be read once quantum computers mature, so anything that must stay confidential for years is already at risk. NIST finalized its first post-quantum standards in 2024, and Canada's federal roadmap targets full migration by 2035. Their first step is a cryptographic inventory, followed by tiering data by sensitivity and lifespan, mapping vendors, and building crypto agility.",
-   "Tammy Harper of Flare covered a ransomware group that hosts its negotiation portals on a blockchain network, which makes traditional takedowns much harder. Her advice for defenders was to recognize and track this kind of infrastructure, and not to build response plans that depend on someone taking it offline.",
-   "Colin's takeaway from Day 3: across agents, robots, cryptography and ransomware, the common thread was control: who is allowed to decide and act, and what happens when that authority quietly grows or outlives its purpose.",
-   "That's the Day 3 deep dive. The full notes, sources and quiz are on the Day 3 page."
-  ]
- },
- {
-  "key": "chat",
-  "label": "Conversation",
-  "note": "About 2 min · two voices",
-  "src": "conversation.mp3",
-  "dur": 120,
-  "transcript": [
-   [
-    1,
-    "Welcome to the final SecTor 2026 recap from Colin Johnstone's notes. This is Day 3."
-   ],
-   [
-    2,
-    "And the question that ran through the whole day was: who gets to decide?"
-   ],
-   [
-    1,
-    "That came straight from the keynote."
-   ],
-   [
-    2,
-    "Helen Oakley described an AI agent asked to give one person temporary access, which ended up making a much broader change than anyone intended. No attacker involved. Just an agent using a powerful service identity with nothing checking the change against the request."
-   ],
-   [
-    1,
-    "So what's the fix?"
-   ],
-   [
-    2,
-    "Treat what an agent proposes as a request, not a permission. Check it at the point of action. And make temporary access undo whatever it opened. Her line was: it's not about what the agent can do, but what it is authorized to cause."
-   ],
-   [
-    1,
-    "There was a more hopeful AI talk too."
-   ],
-   [
-    2,
-    "Brad Edwards showed open-source labs where AI agents play both attacker and defender. It makes purple team practice affordable, as long as people set the boundaries and re-test every fix."
-   ],
-   [
-    1,
-    "And then robots."
-   ],
-   [
-    2,
-    "Patrick Kiley of Mandiant looked at bomb-disposal robots that kept old software and shared passwords for years. The lesson applies to any long-lived device: unique credentials, authenticated control traffic and a real upgrade path."
-   ],
-   [
-    1,
-    "The afternoon looked further ahead."
-   ],
-   [
-    2,
-    "One talk on harvest now, decrypt later: data stolen today could be read by future quantum computers, so start a cryptographic inventory now. And one on ransomware hosted where it's hard to take down, so response plans can't rely on takedowns."
-   ],
-   [
-    1,
-    "Colin's bottom line for Day 3?"
-   ],
-   [
-    2,
-    "Authority is the new perimeter. Decide who and what may act, check it at the moment of action, and keep the evidence. Thanks for listening, and the full notes are on the Day 3 page."
+ "audio": [
+  {
+   "key": "recap",
+   "label": "Quick recap",
+   "note": "About 2 min · one narrator",
+   "src": "recap.mp3?v=20261008j",
+   "dur": 119,
+   "transcript": [
+    "This is the Day 3 recap from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through it: who gets to decide?",
+    "Helen Oakley's keynote described a helpful AI agent asked to grant one person temporary access, which ended up making a much broader change than anyone intended. No attacker was involved. Her point was that an agent's plan should be treated as a request, not a permission, and checked against what was actually asked for before anything changes.",
+    "She also stressed that temporary access has to undo whatever it opened, and that agent autonomy should grow only with evidence. Her closing line: it's not about what the AI agent can do, but what it is authorized to cause.",
+    "Brad Edwards of Palo Alto Networks showed how open-source labs let AI agents play both attacker and defender in purple team exercises. It makes regular practice far more affordable, with people setting the boundaries and every fix re-tested.",
+    "Patrick Kiley of Mandiant looked at long-lived robotics platforms and showed how old software and shared passwords persist for decades. His lessons were about defence in depth, unique credentials per device, and planning an upgrade path from day one.",
+    "Two more briefings looked ahead. One explained harvest now, decrypt later: encrypted data collected today could be read once quantum computers mature, and the speakers put a cryptographic inventory first. The other covered a ransomware group hosting its portals on a blockchain network, where traditional takedowns don't work.",
+    "Colin's takeaway from Day 3: across agents, robots, cryptography and ransomware, the common thread was control: who is allowed to decide and act, and what happens when that authority quietly grows or outlives its purpose.",
+    "The full notes, sources and a quiz are on the Day 3 page."
    ]
-  ]
- }
-];
+  },
+  {
+   "key": "deep",
+   "label": "Deep dive",
+   "note": "About 3 min · session by session",
+   "src": "deep-dive.mp3?v=20261008j",
+   "dur": 202,
+   "transcript": [
+    "This is the Day 3 deep dive from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through every session: who gets to decide?",
+    "Helen Oakley's keynote looked at authority in the agentic enterprise. Her example: a person asks an AI agent for temporary access to an application. The agent plans the work, uses a service identity with broad permissions, and makes a much bigger change than anyone requested. No attacker was involved. The lesson is that the person asking, the agent planning, and the identity carrying out the work are different actors, and each handoff can quietly widen what's allowed.",
+    "Her recommendations were practical. Treat an agent's plan as a request, not a permission, and check each change against the original request at the point of action. Make temporary access expire together with whatever it opened. Roll out agents over thirty, sixty and ninety days, expanding only with evidence. And ask vendors how their own agents are bounded. Her closing line: it's not about what the AI agent can do, but what it is authorized to cause.",
+    "Brad Edwards of Palo Alto Networks showed agentic purple teaming. Open-source labs now let AI agents play both attacker and defender against a realistic test company with a real security monitoring stack, so teams can practise detection and response without a big budget. He was candid about the limits: agents lose context, drift out of scope and sometimes claim success they didn't achieve, so people set the boundaries and every fix is re-tested.",
+    "Patrick Kiley of Mandiant presented research on long-lived robotics platforms used for bomb disposal. Over two decades the hardware evolved, but much of the software, passwords and protocols stayed the same, and he worked with the vendor through coordinated disclosure. His lessons apply far beyond robots: defence in depth, unique credentials per device, authenticated and encrypted control traffic, and an upgrade path planned from day one. Security through obscurity only delays analysis.",
+    "Christine Dewhurst and Trecia Knight explained harvest now, decrypt later. Encrypted data collected today could be read once quantum computers mature, so anything that must stay confidential for years is already at risk. NIST finalized its first post-quantum standards in 2024, and Canada's federal roadmap targets full migration by 2035. Their first step is a cryptographic inventory, followed by tiering data by sensitivity and lifespan, mapping vendors, and building crypto agility.",
+    "Tammy Harper of Flare covered a ransomware group that hosts its negotiation portals on a blockchain network, which makes traditional takedowns much harder. Her advice for defenders was to recognize and track this kind of infrastructure, and not to build response plans that depend on someone taking it offline.",
+    "Colin's takeaway from Day 3: across agents, robots, cryptography and ransomware, the common thread was control: who is allowed to decide and act, and what happens when that authority quietly grows or outlives its purpose.",
+    "That's the Day 3 deep dive. The full notes, sources and quiz are on the Day 3 page."
+   ]
+  },
+  {
+   "key": "chat",
+   "label": "Conversation",
+   "note": "About 2 min · two voices",
+   "src": "conversation.mp3?v=20261008j",
+   "dur": 123,
+   "transcript": [
+    [
+     1,
+     "Welcome to the final SecTor 2026 recap from Colin Johnstone's notes. This is Day 3."
+    ],
+    [
+     2,
+     "And the question that ran through the whole day was: who gets to decide?"
+    ],
+    [
+     1,
+     "That came straight from the keynote."
+    ],
+    [
+     2,
+     "Helen Oakley described an AI agent asked to give one person temporary access, which ended up making a much broader change than anyone intended. No attacker involved. Just an agent using a powerful service identity with nothing checking the change against the request."
+    ],
+    [
+     1,
+     "What was her answer?"
+    ],
+    [
+     2,
+     "She said to treat what an agent proposes as a request, not a permission, check it at the point of action, and make temporary access undo whatever it opened. Her line was: it's not about what the agent can do, but what it is authorized to cause."
+    ],
+    [
+     1,
+     "There was a more hopeful AI talk too."
+    ],
+    [
+     2,
+     "Brad Edwards showed open-source labs where AI agents play both attacker and defender. It makes purple team practice affordable, as long as people set the boundaries and re-test every fix."
+    ],
+    [
+     1,
+     "And then robots."
+    ],
+    [
+     2,
+     "Patrick Kiley of Mandiant looked at bomb-disposal robots that kept old software and shared passwords for years. The lesson applies to any long-lived device: unique credentials, authenticated control traffic and a real upgrade path."
+    ],
+    [
+     1,
+     "The afternoon looked further ahead."
+    ],
+    [
+     2,
+     "One talk on harvest now, decrypt later: data stolen today could be read by future quantum computers, and the speakers put a cryptographic inventory first. And one on ransomware portals hosted on a blockchain, where takedowns don't work the usual way."
+    ],
+    [
+     1,
+     "Colin's bottom line for Day 3?"
+    ],
+    [
+     2,
+     "Control. Across agents, robots, cryptography and ransomware, the question was who gets to decide and act, and what happens when that authority quietly grows. Thanks for listening, and the full notes are on the Day 3 page."
+    ]
+   ]
+  }
+ ]
+};

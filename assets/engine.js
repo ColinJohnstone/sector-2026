@@ -76,7 +76,7 @@ $("#agenda").innerHTML=D.agenda.map(d=>{
 const usedCats=Object.keys(CATS).filter(k=>S.some(s=>s.cats.includes(k)));
 $("#sessions-in").innerHTML=`
   <div class="sec-head rv"><p class="eyebrow">${ic("note")}Session notes</p><h2>${esc(D.sessionsHead.title)}</h2><p class="lead">${esc(D.sessionsHead.lead)}</p>
-    <div class="legend"><span><i class="prov presented">Presented</i>what the speaker covered</span><span><i class="prov mine">My analysis</i>my interpretation</span><span><i class="prov ext">External</i>sources I added</span></div></div>
+    <div class="legend"><span><i class="prov presented">Presented</i>what the speaker covered</span><span><i class="prov mine">My notes</i>what stood out to me</span><span><i class="prov ext">External</i>sources I added</span></div></div>
   <ol class="sindex" aria-label="All sessions">${S.map((s,i)=>`<li><a href="#${s.id}"><span class="n">${String(i+1).padStart(2,"0")}</span><span><b>${esc(s.short)}</b><small>${s.time} · ${esc(s.speakers.map(x=>x[0]).slice(0,2).join(", "))}${s.speakers.length>2?" +"+(s.speakers.length-2):""}</small></span></a></li>`).join("")}</ol>
   <div class="tools">
     <label class="search" for="q"><span class="sr">Search this day's sessions</span>${ic("search")}<input id="q" type="search" placeholder="${esc(D.searchHint)}" autocomplete="off"></label>
@@ -94,7 +94,7 @@ const hl=t=>{const safe=esc(t);if(!query)return safe;return safe.replace(new Reg
 const statTxt=s=>(s.stats||[]).map(x=>x.v+" "+x.l).join(" ");
 const txt={
   head:s=>[s.title,s.summary,s.fmt,...s.speakers.flat(),...s.cats.map(k=>CATS[k][0])].join(" "),
-  notes:s=>[...s.covered,...(s.learned||[]),s.why,s.takeaway||"",...(s.identity?s.identity.points:[]),...s.concepts.map(c=>G[c]?G[c][0]:""),...(s.chain?s.chain.steps:[]),statTxt(s)].join(" "),
+  notes:s=>[...s.covered,...(s.learned||[]),s.why,s.takeaway||"",...s.concepts.map(c=>G[c]?G[c][0]:""),...(s.chain?s.chain.steps:[]),statTxt(s)].join(" "),
   program:s=>s.program.join(" "),
   reading:s=>s.links.map(l=>l.t+" "+l.d+" "+l.k).join(" ")
 };
@@ -111,11 +111,10 @@ function briefingPanel(s){
     <div class="blk"><div class="blk-h"><p class="label">${ic("check")}What was covered</p>${covLabel}</div><ul class="bul">${s.covered.map(c=>`<li>${hl(c)}</li>`).join("")}</ul></div>
     ${s.chain?`<div class="chain"><ol>${s.chain.steps.map((x,k)=>`<li style="--k:${k}">${hl(x)}</li>`).join("")}</ol><small>${esc(s.chain.note)}</small></div>`:""}
     ${s.stats&&s.stats.length?`<div class="blk"><div class="blk-h"><p class="label">${ic("chart")}Key statistics and claims</p></div><div class="statgrid">${s.stats.map(st=>statCard(st,s.org)).join("")}</div></div>`:""}
-    ${s.learned&&s.learned.length?`<div class="blk"><div class="blk-h"><p class="label">${ic("spark")}What I learned</p><i class="prov mine">My analysis</i></div><ul class="bul mine">${s.learned.map(c=>`<li>${hl(c)}</li>`).join("")}</ul></div>`:""}
-    <div class="blk"><div class="blk-h"><p class="label">${ic("bolt")}Why it matters</p><i class="prov mine">My analysis</i></div><p>${hl(s.why)}</p></div>
-    ${s.identity?`<div class="lens"><div class="lens-h">${ic("finger")}<b>Identity Lens</b><i class="prov mine">My analysis</i></div>${s.identity.intro?`<p>${hl(s.identity.intro)}</p>`:""}<ul>${s.identity.points.map(p=>`<li>${hl(p)}</li>`).join("")}</ul></div>`:""}
+    ${s.learned&&s.learned.length?`<div class="blk"><div class="blk-h"><p class="label">${ic("spark")}What stood out</p><i class="prov mine">My notes</i></div><ul class="bul mine">${s.learned.map(c=>`<li>${hl(c)}</li>`).join("")}</ul></div>`:""}
+    <div class="blk"><div class="blk-h"><p class="label">${ic("bolt")}How it connects</p><i class="prov mine">My notes</i></div><p>${hl(s.why)}</p></div>
     <div><p class="label">${ic("book")}Key concepts</p><div class="concepts">${s.concepts.map(c=>termChip(c)).join("")}</div></div>
-    ${s.takeaway?`<div class="takeaway"><p class="label">${ic("key")}My takeaway</p><p>${hl(s.takeaway)}</p></div>`:""}</div>`;
+    ${s.takeaway?`<div class="takeaway"><p class="label">${ic("key")}In one line</p><p>${hl(s.takeaway)}</p></div>`:""}</div>`;
 }
 function panel(s,which){
   if(which==="program") return `<div class="panel prog">
@@ -174,7 +173,7 @@ render();
 /* ---------- takeaways ---------- */
 const T=D.takeaways;
 $("#remember-in").innerHTML=`
-  <div class="sec-head rv"><p class="eyebrow">${ic("key")}What I'm taking away</p><h2>${esc(T.title)}</h2><p class="lead">${esc(T.lead)}</p></div>
+  <div class="sec-head rv"><p class="eyebrow">${ic("key")}Recurring themes</p><h2>${esc(T.title)}</h2><p class="lead">${esc(T.lead)}</p></div>
   <div class="tk">${T.items.map(x=>`<div class="rv"><div class="ico">${ic(x.icon)}</div><h3>${esc(x.title)}</h3><p>${esc(x.text)}</p>${rel(x.sessions)}</div>`).join("")}</div>
   <blockquote class="closing rv"><p>${esc(T.quote.text)}</p>${T.quote.by?`<footer>${esc(T.quote.by)}</footer>`:""}</blockquote>`;
 
