@@ -1,4 +1,4 @@
-/* Site-wide search across sessions, speakers, takeaways, enterprise actions and the glossary */
+/* Site-wide search across sessions, speakers, takeaways and the glossary */
 (function(){
 const days=Object.values((window.SECTOR||{}).days||{});
 const G=window.GLOSSARY||{};
@@ -11,7 +11,6 @@ for(const D of days){
     for(const [n,r] of s.speakers)items.push({type:"Speaker",title:n,sub:`${r} · ${s.short}, Day ${D.n}`,href:base+"#"+s.id,cats:s.cats,text:r});
   }
   for(const t of D.takeaways.items)items.push({type:"Takeaway",title:t.title,sub:`Day ${D.n} takeaway`,href:base+"#remember",cats:[],text:t.text});
-  for(const e of D.enterprise.items)items.push({type:"Enterprise",title:e.title,sub:`Day ${D.n} · What this means for an enterprise`,href:base+"#enterprise",cats:[],text:e.text});
 }
 for(const [k,[t,d]] of Object.entries(G))items.push({type:"Glossary",title:t,sub:"Glossary",href:"glossary/#g-"+k,cats:[],text:d});
 
@@ -22,12 +21,12 @@ const snippet=(text,terms)=>{const low=text.toLowerCase();let i=-1;for(const t o
 const mark=(s,terms)=>{let h=esc(s);for(const t of terms){if(!t)continue;h=h.replace(new RegExp("("+t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),"<mark>$1</mark>")}return h};
 function run(){
   const q=inp.value.trim().toLowerCase(),terms=q.split(/\s+/).filter(Boolean);
-  if(!terms.length&&cat==="all"){out.innerHTML=`<p class="hint">Search covers ${days.reduce((n,D)=>n+D.sessions.length,0)} sessions, their speakers, takeaways, enterprise actions and ${Object.keys(G).length} glossary terms. Pick a topic to browse.</p>`;return}
+  if(!terms.length&&cat==="all"){out.innerHTML=`<p class="hint">Search covers ${days.reduce((n,D)=>n+D.sessions.length,0)} sessions, their speakers, takeaways and ${Object.keys(G).length} glossary terms. Pick a topic to browse.</p>`;return}
   let res=items.filter(it=>(cat==="all"||it.cats.includes(cat))&&terms.every(t=>(it.title+" "+it.sub+" "+it.text).toLowerCase().includes(t)));
   res.sort((a,b)=>terms.filter(t=>b.title.toLowerCase().includes(t)).length-terms.filter(t=>a.title.toLowerCase().includes(t)).length);
   if(!res.length){out.innerHTML=`<p class="hint">Nothing matches “${esc(q)}”${cat!=="all"?` in ${CATS[cat][0]}`:""}. Try a broader word.</p>`;return}
   const groups={};for(const r of res)(groups[r.type]=groups[r.type]||[]).push(r);
-  out.innerHTML=["Session","Speaker","Takeaway","Enterprise","Glossary"].filter(g=>groups[g]).map(g=>`<div class="gr-group"><p class="label">${g==="Session"?ic("note"):g==="Speaker"?ic("users"):g==="Glossary"?ic("book"):g==="Enterprise"?ic("building"):ic("key")}${g}s · ${groups[g].length}</p>${groups[g].slice(0,8).map(r=>`<a class="gr" href="${r.href}"><b>${mark(r.title,terms)}</b><small>${esc(r.sub)}</small>${terms.length&&r.type!=="Speaker"?`<span>${mark(snippet(r.text,terms),terms)}</span>`:""}</a>`).join("")}${groups[g].length>8?`<p class="hint">${groups[g].length-8} more. Narrow your search to see them.</p>`:""}</div>`).join("");
+  out.innerHTML=["Session","Speaker","Takeaway","Glossary"].filter(g=>groups[g]).map(g=>`<div class="gr-group"><p class="label">${g==="Session"?ic("note"):g==="Speaker"?ic("users"):g==="Glossary"?ic("book"):g==="Enterprise"?ic("building"):ic("key")}${g}s · ${groups[g].length}</p>${groups[g].slice(0,8).map(r=>`<a class="gr" href="${r.href}"><b>${mark(r.title,terms)}</b><small>${esc(r.sub)}</small>${terms.length&&r.type!=="Speaker"?`<span>${mark(snippet(r.text,terms),terms)}</span>`:""}</a>`).join("")}${groups[g].length>8?`<p class="hint">${groups[g].length-8} more. Narrow your search to see them.</p>`:""}</div>`).join("");
 }
 inp.addEventListener("input",run);run();
 if(location.hash==="#search")setTimeout(()=>inp.focus(),100);

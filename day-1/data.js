@@ -1472,9 +1472,9 @@ window.SECTOR.days[1].audio=[
   "label": "Deep dive",
   "note": "About 3 min · session by session",
   "src": "deep-dive.mp3",
-  "dur": 201,
+  "dur": 195,
   "transcript": [
-   "This is the Day 1 deep dive from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit. We'll go through it session by session, then finish with what it means for an enterprise.",
+   "This is the Day 1 deep dive from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit. We'll go through it session by session, then finish with the main takeaway.",
    "Matt Johansen of Vulnerable U opened the day. His argument was that the capabilities we associate with nation-state attackers are getting cheap and easy to access. Budget, specialist teams and custom tooling used to separate governments from everyone else. That gap is closing, so intent and persistence matter more than money. Colin's note: patch cycles measured in weeks look very different when exploitation can follow disclosure within hours.",
    "Gal Ordo of Native argued that AI security is really cloud security. Automated attacks now connect familiar weaknesses faster than many detection processes can respond. His answer wasn't another AI-specific product. It was architecture: separate production from everything else, reduce internet exposure, enforce strong identity boundaries, and block destructive automated actions by default.",
    "Eric Broda and Rachel Clark focused on agents as identities. Organizations may soon run thousands or even millions of agents, with no reliable way to inventory them. Their analogy was a toaster: you trust it because of standards. Agents need the same thing, a consistent way to define what each one may do, who owns it, and how it's switched off.",
@@ -1482,7 +1482,7 @@ window.SECTOR.days[1].audio=[
    "Alessandro Brucato of Tracebit brought the most encouraging result of the day. Automated attackers explore everything, so decoy credentials and canary resources get touched early. In their testing, attacks were detected before the first critical action in nearly every run.",
    "Yigael Berger of Sweet Security looked at economics. When finding a weakness costs almost nothing, testing becomes continuous for both attackers and defenders, and the same economics can help defenders triage alerts and fill skills gaps.",
    "The afternoon panels were about priorities and ownership. The audience forum ranked detection and response as the top priority for the year, with governance the most likely to be overlooked. The 2027 playbook panel was built for disagreement, and showed there's no settled AI security playbook to copy yet. Ryoji Betchaku of Wiz showed how to turn threat intelligence into something executives can act on, by tying it to an organization's own exposure. And the closing panel asked who actually owns an AI system when it acts on its own.",
-   "Colin's enterprise takeaways from Day 1: inventory every agent and give each one an identity, an owner and an off switch. Lean on prevention and segmentation, because detection alone can't keep up. Plant canaries in cloud environments. And decide ownership of autonomous systems before something goes wrong, not after.",
+   "Colin's takeaway from Day 1: AI isn't inventing a new class of attacks. It's making familiar ones faster, cheaper and easier to chain together, and the conversations kept coming back to fundamentals, agent identity and ownership.",
    "That's the Day 1 deep dive. The full notes, sources and quiz are on the Day 1 page."
   ]
  },

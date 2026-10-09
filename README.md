@@ -22,7 +22,7 @@ Static site, no build step and no dependencies beyond Google Fonts. Keep every l
 assets/
   core.js      shared helpers: icon sprite, categories, concept tooltips, provenance badges, Quiz
   engine.js    renders a day page from window.SECTOR.days[N]
-  search.js    home-page search across sessions, speakers, takeaways, enterprise items, glossary
+  search.js    home-page search across sessions, speakers, takeaways and the glossary
   glossary.js  window.GLOSSARY: key -> [term, definition, icon]
   base.css     shared component layout
   site.css     home, brief, challenge and glossary pages

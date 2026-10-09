@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>SecTor 2026 Executive Brief</title>
-<meta name="description" content="SecTor 2026 in ten minutes: major findings, what changed, identity and AI implications, and recommended security actions. Personal analysis by Colin Johnstone, not an official CIBC publication.">
+<meta name="description" content="SecTor 2026 in six minutes: the major findings and what changed across all three days. Personal conference notes by Colin Johnstone, not an official CIBC publication.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Public+Sans:wght@400..700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="../assets/base.css?v=20261008e">
-<link rel="stylesheet" href="../assets/site.css?v=20261008e">
-<link rel="stylesheet" href="../assets/report.css?v=20261008e">
-<link rel="stylesheet" href="../assets/styles.css?v=20261008e">
+<link rel="stylesheet" href="../assets/base.css?v=20261008f">
+<link rel="stylesheet" href="../assets/site.css?v=20261008f">
+<link rel="stylesheet" href="../assets/report.css?v=20261008f">
+<link rel="stylesheet" href="../assets/styles.css?v=20261008f">
 <script>try{var s=JSON.parse(localStorage.getItem("sector.style")),t=JSON.parse(localStorage.getItem("sector.theme"));if(s&&s!=="report")document.documentElement.dataset.style=s;if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body class="site">
@@ -28,19 +28,15 @@
 </div><div class="readbar" id="readbar"></div></header>
 <main>
 <section class="doc-hero"><div class="wrap">
-  <p class="eyebrow"><svg class="i"><use href="#i-note"/></svg>Executive security brief · About 10 minutes · Covers all three days</p>
+  <p class="eyebrow"><svg class="i"><use href="#i-note"/></svg>Executive security brief · About 6 minutes · Covers all three days</p>
   <h1 id="h1">SecTor 2026 for people who <em>weren't</em> there.</h1>
-  <p class="lead">The condensed view: what changed, why it matters, and what I'd do about it. Each finding links back to the detailed session notes and their sources.</p>
+  <p class="lead">The condensed view of the conference: what was presented, the major findings and what changed. Each finding links back to the detailed session notes and their sources.</p>
   <div class="byline"><img class="me" src="../assets/colin.jpg" alt="Colin Johnstone" width="46" height="46"><div class="who"><a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a><span>Senior Consultant, Authentication Services @ CIBC</span></div><a class="li" href="https://www.linkedin.com/in/colin-johnstone-7a982a187/">LinkedIn</a></div>
   <p class="disclaimer"><svg class="i"><use href="#i-note"/></svg>Personal conference notes, analysis and observations by <a href="https://www.linkedin.com/in/colin-johnstone-7a982a187/" rel="author">Colin Johnstone</a>. Not an official CIBC publication or position.</p>
   <nav class="toc" aria-label="Contents">
     <a href="#sixty">SecTor 2026 in 60 seconds</a>
     <a href="#findings">Twelve major findings</a>
     <a href="#changed">What changed</a>
-    <a href="#care">What organizations should care about</a>
-    <a href="#identity">Identity implications</a>
-    <a href="#ai">AI implications</a>
-    <a href="#actions">Recommended security actions</a>
   </nav>
 </div></section>
 
@@ -80,61 +76,6 @@
     <li><strong>Authority.</strong> The actor requesting an outcome, the agent planning it and the identity carrying it out are now often different. Risk comes from what an agent is authorized to cause, not just what it can do.</li>
   </ul>
 
-  <h2 id="care">What organizations should care about</h2>
-  <p>The practical question isn't whether to buy “AI security.” It's whether existing controls still work when attacks move at machine speed. Programs built around detecting and then responding assume time we no longer have. Prevention through architecture (segmentation, least privilege, identity-based access) and automated, pre-approved response for high-confidence signals carry more weight. Inventory is the other recurring theme: you can't govern agents, models, local AI runtimes, long-lived devices or cryptography you haven't found.</p>
-
-  <h2 id="identity">Identity implications</h2>
-  <div class="cols2">
-    <div class="box"><h3><svg class="i"><use href="#i-finger"/></svg>Agents and workloads</h3><ul>
-      <li>Every agent needs its own credential, scoped permissions, an owner and a tested revocation path.</li>
-      <li>Logs must separate actions taken by an agent from actions taken by the person who triggered it.</li>
-      <li>Workload identities are high-value targets. Require IMDSv2 or equivalent and remove long-lived keys.</li>
-      <li>Gateways that call internal APIs need per-backend identities, not one powerful shared identity.</li>
-      <li>Carry the requester's scope through to the action: an agent's service account must not stand in for the task's authority.</li>
-      <li>Time-boxed access must also reverse what it opened; expiring the credential isn't enough.</li>
-    </ul></div>
-    <div class="box"><h3><svg class="i"><use href="#i-phone"/></svg>People and devices</h3><ul>
-      <li>Phishing-resistant authentication (passkeys) assumes a trustworthy device. Spyware and local malware break that assumption.</li>
-      <li>Stolen session tokens bypass strong sign-in. Short token lifetimes and device-bound sessions limit replay.</li>
-      <li>High-risk staff need a defined response to spyware threat notifications, including credential and session revocation.</li>
-      <li>Canary credentials are cheap, high-signal identities worth planting in cloud environments.</li>
-      <li>Fleet-wide shared passwords on devices remove device identity entirely; each device needs its own credential.</li>
-      <li>Passkeys and token signing rely on elliptic-curve signatures; add them to the post-quantum migration inventory.</li>
-    </ul></div>
-  </div>
-
-  <h2 id="ai">AI implications</h2>
-  <ul>
-    <li><strong>Use AI for discovery, but own verification.</strong> AI findings are claims until independently proven; unverified volume just moves work onto engineers.</li>
-    <li><strong>Treat local AI as software with permissions.</strong> Inventory where models run on endpoints and limit what they can read.</li>
-    <li><strong>Assume prompt injection reaches tools.</strong> Anything that can put text in front of an agent can try to steer its tool calls, so authorization must hold even for your own agents.</li>
-    <li><strong>Earn autonomy in security operations.</strong> Start with triage and enrichment; keep irreversible actions behind controls that can absorb a bad decision.</li>
-    <li><strong>Don't lock in.</strong> Models change quickly; build controls around models rather than into one.</li>
-    <li><strong>Separate reasoning from execution.</strong> Let the model propose; let a policy check decide whether the change is in scope before it runs.</li>
-    <li><strong>Practise against AI attackers.</strong> Agentic purple team labs show how AI attackers behave against your own detection stack.</li>
-  </ul>
-
-  <h2 id="actions">Recommended security actions</h2>
-  <div class="tablewrap"><table class="actions">
-    <thead><tr><th>#</th><th>Action</th><th>When</th><th>From</th></tr></thead>
-    <tbody>
-      <tr><td>01</td><td>Build an inventory of AI agents, models and local AI runtimes, each with an accountable owner.</td><td><span class="when now">Now</span></td><td><a href="../day-1/#s3">Day 1</a> · <a href="../day-2/#llm">Day 2</a></td></tr>
-      <tr><td>02</td><td>Give every agent its own identity, scoped permissions, audit trail and kill switch.</td><td><span class="when now">Now</span></td><td><a href="../day-1/#s3">Day 1</a></td></tr>
-      <tr><td>03</td><td>Require IMDSv2 (or equivalent), remove long-lived cloud keys and tighten workload roles.</td><td><span class="when now">Now</span></td><td><a href="../day-1/#s2">Day 1</a></td></tr>
-      <tr><td>04</td><td>Plant canary credentials and decoy resources in cloud accounts, with pre-approved response.</td><td><span class="when now">Now</span></td><td><a href="../day-1/#s5">Day 1</a></td></tr>
-      <tr><td>05</td><td>Audit what AI gateway identities can reach; split them per backend.</td><td><span class="when now">Now</span></td><td><a href="../day-2/#mcp">Day 2</a></td></tr>
-      <tr><td>06</td><td>Block destructive actions by default for automation and agents; separate prod from non-prod.</td><td><span class="when next">Next</span></td><td><a href="../day-1/#s2">Day 1</a></td></tr>
-      <tr><td>07</td><td>Add independent verification to AI-driven testing and bug intake before engineers act.</td><td><span class="when next">Next</span></td><td><a href="../day-2/#pen">Day 2</a></td></tr>
-      <tr><td>08</td><td>Add EDR detections for local AI misuse: unusual local AI API calls and unexpected child processes.</td><td><span class="when next">Next</span></td><td><a href="../day-2/#llm">Day 2</a></td></tr>
-      <tr><td>09</td><td>Turn on ECC and patch drivers on shared GPUs; isolate sensitive AI workloads.</td><td><span class="when next">Next</span></td><td><a href="../day-2/#gpu">Day 2</a></td></tr>
-      <tr><td>10</td><td>Define a response for spyware threat notifications for high-risk staff.</td><td><span class="when next">Next</span></td><td><a href="../day-2/#k1">Day 2</a></td></tr>
-      <tr><td>11</td><td>Put a policy check between agent plans and production changes, and give agent workflows task-scoped, expiring authority.</td><td><span class="when now">Now</span></td><td><a href="../day-3/#k3">Day 3</a></td></tr>
-      <tr><td>12</td><td>Start a cryptographic inventory, including vendor products and identity systems, and tier data by how long it must stay secret.</td><td><span class="when now">Now</span></td><td><a href="../day-3/#pq">Day 3</a></td></tr>
-      <tr><td>13</td><td>Audit long-lived devices (OT, IoT, specialized equipment) for shared passwords and unauthenticated control traffic.</td><td><span class="when next">Next</span></td><td><a href="../day-3/#bot">Day 3</a></td></tr>
-      <tr><td>14</td><td>Stand up an agentic purple team lab and re-run attacks to prove fixes work.</td><td><span class="when next">Next</span></td><td><a href="../day-3/#purple">Day 3</a></td></tr>
-    </tbody>
-  </table></div>
-  <p class="hint" style="margin-top:1rem">“Now” and “Next” reflect my view of effort versus risk reduction, not any organization's actual priorities.</p>
 </div></section>
 
 <footer class="wrap page-foot">
@@ -143,8 +84,8 @@
   <span>Statistics are as presented by speakers unless a source is linked. Full notes: <a href="../day-1/">Day 1</a> · <a href="../day-2/">Day 2</a> · <a href="../day-3/">Day 3</a>.</span>
 </footer>
 </main>
-<script src="../assets/core.js?v=20261008e"></script>
-<script src="../assets/extras.js?v=20261008e"></script>
+<script src="../assets/core.js?v=20261008f"></script>
+<script src="../assets/extras.js?v=20261008f"></script>
 <script>splitWords(document.getElementById("h1"));readProgress();</script>
 </body>
 </html>

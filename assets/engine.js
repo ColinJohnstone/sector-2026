@@ -94,7 +94,7 @@ const hl=t=>{const safe=esc(t);if(!query)return safe;return safe.replace(new Reg
 const statTxt=s=>(s.stats||[]).map(x=>x.v+" "+x.l).join(" ");
 const txt={
   head:s=>[s.title,s.summary,s.fmt,...s.speakers.flat(),...s.cats.map(k=>CATS[k][0])].join(" "),
-  notes:s=>[...s.covered,...(s.learned||[]),s.why,s.takeaway||"",s.ask,...(s.identity?s.identity.points:[]),...s.concepts.map(c=>G[c]?G[c][0]:""),...(s.chain?s.chain.steps:[]),statTxt(s)].join(" "),
+  notes:s=>[...s.covered,...(s.learned||[]),s.why,s.takeaway||"",...(s.identity?s.identity.points:[]),...s.concepts.map(c=>G[c]?G[c][0]:""),...(s.chain?s.chain.steps:[]),statTxt(s)].join(" "),
   program:s=>s.program.join(" "),
   reading:s=>s.links.map(l=>l.t+" "+l.d+" "+l.k).join(" ")
 };
@@ -115,8 +115,7 @@ function briefingPanel(s){
     <div class="blk"><div class="blk-h"><p class="label">${ic("bolt")}Why it matters</p><i class="prov mine">My analysis</i></div><p>${hl(s.why)}</p></div>
     ${s.identity?`<div class="lens"><div class="lens-h">${ic("finger")}<b>Identity Lens</b><i class="prov mine">My analysis</i></div>${s.identity.intro?`<p>${hl(s.identity.intro)}</p>`:""}<ul>${s.identity.points.map(p=>`<li>${hl(p)}</li>`).join("")}</ul></div>`:""}
     <div><p class="label">${ic("book")}Key concepts</p><div class="concepts">${s.concepts.map(c=>termChip(c)).join("")}</div></div>
-    ${s.takeaway?`<div class="takeaway"><p class="label">${ic("key")}My takeaway</p><p>${hl(s.takeaway)}</p></div>`:""}
-    <p class="ask">${ic("q")}<span><strong>Ask yourself:</strong> ${hl(s.ask)}</span></p></div>`;
+    ${s.takeaway?`<div class="takeaway"><p class="label">${ic("key")}My takeaway</p><p>${hl(s.takeaway)}</p></div>`:""}</div>`;
 }
 function panel(s,which){
   if(which==="program") return `<div class="panel prog">
@@ -178,12 +177,6 @@ $("#remember-in").innerHTML=`
   <div class="sec-head rv"><p class="eyebrow">${ic("key")}What I'm taking away</p><h2>${esc(T.title)}</h2><p class="lead">${esc(T.lead)}</p></div>
   <div class="tk">${T.items.map(x=>`<div class="rv"><div class="ico">${ic(x.icon)}</div><h3>${esc(x.title)}</h3><p>${esc(x.text)}</p>${rel(x.sessions)}</div>`).join("")}</div>
   <blockquote class="closing rv"><p>${esc(T.quote.text)}</p>${T.quote.by?`<footer>${esc(T.quote.by)}</footer>`:""}</blockquote>`;
-
-/* ---------- enterprise ---------- */
-const E=D.enterprise;
-$("#enterprise-in").innerHTML=`
-  <div class="sec-head rv"><p class="eyebrow">${ic("building")}Practical implications</p><h2>What this means for an enterprise</h2><p class="lead">${esc(E.lead)}</p></div>
-  <ol class="ent">${E.items.map(x=>`<li class="rv"><h3>${esc(x.title)}</h3><p>${esc(x.text)}</p>${rel(x.sessions)}</li>`).join("")}</ol>`;
 
 /* ---------- glossary (terms used today) ---------- */
 const used=[...new Set(S.flatMap(s=>s.concepts).concat(D.extraTerms||[]))].filter(k=>G[k]).sort((a,b)=>G[a][0].localeCompare(G[b][0]));

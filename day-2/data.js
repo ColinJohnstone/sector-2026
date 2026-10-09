@@ -1254,7 +1254,7 @@ window.SECTOR.days[2].audio=[
   "label": "Deep dive",
   "note": "About 3 min · session by session",
   "src": "deep-dive.mp3",
-  "dur": 175,
+  "dur": 166,
   "transcript": [
    "This is the Day 2 deep dive from Colin Johnstone's SecTor 2026 notes. Day 2 was keynote and briefings, and the theme was that the threat is already on the device.",
    "Ron Deibert, director of the Citizen Lab at the University of Toronto, opened with counterintelligence for civil society. Commercial spyware has been used against journalists, lawyers, activists and their families, often without the target clicking anything. Citizen Lab's public research has repeatedly led to emergency patches from phone makers, sanctions and company shutdowns. Colin's note: threat notifications from Apple and Google deserve a real response plan, not a shrug.",
@@ -1262,7 +1262,7 @@ window.SECTOR.days[2].audio=[
    "A University of Toronto team led by Gururaj Saileshwar presented GPU Breach. Their research showed that the memory isolation we assume on GPUs can't be taken for granted, especially on shared hardware. Their recommended mitigations were error-correcting memory, patched drivers, and careful thought about sharing GPUs between workloads. The work was responsibly disclosed to NVIDIA.",
    "Rahul Jaisinghani of BrowserStack talked about AI-assisted penetration testing. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow and expensive part. Adding an independent verifier that re-proves every finding cut analyst time significantly in his team's pipeline. His motto: buy the hunter, own the verifier.",
    "Two more briefings rounded out the day. Researchers from TU Braunschweig showed that web archive snapshots can't always be treated as proof of what a site said, so keep your own evidence. And Simon Maxwell-Stewart of BeyondTrust showed why gateways that let AI agents call internal services need narrowly scoped identities for each backend.",
-   "Colin's enterprise takeaways from Day 2: find where local AI runs on managed devices and limit what it can touch. Keep error-correcting memory and driver patching in place for shared GPUs. Put independent verification in front of AI-generated findings. And plan a response for high-risk staff who receive spyware threat notifications.",
+   "Colin's takeaway from Day 2: the newest attack surface is the technology we already trust, from browsers and GPUs to the phones in our pockets, and proving what's real is becoming as important as finding it.",
    "That's the Day 2 deep dive. The full notes, sources and quiz are on the Day 2 page."
   ]
  },

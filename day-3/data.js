@@ -1084,7 +1084,7 @@ window.SECTOR.days[3].audio=[
   "label": "Deep dive",
   "note": "About 3 min · session by session",
   "src": "deep-dive.mp3",
-  "dur": 209,
+  "dur": 202,
   "transcript": [
    "This is the Day 3 deep dive from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through every session: who gets to decide?",
    "Helen Oakley's keynote looked at authority in the agentic enterprise. Her example: a person asks an AI agent for temporary access to an application. The agent plans the work, uses a service identity with broad permissions, and makes a much bigger change than anyone requested. No attacker was involved. The lesson is that the person asking, the agent planning, and the identity carrying out the work are different actors, and each handoff can quietly widen what's allowed.",
@@ -1093,7 +1093,7 @@ window.SECTOR.days[3].audio=[
    "Patrick Kiley of Mandiant presented research on long-lived robotics platforms used for bomb disposal. Over two decades the hardware evolved, but much of the software, passwords and protocols stayed the same, and he worked with the vendor through coordinated disclosure. His lessons apply far beyond robots: defence in depth, unique credentials per device, authenticated and encrypted control traffic, and an upgrade path planned from day one. Security through obscurity only delays analysis.",
    "Christine Dewhurst and Trecia Knight explained harvest now, decrypt later. Encrypted data collected today could be read once quantum computers mature, so anything that must stay confidential for years is already at risk. NIST finalized its first post-quantum standards in 2024, and Canada's federal roadmap targets full migration by 2035. Their first step is a cryptographic inventory, followed by tiering data by sensitivity and lifespan, mapping vendors, and building crypto agility.",
    "Tammy Harper of Flare covered a ransomware group that hosts its negotiation portals on a blockchain network, which makes traditional takedowns much harder. Her advice for defenders was to recognize and track this kind of infrastructure, and not to build response plans that depend on someone taking it offline.",
-   "Colin's enterprise takeaways from Day 3: put a policy check between agent plans and production changes. Give agent workflows task-scoped, expiring authority. Start a cryptographic inventory that includes identity systems. Audit long-lived devices for shared passwords. And make sure ransomware playbooks don't rely on takedowns.",
+   "Colin's takeaway from Day 3: across agents, robots, cryptography and ransomware, the common thread was control: who is allowed to decide and act, and what happens when that authority quietly grows or outlives its purpose.",
    "That's the Day 3 deep dive. The full notes, sources and quiz are on the Day 3 page."
   ]
  },
