@@ -8,9 +8,9 @@ const base=(document.querySelector('link[href*="assets/base.css"]')||{}).getAttr
 
 /* ---------- styles ---------- */
 const STYLES={
-  report:{label:"Report",desc:"Printed report, each day with its own look",font:null},
+  report:{label:"Report",desc:"Printed report, each day with its own fonts and design",font:null},
   broadsheet:{label:"Broadsheet",desc:"Bold newspaper headlines and thick rules",font:"family=Libre+Franklin:wght@400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=DM+Mono:wght@400;500"},
-  terminal:{label:"Terminal",desc:"Green-on-black console for the SOC crowd",font:"family=JetBrains+Mono:ital,wght@0,400..800;1,400"},
+  terminal:{label:"Terminal",desc:"Console look, each day in its own colour (default)",font:"family=JetBrains+Mono:ital,wght@0,400..800;1,400"},
   plain:{label:"Plain",desc:"Large, high-contrast text with no animation",font:"family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400"}
 };
 const THEMES={auto:"Auto",light:"Light",dark:"Dark"};
@@ -22,14 +22,14 @@ function applyStyle(st){
   if(st==="plain"){de.classList.remove("motion");document.querySelectorAll("[data-rv]").forEach(e=>e.classList.add("seen"))}
 }
 function applyTheme(t){if(t==="light"||t==="dark")de.dataset.theme=t;else delete de.dataset.theme}
-applyStyle(store.get("style","report"));applyTheme(store.get("theme","auto"));
+applyStyle(store.get("style","terminal"));applyTheme(store.get("theme","auto"));
 
 function picker(){
   const nav=document.querySelector(".bar nav");if(!nav||document.getElementById("stylebtn"))return;
   const b=document.createElement("button");b.id="stylebtn";b.type="button";b.className="stylebtn";b.setAttribute("aria-expanded","false");b.setAttribute("aria-controls","stylepanel");b.textContent="Style";
   nav.appendChild(b);
   const p=document.createElement("div");p.id="stylepanel";p.className="stylepanel";p.hidden=true;p.setAttribute("role","dialog");p.setAttribute("aria-label","Choose a site style");
-  const cur=()=>store.get("style","report"),curT=()=>store.get("theme","auto");
+  const cur=()=>store.get("style","terminal"),curT=()=>store.get("theme","auto");
   const draw=()=>{p.innerHTML=`<p class="sp-h">Site style</p>
     <div class="sp-list">${Object.entries(STYLES).map(([k,v])=>`<button type="button" class="sp-opt" data-style="${k}" aria-pressed="${cur()===k}"><span class="sp-sw sw-${k}" aria-hidden="true">Aa</span><span><b>${v.label}</b><small>${v.desc}</small></span></button>`).join("")}</div>
     <p class="sp-h">Light or dark</p>
@@ -65,7 +65,7 @@ const BADGES=[
   ["day1","Day 1 stamp","Read all Day 1 sessions"],["day2","Day 2 stamp","Read all Day 2 sessions"],["day3","Day 3 stamp","Read all Day 3 sessions"],
   ["quizall","Triple quiz","Finished all three day quizzes"],["ace","Quiz ace","Scored 90% or more on a day quiz"],
   ["challenge","Challenger","Finished the SecTor Challenge"],["listener","Listener","Played an audio recap"],
-  ["drill","Drill ready","Tried a ReadySetCyber game"],["stylist","Stylist","Tried a different site style"]
+  ["drill","Drill ready","Tried a ReadySetCyber game"],["stylist","Stylist","Switched the site style"]
 ];
 function earned(){
   const d=P.data(),days=(window.SECTOR&&SECTOR.days)||{},e={...d.badges};

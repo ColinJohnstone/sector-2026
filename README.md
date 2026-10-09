@@ -27,7 +27,7 @@ assets/
   base.css     shared component layout
   site.css     home, brief, challenge and glossary pages
   report.css   house style: printed-report look, scroll reveals and print-like motion
-  styles.css   alternative site styles (Broadsheet, Terminal, Plain), style menu, passport, topic map
+  styles.css   site styles: Terminal (default), Broadsheet, Plain; Report is report.css + day themes
   extras.js    style and light/dark menu, reading progress passport and badges (saved in the browser)
   colin.jpg    author photo for the byline
 day-N/
