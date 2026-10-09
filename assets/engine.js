@@ -11,28 +11,36 @@ const rel=ids=>ids&&ids.length?`<div class="rel">${ids.map(linkTo).join("")}</di
 
 
 /* ---------- audio recap ---------- */
-function audioBlock(A){
-  const mm=t=>Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
+/* D.audio: array of formats {key,label,note,src,dur,transcript}; transcript items are strings, or [speaker,text] for conversations */
+const mmss=t=>Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
+function audioBlock(list){
+  const L=Array.isArray(list)?list:[{key:"recap",label:"Quick recap",note:"one narrator",...list}];
+  const A=L[0];
   return `<div class="recap" id="recap">
     <button class="rc-play" type="button" aria-label="Play the audio recap"><span class="rc-ico" aria-hidden="true"></span></button>
     <div class="rc-main">
-      <p class="rc-t"><b>Listen to the recap</b><span>${mm(A.dur)} · read by a synthetic voice</span></p>
+      <p class="rc-t"><b>Listen</b>${L.length>1?`<span class="rc-fmts" role="group" aria-label="Audio format">${L.map((f,i)=>`<button type="button" class="rc-fmt" data-i="${i}" aria-pressed="${i===0}">${esc(f.label)}</button>`).join("")}</span>`:""}</p>
       <div class="rc-bar" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="${A.dur}" aria-valuenow="0"><i></i></div>
-      <p class="rc-meta"><span class="rc-time">0:00 / ${mm(A.dur)}</span><button type="button" class="rc-rate" aria-label="Playback speed">1×</button><a href="${A.src}" download>MP3</a></p>
+      <p class="rc-meta"><span class="rc-time">0:00 / ${mmss(A.dur)}</span><span class="rc-note">${esc(A.note||"")} · synthetic voice</span><button type="button" class="rc-rate" aria-label="Playback speed">1×</button><a class="rc-dl" href="${A.src}" download>MP3</a></p>
     </div>
-    <details class="rc-tx"><summary>Transcript</summary>${A.transcript.map(p=>`<p>${esc(p)}</p>`).join("")}</details>
+    <details class="rc-tx"><summary>Transcript</summary><div class="rc-txt"></div></details>
     <audio preload="none" src="${A.src}"></audio>
   </div>`;
 }
 function wireAudio(){
   const r=$("#recap");if(!r)return;
-  const a=r.querySelector("audio"),btn=r.querySelector(".rc-play"),bar=r.querySelector(".rc-bar"),fill=bar.querySelector("i"),time=r.querySelector(".rc-time"),rate=r.querySelector(".rc-rate");
-  const mm=t=>Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
-  const total=()=>isFinite(a.duration)?a.duration:+bar.getAttribute("aria-valuemax");
+  const L=Array.isArray(D.audio)?D.audio:[{key:"recap",label:"Quick recap",note:"one narrator",...D.audio}];
+  const a=r.querySelector("audio"),btn=r.querySelector(".rc-play"),bar=r.querySelector(".rc-bar"),fill=bar.querySelector("i"),time=r.querySelector(".rc-time"),rate=r.querySelector(".rc-rate"),note=r.querySelector(".rc-note"),dl=r.querySelector(".rc-dl"),txt=r.querySelector(".rc-txt");
+  let cur=L[0];
+  const total=()=>isFinite(a.duration)?a.duration:cur.dur;
+  const tx=f=>f.transcript.map(p=>Array.isArray(p)?`<p><b class="rc-who">${p[0]===1?"Voice 1":"Voice 2"}</b> ${esc(p[1])}</p>`:`<p>${esc(p)}</p>`).join("");
+  const load=(f,play)=>{cur=f;const rt=a.playbackRate;a.src=f.src;a.playbackRate=rt;fill.style.width="0";time.textContent="0:00 / "+mmss(f.dur);note.textContent=(f.note||"")+" · synthetic voice";dl.href=f.src;txt.innerHTML=tx(f);bar.setAttribute("aria-valuemax",f.dur);if(play)a.play()};
+  txt.innerHTML=tx(cur);
+  r.querySelectorAll(".rc-fmt").forEach(b=>b.onclick=()=>{r.querySelectorAll(".rc-fmt").forEach(x=>x.setAttribute("aria-pressed",x===b));const playing=!a.paused;load(L[+b.dataset.i],playing)});
   btn.onclick=()=>a.paused?a.play():a.pause();
   a.onplay=()=>{r.classList.add("playing");btn.setAttribute("aria-label","Pause the audio recap")};
   a.onpause=a.onended=()=>{r.classList.remove("playing");btn.setAttribute("aria-label","Play the audio recap")};
-  a.ontimeupdate=()=>{const p=a.currentTime/total();fill.style.width=(p*100)+"%";time.textContent=mm(a.currentTime)+" / "+mm(total());bar.setAttribute("aria-valuenow",Math.round(a.currentTime))};
+  a.ontimeupdate=()=>{const p=a.currentTime/total();fill.style.width=(p*100)+"%";time.textContent=mmss(a.currentTime)+" / "+mmss(total());bar.setAttribute("aria-valuenow",Math.round(a.currentTime))};
   const seek=x=>{const b=bar.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(x-b.left)/b.width))*total();if(a.paused)a.play()};
   bar.addEventListener("click",e=>seek(e.clientX));
   bar.addEventListener("keydown",e=>{if(e.key==="ArrowRight")a.currentTime+=10;if(e.key==="ArrowLeft")a.currentTime-=10});

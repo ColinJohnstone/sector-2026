@@ -1231,17 +1231,96 @@ window.SECTOR.days[2].people={
   "site": "https://www.beyondtrust.com"
  }
 };
-/* Audio recap: recap.mp3 in this folder, generated with the open-source Kokoro voice model. */
-window.SECTOR.days[2].audio={
- "src": "recap.mp3",
- "dur": 93,
- "transcript": [
-  "This is the Day 2 recap from Colin Johnstone's SecTor 2026 notes. If Day 1 was about speed, Day 2 was about where risk lands. The headline: the threat is already on the device.",
-  "Ron Deibert of the Citizen Lab opened with the human side. Commercial spyware is aimed at journalists, lawyers and activists, and public-interest research is often what leads to the patch, the sanction or the shutdown that protects everyone else.",
-  "Several talks looked at technology we already trust. Researchers showed that the small AI models now built into browsers and operating systems deserve the same scrutiny as any other software with access to our files. A University of Toronto team showed that hardware isolation on shared GPUs isn't something we can take for granted.",
-  "BrowserStack's talk flipped the AI story around. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow, expensive part. Their motto: buy the hunter, own the verifier.",
-  "Two more briefings rounded out the day: one on why an archived web page isn't proof on its own, and one on why AI gateways need carefully scoped identities.",
-  "Colin's takeaway from Day 2: know where AI runs in your environment, limit what it can touch, keep patching and isolation in place for shared hardware, and verify before you act.",
-  "The full notes, sources and a quiz are on the Day 2 page."
- ]
-};
+/* Audio recaps (MP3s in this folder), generated with the open-source Kokoro voice model. */
+window.SECTOR.days[2].audio=[
+ {
+  "key": "recap",
+  "label": "Quick recap",
+  "note": "About 2 min · one narrator",
+  "src": "recap.mp3",
+  "dur": 93,
+  "transcript": [
+   "This is the Day 2 recap from Colin Johnstone's SecTor 2026 notes. If Day 1 was about speed, Day 2 was about where risk lands. The headline: the threat is already on the device.",
+   "Ron Deibert of the Citizen Lab opened with the human side. Commercial spyware is aimed at journalists, lawyers and activists, and public-interest research is often what leads to the patch, the sanction or the shutdown that protects everyone else.",
+   "Several talks looked at technology we already trust. Researchers showed that the small AI models now built into browsers and operating systems deserve the same scrutiny as any other software with access to our files. A University of Toronto team showed that hardware isolation on shared GPUs isn't something we can take for granted.",
+   "BrowserStack's talk flipped the AI story around. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow, expensive part. Their motto: buy the hunter, own the verifier.",
+   "Two more briefings rounded out the day: one on why an archived web page isn't proof on its own, and one on why AI gateways need carefully scoped identities.",
+   "Colin's takeaway from Day 2: know where AI runs in your environment, limit what it can touch, keep patching and isolation in place for shared hardware, and verify before you act.",
+   "The full notes, sources and a quiz are on the Day 2 page."
+  ]
+ },
+ {
+  "key": "deep",
+  "label": "Deep dive",
+  "note": "About 3 min · session by session",
+  "src": "deep-dive.mp3",
+  "dur": 175,
+  "transcript": [
+   "This is the Day 2 deep dive from Colin Johnstone's SecTor 2026 notes. Day 2 was keynote and briefings, and the theme was that the threat is already on the device.",
+   "Ron Deibert, director of the Citizen Lab at the University of Toronto, opened with counterintelligence for civil society. Commercial spyware has been used against journalists, lawyers, activists and their families, often without the target clicking anything. Citizen Lab's public research has repeatedly led to emergency patches from phone makers, sanctions and company shutdowns. Colin's note: threat notifications from Apple and Google deserve a real response plan, not a shrug.",
+   "Researchers from the ATLAS-AI Lab at the Technion looked at the small AI models now built into browsers and operating systems, often installed without users opting in. Their research showed these models deserve the same scrutiny as any other software with access to our files. Their advice: remove local models where they aren't needed, watch for unusual use of them, and scope what they can reach. Their memorable line: these are the worst models that will ever run on your endpoint.",
+   "A University of Toronto team led by Gururaj Saileshwar presented GPU Breach. Their research showed that the memory isolation we assume on GPUs can't be taken for granted, especially on shared hardware. Their recommended mitigations were error-correcting memory, patched drivers, and careful thought about sharing GPUs between workloads. The work was responsibly disclosed to NVIDIA.",
+   "Rahul Jaisinghani of BrowserStack talked about AI-assisted penetration testing. AI has made finding potential vulnerabilities cheap, but confirming which ones are real is now the slow and expensive part. Adding an independent verifier that re-proves every finding cut analyst time significantly in his team's pipeline. His motto: buy the hunter, own the verifier.",
+   "Two more briefings rounded out the day. Researchers from TU Braunschweig showed that web archive snapshots can't always be treated as proof of what a site said, so keep your own evidence. And Simon Maxwell-Stewart of BeyondTrust showed why gateways that let AI agents call internal services need narrowly scoped identities for each backend.",
+   "Colin's enterprise takeaways from Day 2: find where local AI runs on managed devices and limit what it can touch. Keep error-correcting memory and driver patching in place for shared GPUs. Put independent verification in front of AI-generated findings. And plan a response for high-risk staff who receive spyware threat notifications.",
+   "That's the Day 2 deep dive. The full notes, sources and quiz are on the Day 2 page."
+  ]
+ },
+ {
+  "key": "chat",
+  "label": "Conversation",
+  "note": "About 2 min · two voices",
+  "src": "conversation.mp3",
+  "dur": 106,
+  "transcript": [
+   [
+    1,
+    "Welcome back to the SecTor 2026 recap from Colin Johnstone's notes. This is Day 2."
+   ],
+   [
+    2,
+    "If Day 1 was about speed, Day 2 was about where risk lands. The headline: the threat is already on the device."
+   ],
+   [
+    1,
+    "The keynote was a bit different from a typical security talk."
+   ],
+   [
+    2,
+    "It was. Ron Deibert of the Citizen Lab talked about commercial spyware aimed at journalists, lawyers and activists. Their public research has led to emergency patches, sanctions and even company shutdowns, which protects everyone else too."
+   ],
+   [
+    1,
+    "Then a lot of the day was about technology we already trust."
+   ],
+   [
+    2,
+    "Right. One team from the Technion looked at the small AI models now built into browsers and operating systems. Their warning stuck with Colin: these are the worst models that will ever run on your endpoint. They'll only get more capable."
+   ],
+   [
+    1,
+    "So the advice is?"
+   ],
+   [
+    2,
+    "Know where they run, remove them where they aren't needed, and limit what they can touch. And a University of Toronto team showed that we can't take memory isolation on shared GPUs for granted either."
+   ],
+   [
+    1,
+    "There was also a twist on AI for defenders."
+   ],
+   [
+    2,
+    "BrowserStack's talk. AI makes finding potential vulnerabilities cheap, but proving which ones are real is now the bottleneck. Their motto was: buy the hunter, own the verifier."
+   ],
+   [
+    1,
+    "Colin's bottom line for Day 2?"
+   ],
+   [
+    2,
+    "The newest attack surface is the stuff we already trust: browsers, GPUs, AI gateways and the phones that hold our authenticators. Find it, scope it, and verify before you act. The full notes are on the Day 2 page."
+   ]
+  ]
+ }
+];

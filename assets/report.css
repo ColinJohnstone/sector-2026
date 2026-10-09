@@ -220,3 +220,10 @@ a.daycard:hover .go{letter-spacing:.02em}
 .recap.playing .rc-play{animation:rcpulse 2s ease-in-out infinite}
 @keyframes rcpulse{50%{box-shadow:0 0 0 .35rem var(--accent-soft)!important}}
 @media (prefers-reduced-motion:reduce){.recap.playing .rc-play{animation:none}}
+.rc-t b{margin-right:.3rem}
+.rc-fmts{display:inline-flex;flex-wrap:wrap;gap:.2rem .9rem}
+.rc-fmt{background:none;border:0;padding:0;font:inherit;font-size:.86rem;color:var(--muted);cursor:pointer;border-bottom:1.5px solid transparent}
+.rc-fmt[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.rc-fmt:hover{color:var(--ink)}
+.rc-meta{flex-wrap:wrap}
+.rc-who{font-family:var(--ui);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-right:.3rem}

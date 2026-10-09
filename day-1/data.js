@@ -1449,17 +1449,106 @@ window.SECTOR.days[1].people={
   "site": "https://www.opg.com"
  }
 };
-/* Audio recap: recap.mp3 in this folder, generated with the open-source Kokoro voice model. */
-window.SECTOR.days[1].audio={
- "src": "recap.mp3",
- "dur": 103,
- "transcript": [
-  "This is the Day 1 recap from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit, and the theme was simple: AI changed the speed of the attack.",
-  "The opening keynote, from Matt Johansen of Vulnerable U, framed it with a contrast. Capabilities that once needed a government budget are now available to almost anyone. His line summed up the day: you are not defending against China, you are defending against 250 dollars a month.",
-  "The cloud sessions made the same point. Speakers showed that the techniques themselves weren't new. What changed is how quickly automated tools can string them together, often faster than a team can read the first alert. That's why the advice kept returning to prevention and reducing blast radius, not just detection.",
-  "There was good news too. Tracebit showed that deception works unusually well against automated attackers. Because they explore everything, decoy credentials and canaries get touched early, giving defenders a reliable warning.",
-  "The other big thread was identity for AI agents. Organizations may soon run thousands of them, often without a reliable inventory. The panels kept asking the same questions: what is each agent, what can it reach, who owns it, and how do you switch it off?",
-  "Colin's takeaway from Day 1: AI isn't inventing a new class of problems. It's making the old ones faster and cheaper. That puts the weight back on fundamentals: segmentation, least privilege, strong identity and a smaller blast radius.",
-  "The full notes, sources and a quiz are on the Day 1 page."
- ]
-};
+/* Audio recaps (MP3s in this folder), generated with the open-source Kokoro voice model. */
+window.SECTOR.days[1].audio=[
+ {
+  "key": "recap",
+  "label": "Quick recap",
+  "note": "About 2 min · one narrator",
+  "src": "recap.mp3",
+  "dur": 103,
+  "transcript": [
+   "This is the Day 1 recap from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit, and the theme was simple: AI changed the speed of the attack.",
+   "The opening keynote, from Matt Johansen of Vulnerable U, framed it with a contrast. Capabilities that once needed a government budget are now available to almost anyone. His line summed up the day: you are not defending against China, you are defending against 250 dollars a month.",
+   "The cloud sessions made the same point. Speakers showed that the techniques themselves weren't new. What changed is how quickly automated tools can string them together, often faster than a team can read the first alert. That's why the advice kept returning to prevention and reducing blast radius, not just detection.",
+   "There was good news too. Tracebit showed that deception works unusually well against automated attackers. Because they explore everything, decoy credentials and canaries get touched early, giving defenders a reliable warning.",
+   "The other big thread was identity for AI agents. Organizations may soon run thousands of them, often without a reliable inventory. The panels kept asking the same questions: what is each agent, what can it reach, who owns it, and how do you switch it off?",
+   "Colin's takeaway from Day 1: AI isn't inventing a new class of problems. It's making the old ones faster and cheaper. That puts the weight back on fundamentals: segmentation, least privilege, strong identity and a smaller blast radius.",
+   "The full notes, sources and a quiz are on the Day 1 page."
+  ]
+ },
+ {
+  "key": "deep",
+  "label": "Deep dive",
+  "note": "About 3 min · session by session",
+  "src": "deep-dive.mp3",
+  "dur": 201,
+  "transcript": [
+   "This is the Day 1 deep dive from Colin Johnstone's SecTor 2026 notes. Day 1 was the AI x Cloud Security Summit. We'll go through it session by session, then finish with what it means for an enterprise.",
+   "Matt Johansen of Vulnerable U opened the day. His argument was that the capabilities we associate with nation-state attackers are getting cheap and easy to access. Budget, specialist teams and custom tooling used to separate governments from everyone else. That gap is closing, so intent and persistence matter more than money. Colin's note: patch cycles measured in weeks look very different when exploitation can follow disclosure within hours.",
+   "Gal Ordo of Native argued that AI security is really cloud security. Automated attacks now connect familiar weaknesses faster than many detection processes can respond. His answer wasn't another AI-specific product. It was architecture: separate production from everything else, reduce internet exposure, enforce strong identity boundaries, and block destructive automated actions by default.",
+   "Eric Broda and Rachel Clark focused on agents as identities. Organizations may soon run thousands or even millions of agents, with no reliable way to inventory them. Their analogy was a toaster: you trust it because of standards. Agents need the same thing, a consistent way to define what each one may do, who owns it, and how it's switched off.",
+   "Brian Deitch of Zscaler made the case for being dark by default. You will never patch fast enough, so make applications unreachable until the user and device are verified, segment what matters, and keep the blast radius small.",
+   "Alessandro Brucato of Tracebit brought the most encouraging result of the day. Automated attackers explore everything, so decoy credentials and canary resources get touched early. In their testing, attacks were detected before the first critical action in nearly every run.",
+   "Yigael Berger of Sweet Security looked at economics. When finding a weakness costs almost nothing, testing becomes continuous for both attackers and defenders, and the same economics can help defenders triage alerts and fill skills gaps.",
+   "The afternoon panels were about priorities and ownership. The audience forum ranked detection and response as the top priority for the year, with governance the most likely to be overlooked. The 2027 playbook panel was built for disagreement, and showed there's no settled AI security playbook to copy yet. Ryoji Betchaku of Wiz showed how to turn threat intelligence into something executives can act on, by tying it to an organization's own exposure. And the closing panel asked who actually owns an AI system when it acts on its own.",
+   "Colin's enterprise takeaways from Day 1: inventory every agent and give each one an identity, an owner and an off switch. Lean on prevention and segmentation, because detection alone can't keep up. Plant canaries in cloud environments. And decide ownership of autonomous systems before something goes wrong, not after.",
+   "That's the Day 1 deep dive. The full notes, sources and quiz are on the Day 1 page."
+  ]
+ },
+ {
+  "key": "chat",
+  "label": "Conversation",
+  "note": "About 2 min · two voices",
+  "src": "conversation.mp3",
+  "dur": 121,
+  "transcript": [
+   [
+    1,
+    "Welcome to the SecTor 2026 recap, built from Colin Johnstone's conference notes. This is Day 1, the AI x Cloud Security Summit."
+   ],
+   [
+    2,
+    "And the theme fits in one sentence: AI changed the speed of the attack."
+   ],
+   [
+    1,
+    "What does that actually mean, though? Is AI inventing new kinds of attacks?"
+   ],
+   [
+    2,
+    "Mostly not. Speaker after speaker made the same point. The weaknesses are familiar. What's new is how quickly automated tools can string them together, often faster than a team can read the first alert."
+   ],
+   [
+    1,
+    "The opening keynote had a great line about that."
+   ],
+   [
+    2,
+    "Matt Johansen of Vulnerable U said: you are not defending against China, you are defending against 250 dollars a month. Capabilities that used to need a government budget are now within almost anyone's reach."
+   ],
+   [
+    1,
+    "So if attackers are faster, what did people say actually works?"
+   ],
+   [
+    2,
+    "The fundamentals, honestly. Segmentation, least privilege, strong identity and a smaller blast radius. Zscaler's talk called it being dark by default: apps aren't reachable until the user and device are verified."
+   ],
+   [
+    1,
+    "There was some good news too, right?"
+   ],
+   [
+    2,
+    "Deception. Tracebit showed that automated attackers explore everything, so decoy credentials and canaries get touched early. It's one of the few areas where AI attackers make defenders' lives easier."
+   ],
+   [
+    1,
+    "And the big open question was agents themselves."
+   ],
+   [
+    2,
+    "Exactly. Organizations may soon run thousands of AI agents. Every one needs an identity, an owner, scoped access and an off switch. And someone has to own the outcome when one acts on its own."
+   ],
+   [
+    1,
+    "Colin's bottom line for Day 1?"
+   ],
+   [
+    2,
+    "AI isn't creating a new class of problems. It's compressing the time, cost and expertise needed to exploit the ones we already have. The full notes and a quiz are on the Day 1 page."
+   ]
+  ]
+ }
+];

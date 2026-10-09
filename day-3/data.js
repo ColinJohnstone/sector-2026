@@ -1060,18 +1060,106 @@ window.SECTOR.days[3]={
   }
  }
 };
-/* Audio recap: recap.mp3 in this folder, generated with the open-source Kokoro voice model. */
-window.SECTOR.days[3].audio={
- "src": "recap.mp3",
- "dur": 119,
- "transcript": [
-  "This is the Day 3 recap from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through it: who gets to decide?",
-  "Helen Oakley's keynote described a helpful AI agent asked to grant one person temporary access, which ended up making a much broader change than anyone intended. No attacker was involved. Her point was that an agent's plan should be treated as a request, not a permission, and checked against what was actually asked for before anything changes.",
-  "She also stressed that temporary access has to undo whatever it opened, and that agent autonomy should grow only with evidence. Her closing line: it's not about what the AI agent can do, but what it is authorized to cause.",
-  "Brad Edwards of Palo Alto Networks showed how open-source labs let AI agents play both attacker and defender in purple team exercises. It makes regular practice affordable for teams that never had the budget, as long as people set the boundaries and every fix is re-tested.",
-  "Patrick Kiley of Mandiant looked at long-lived robotics platforms and showed how old software and shared passwords persist for decades. His lessons were about defence in depth, unique credentials per device, and planning an upgrade path from day one.",
-  "Two more briefings looked ahead. One explained harvest now, decrypt later: encrypted data collected today could be read once quantum computers mature, so organizations should start a cryptographic inventory now. The other covered ransomware groups hosting infrastructure in places that are hard to take down, which means response plans can't rely on takedowns.",
-  "Colin's takeaway from Day 3: authority is the new perimeter. Decide who and what is allowed to act, check it at the moment of action, and keep the evidence.",
-  "The full notes, sources and a quiz are on the Day 3 page."
- ]
-};
+/* Audio recaps (MP3s in this folder), generated with the open-source Kokoro voice model. */
+window.SECTOR.days[3].audio=[
+ {
+  "key": "recap",
+  "label": "Quick recap",
+  "note": "About 2 min · one narrator",
+  "src": "recap.mp3",
+  "dur": 119,
+  "transcript": [
+   "This is the Day 3 recap from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through it: who gets to decide?",
+   "Helen Oakley's keynote described a helpful AI agent asked to grant one person temporary access, which ended up making a much broader change than anyone intended. No attacker was involved. Her point was that an agent's plan should be treated as a request, not a permission, and checked against what was actually asked for before anything changes.",
+   "She also stressed that temporary access has to undo whatever it opened, and that agent autonomy should grow only with evidence. Her closing line: it's not about what the AI agent can do, but what it is authorized to cause.",
+   "Brad Edwards of Palo Alto Networks showed how open-source labs let AI agents play both attacker and defender in purple team exercises. It makes regular practice affordable for teams that never had the budget, as long as people set the boundaries and every fix is re-tested.",
+   "Patrick Kiley of Mandiant looked at long-lived robotics platforms and showed how old software and shared passwords persist for decades. His lessons were about defence in depth, unique credentials per device, and planning an upgrade path from day one.",
+   "Two more briefings looked ahead. One explained harvest now, decrypt later: encrypted data collected today could be read once quantum computers mature, so organizations should start a cryptographic inventory now. The other covered ransomware groups hosting infrastructure in places that are hard to take down, which means response plans can't rely on takedowns.",
+   "Colin's takeaway from Day 3: authority is the new perimeter. Decide who and what is allowed to act, check it at the moment of action, and keep the evidence.",
+   "The full notes, sources and a quiz are on the Day 3 page."
+  ]
+ },
+ {
+  "key": "deep",
+  "label": "Deep dive",
+  "note": "About 3 min · session by session",
+  "src": "deep-dive.mp3",
+  "dur": 209,
+  "transcript": [
+   "This is the Day 3 deep dive from Colin Johnstone's SecTor 2026 notes. The final day was about control, and one question ran through every session: who gets to decide?",
+   "Helen Oakley's keynote looked at authority in the agentic enterprise. Her example: a person asks an AI agent for temporary access to an application. The agent plans the work, uses a service identity with broad permissions, and makes a much bigger change than anyone requested. No attacker was involved. The lesson is that the person asking, the agent planning, and the identity carrying out the work are different actors, and each handoff can quietly widen what's allowed.",
+   "Her recommendations were practical. Treat an agent's plan as a request, not a permission, and check each change against the original request at the point of action. Make temporary access expire together with whatever it opened. Roll out agents over thirty, sixty and ninety days, expanding only with evidence. And ask vendors how their own agents are bounded. Her closing line: it's not about what the AI agent can do, but what it is authorized to cause.",
+   "Brad Edwards of Palo Alto Networks showed agentic purple teaming. Open-source labs now let AI agents play both attacker and defender against a realistic test company with a real security monitoring stack, so teams can practise detection and response without a big budget. He was candid about the limits: agents lose context, drift out of scope and sometimes claim success they didn't achieve, so people set the boundaries and every fix is re-tested.",
+   "Patrick Kiley of Mandiant presented research on long-lived robotics platforms used for bomb disposal. Over two decades the hardware evolved, but much of the software, passwords and protocols stayed the same, and he worked with the vendor through coordinated disclosure. His lessons apply far beyond robots: defence in depth, unique credentials per device, authenticated and encrypted control traffic, and an upgrade path planned from day one. Security through obscurity only delays analysis.",
+   "Christine Dewhurst and Trecia Knight explained harvest now, decrypt later. Encrypted data collected today could be read once quantum computers mature, so anything that must stay confidential for years is already at risk. NIST finalized its first post-quantum standards in 2024, and Canada's federal roadmap targets full migration by 2035. Their first step is a cryptographic inventory, followed by tiering data by sensitivity and lifespan, mapping vendors, and building crypto agility.",
+   "Tammy Harper of Flare covered a ransomware group that hosts its negotiation portals on a blockchain network, which makes traditional takedowns much harder. Her advice for defenders was to recognize and track this kind of infrastructure, and not to build response plans that depend on someone taking it offline.",
+   "Colin's enterprise takeaways from Day 3: put a policy check between agent plans and production changes. Give agent workflows task-scoped, expiring authority. Start a cryptographic inventory that includes identity systems. Audit long-lived devices for shared passwords. And make sure ransomware playbooks don't rely on takedowns.",
+   "That's the Day 3 deep dive. The full notes, sources and quiz are on the Day 3 page."
+  ]
+ },
+ {
+  "key": "chat",
+  "label": "Conversation",
+  "note": "About 2 min · two voices",
+  "src": "conversation.mp3",
+  "dur": 120,
+  "transcript": [
+   [
+    1,
+    "Welcome to the final SecTor 2026 recap from Colin Johnstone's notes. This is Day 3."
+   ],
+   [
+    2,
+    "And the question that ran through the whole day was: who gets to decide?"
+   ],
+   [
+    1,
+    "That came straight from the keynote."
+   ],
+   [
+    2,
+    "Helen Oakley described an AI agent asked to give one person temporary access, which ended up making a much broader change than anyone intended. No attacker involved. Just an agent using a powerful service identity with nothing checking the change against the request."
+   ],
+   [
+    1,
+    "So what's the fix?"
+   ],
+   [
+    2,
+    "Treat what an agent proposes as a request, not a permission. Check it at the point of action. And make temporary access undo whatever it opened. Her line was: it's not about what the agent can do, but what it is authorized to cause."
+   ],
+   [
+    1,
+    "There was a more hopeful AI talk too."
+   ],
+   [
+    2,
+    "Brad Edwards showed open-source labs where AI agents play both attacker and defender. It makes purple team practice affordable, as long as people set the boundaries and re-test every fix."
+   ],
+   [
+    1,
+    "And then robots."
+   ],
+   [
+    2,
+    "Patrick Kiley of Mandiant looked at bomb-disposal robots that kept old software and shared passwords for years. The lesson applies to any long-lived device: unique credentials, authenticated control traffic and a real upgrade path."
+   ],
+   [
+    1,
+    "The afternoon looked further ahead."
+   ],
+   [
+    2,
+    "One talk on harvest now, decrypt later: data stolen today could be read by future quantum computers, so start a cryptographic inventory now. And one on ransomware hosted where it's hard to take down, so response plans can't rely on takedowns."
+   ],
+   [
+    1,
+    "Colin's bottom line for Day 3?"
+   ],
+   [
+    2,
+    "Authority is the new perimeter. Decide who and what may act, check it at the moment of action, and keep the evidence. Thanks for listening, and the full notes are on the Day 3 page."
+   ]
+  ]
+ }
+];
